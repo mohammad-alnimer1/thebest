@@ -1,0 +1,446 @@
+import 'dart:ui';
+import 'dart:convert';
+import 'package:http/http.dart ' as http;
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
+import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'AppHelper/AppController.dart';
+import 'AppHelper/networking.dart';
+import 'Drawer/Constants.dart';
+import 'api/Api.dart';
+
+class DetailsPage extends StatefulWidget {
+  final id;
+  DetailsPage({this.id});
+  @override
+  _DetailsPageState createState() => _DetailsPageState();
+}
+
+class _DetailsPageState extends State<DetailsPage> {
+  var languageState;
+
+  void langState() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    languageState = preferences.getString("lng");
+  }
+
+  bool loading = true;
+  bool loading1 = true;
+  var servicesDetails;
+
+  Future<dynamic> getdetails(int id) async {
+    try {
+      NetworkHelper networkHelper = NetworkHelper(
+          'http://mohamadfaqeh-001-site37.itempurl.com/api/mobile/webpage/en?id=${widget.id}');
+      servicesDetails = await networkHelper.getdata();
+
+      setState(() {
+        print(servicesDetails.runtimeType);
+
+        print('daaaaaaaaaaaaaaaaaaaaaatttttttaaaaaaa+${servicesDetails}');
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+List comm;
+
+  Future<dynamic> getAllComment(int id) async {
+    try {
+      NetworkHelper networkHelper = NetworkHelper(
+          'http://mohamadfaqeh-001-site37.itempurl.com/api/mobile/allcommentservices/en?serviceid=${widget.id}');
+      comm = await networkHelper.getdata();
+
+      setState(() {
+        print(comm.runtimeType);
+        loading1=false;
+        return comm;
+
+      });
+      print('cooooooooooooooommmmmmm+${comm.toString()}');
+      print('cooooooooooooooommmmmmm+${comm[0]['Email']}');
+    } catch (e) {
+      print(e);
+    }
+  }
+
+
+
+
+  GlobalKey<FormState> commentKey = new GlobalKey<FormState>();
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController CommentController = new TextEditingController();
+
+  Future<dynamic> senddata() async {
+    var url =
+        'http://mohamadfaqeh-001-site37.itempurl.com/api/mobile/addcomment';
+    var commentdata = commentKey.currentState;
+    if (commentdata.validate()) {
+      var dataToSend = {
+        "ServiceID": widget.id.toString(),
+        "Description": CommentController.text,
+        "Title": nameController.text,
+        "Email": emailController.text
+      };
+      print('))))))))))))))))');
+      http.Response response = await http.post(url, body: dataToSend);
+      if (response.statusCode == 200) {
+        String data = response.body;
+        print('hi hi hi hi hi hi  data ${data}');
+        setState(() {
+          jsonEncode(data);
+          _showMaterialDialog();
+        });
+      } else {
+        print(response.statusCode);
+      }
+    }
+  }
+
+  String validdata(String val) {
+    if (val.trim().isEmpty) {
+      return "${AppController.strings.fillDataError}";
+    }
+  }
+
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    widget.id;
+    getdetails(widget.id);
+    getAllComment(widget.id);
+    langState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Directionality(
+        textDirection: AppController.textDirection,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color(0xFFf33BE9F),
+            elevation: 0,
+            centerTitle: true,
+          ),
+          backgroundColor: Color(0xFFf33BE9F),
+          body: servicesDetails != null&&servicesDetails.isNotEmpty
+              ? ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
+                          margin: EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: languageState == 'Ar'
+                                    ? Text('${servicesDetails['TitleAr']}',
+                                        style: TextStyle(fontSize: 22))
+                                    : Text('${servicesDetails['TitleEn']}',
+                                        style: TextStyle(fontSize: 22)),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 10, left: 10),
+                                child: Divider(
+                                  thickness: 1,
+                                  color: Colors.black45,
+                                ),
+                              ),
+                              Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.white,
+                                  ),
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.network(
+                                        '${Api().baseImgURL + servicesDetails['Images']}',
+                                        fit: BoxFit.cover,
+                                      ))),
+                              Container(
+                                padding: const EdgeInsets.all(8.0),
+                                child: languageState == 'Ar'
+                                    ? Text(
+                                        "${servicesDetails['DescriptionAr']}",
+                                        style: TextStyle(fontSize: 18))
+                                    : Text(
+                                        "${servicesDetails['DescriptionEn']}",
+                                        style: TextStyle(fontSize: 18)),
+                              ),
+                              // Container(
+                              //   padding: EdgeInsets.all(16),
+                              //   child: Row(
+                              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //     children: [
+                              //       InkWell(
+                              //           onTap: () {},
+                              //           child: Text(
+                              //             '< Previous Post',
+                              //             style: TextStyle(color: Colors.blue, fontSize: 16),
+                              //           )),
+                              //       InkWell(
+                              //           onTap: () {},
+                              //           child: Text(' Next Post>',
+                              //               style:
+                              //                   TextStyle(color: Colors.blue, fontSize: 16)))
+                              //     ],
+                              //   ),
+                              // )
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
+                          margin: EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('${AppController.strings.Comments}',
+                                    style: TextStyle(fontSize: 22)),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 10, left: 10),
+                                child: Divider(
+                                  thickness: 1,
+                                  color: Colors.black45,
+                                ),
+                              ),
+                              Container(
+                                height: 300,
+                                child:comm.isNotEmpty? ListView.separated(
+                                  shrinkWrap: true,
+                                  itemCount: comm.length,
+                                  separatorBuilder: (context, index) => Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 10, left: 10),
+                                    child: Divider(
+                                      thickness: 1,
+                                      color: Colors.black45,
+                                    ),
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    return Column(
+                                      children: [
+                                        Container(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                    decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .black38)),
+                                                    child: Icon(
+                                                      Icons.person,
+                                                      size: 50,
+                                                      color: Colors.black26,
+                                                    )),
+                                                Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 20,
+                                                            right: 8,
+                                                            bottom: 8,
+                                                            top: 8),
+                                                    child: Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      children: [
+                                                        Text(
+                                                          "${comm[index]['Title']}  ",style: TextStyle(fontSize: 20),
+                                                        ),
+                                                        Text(
+                                                          "${comm[index]['Email']}  ",
+                                                        ),
+                                                      ],
+                                                    )),
+                                              ],
+                                            )),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            "${comm[index]['Description']}",
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                ):Container(
+                                  height: double.infinity,
+                                  child: ModalProgressHUD(
+                                      color: Colors.white12,
+                                      inAsyncCall: loading1,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Expanded(
+                                              child: loading1
+                                                  ? Center(
+                                                  child: Text(
+                                                      '${AppController.strings.PleaseWait}'))
+                                                  : Center(
+                                                child: Text(
+                                                  '${AppController.strings.NoComment}',
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black87),
+                                                ),
+                                              )),
+                                        ],
+                                      )),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 10, left: 10),
+                                child: Divider(
+                                  thickness: 1,
+                                  color: Colors.black45,
+                                ),
+                              ),
+                              Form(
+                                key: commentKey,
+                                child: Container(
+                                    padding: EdgeInsets.all(16),
+                                    child: ExpansionTileCard(
+                                      title: Text(
+                                          '${AppController.strings.LeaveComment}'),
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.all(10),
+                                          child: TextFormField(
+                                              controller: nameController,
+                                              textAlign: TextAlign.center,
+                                              validator: validdata,
+                                              decoration: KDecoration.copyWith(
+                                                  labelText:
+                                                      '${AppController.strings.EnteryourName}')),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(10),
+                                          child: TextFormField(
+                                              controller: emailController,
+                                              textAlign: TextAlign.center,
+                                              keyboardType:
+                                                  TextInputType.emailAddress,
+                                              validator: validdata,
+                                              decoration: KDecoration.copyWith(
+                                                  labelText:
+                                                      '${AppController.strings.EnteryourEmail}')),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(10),
+                                          child: TextFormField(
+                                              controller: CommentController,
+                                              maxLines: 5,
+                                              textAlign: TextAlign.center,
+                                              keyboardType:
+                                                  TextInputType.emailAddress,
+                                              validator: validdata,
+                                              decoration: KDecoration.copyWith(
+                                                  labelText:
+                                                      '${AppController.strings.writComment}')),
+                                        ),
+                                        MaterialButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                senddata();
+                                              });
+                                            },
+                                            color: Color(0xFFf33BE9F),
+                                            child: Text(
+                                              '${AppController.strings.send}',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20),
+                                            ))
+                                      ],
+                                    )),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                )
+              : Container(
+                  height: double.infinity,
+                  child: ModalProgressHUD(
+                      color: Colors.white12,
+                      inAsyncCall: loading,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              child: loading
+                                  ? Center(
+                                      child: Text(
+                                          '${AppController.strings.PleaseWait}'))
+                                  : Center(
+                                      child: Text(
+                                        '${AppController.strings.NoServices}',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.black87),
+                                      ),
+                                    )),
+                        ],
+                      )),
+                ),
+        ));
+  }
+
+  _showMaterialDialog() {
+    showDialog(
+        context: context,
+        builder: (_) => new AlertDialog(
+              title: new Text("${AppController.strings.note}"),
+              content: new Text("${AppController.strings.Success}"),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text('${AppController.strings.ok}'),
+                  onPressed: () {
+                    setState(() {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => super.widget));
+                    });
+                  },
+                )
+              ],
+            ));
+  }
+}
