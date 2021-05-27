@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:http/http.dart ' as http;
+import 'package:http/http.dart' as https;
 
 class NetworkHelper {
   NetworkHelper(this.url,);
@@ -7,7 +7,7 @@ class NetworkHelper {
    Future <dynamic> getdata()async{
      print(url);
      print('))))))))))))))))');
-    http.Response response = await http.get(url);
+    https.Response response = await https.get(url);
      if (response.statusCode == 200) {
        String data = response.body;
        print('+++++++++++++++++++${data.runtimeType}');

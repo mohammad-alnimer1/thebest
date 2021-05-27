@@ -11,7 +11,7 @@ import 'package:thebest/AppHelper/networking.dart';
 import 'package:thebest/api/AllFunGet.dart';
 import 'package:thebest/api/Api.dart';
 import 'package:thebest/module/AboutUs_Model.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as https;
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'AboutUsDetals.dart';

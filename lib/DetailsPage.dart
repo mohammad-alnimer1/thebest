@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'dart:convert';
-import 'package:http/http.dart ' as http;
+import 'package:http/http.dart'as https;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +90,7 @@ List comm;
         "Email": emailController.text
       };
       print('))))))))))))))))');
-      http.Response response = await http.post(url, body: dataToSend);
+      https.Response response = await https.post(url, body: dataToSend);
       if (response.statusCode == 200) {
         String data = response.body;
         print('hi hi hi hi hi hi  data ${data}');
@@ -275,12 +275,12 @@ List comm;
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       children: [
-                                                        Text(
-                                                          "${comm[index]['Title']}  ",style: TextStyle(fontSize: 20),
-                                                        ),
-                                                        Text(
-                                                          "${comm[index]['Email']}  ",
-                                                        ),
+                                                       Container(width: MediaQuery.of(context).size.width*0.65,child:  Text(
+                                                         "${comm[index]['Title']}  ",style: TextStyle(fontSize: 20),
+                                                       ),),
+                                                       Container(child:  Text(
+                                                         "${comm[index]['Email']}  ",
+                                                       ),width: MediaQuery.of(context).size.width*0.65,)
                                                       ],
                                                     )),
                                               ],

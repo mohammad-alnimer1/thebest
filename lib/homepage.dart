@@ -9,7 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart' as https;
 import 'AppHelper/AppController.dart';
 import 'AppHelper/networking.dart';
 import 'Drawer/DrawerPage.dart';
