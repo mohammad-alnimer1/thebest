@@ -78,10 +78,11 @@ class _ContactUsState extends State<ContactUs> {
                 CircleAvatar(
                   backgroundColor: Colors.white,
                   radius: 80,
-                  backgroundImage: AssetImage('images/Logo.png'),
+                  // backgroundImage: AssetImage(),
+                  child: Image.asset('images/Logo.png'),
                 ),
 
-                Container(
+              data!=null?    Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(50)),
@@ -92,13 +93,13 @@ class _ContactUsState extends State<ContactUs> {
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(Icons.alternate_email),
                       ),
-                      Text('  ${Title}   ',style: TextStyle(fontSize: 18),),
-                      Text(': ${Email  } ',style: TextStyle(fontSize: 18),),
+                      Title!=null?Text('  ${Title}   ',style: TextStyle(fontSize: 18),):Container(),
+                      Email!=null? Text(': ${Email  } ',style: TextStyle(fontSize: 18),):Container(),
 
                     ],
                   ),
-                ),
-              Container(
+                ):Container(),
+              data!=null?   Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(50)),
@@ -115,9 +116,9 @@ class _ContactUsState extends State<ContactUs> {
 
                     ],
                   ),
-                ),
+                ):Container(),
 
-                Container(
+              data!=null?       Container(
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(50)),
@@ -132,7 +133,7 @@ class _ContactUsState extends State<ContactUs> {
                       Text('wwww.thebest.com',style: TextStyle(fontSize: 18),)
                     ],
                   ),
-                ),
+                ):Container(),
             ],
           ),
           ),

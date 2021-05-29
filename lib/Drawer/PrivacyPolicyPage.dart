@@ -11,12 +11,12 @@ import 'package:thebest/AppHelper/AppString.dart';
 import 'package:thebest/AppHelper/networking.dart';
 import 'package:thebest/api/Api.dart';
 
-class TermsConditions extends StatefulWidget {
+class PrivacyPolicy extends StatefulWidget {
   @override
-  _TermsConditionsState createState() => _TermsConditionsState();
+  _PrivacyPolicyState createState() => _PrivacyPolicyState();
 }
 
-class _TermsConditionsState extends State<TermsConditions> {
+class _PrivacyPolicyState extends State<PrivacyPolicy> {
   bool loading =true;
   @override
   void initState() {
@@ -24,6 +24,7 @@ class _TermsConditionsState extends State<TermsConditions> {
     langState();
     super.initState();
   }
+
 
   var languageState;
 
@@ -44,7 +45,7 @@ class _TermsConditionsState extends State<TermsConditions> {
 
   var data;
   Future<dynamic> getTermsConditions() async {
-    NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}tearmcondition/en');
+    NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}privacy/en');
     data = await networkHelper.getdata();
     setState(() {
       loading=false;
@@ -62,78 +63,78 @@ class _TermsConditionsState extends State<TermsConditions> {
       //textDirection: AppController.textDirection,
       //debugShowCheckedModeBanner: false,
       child: Scaffold(
+        backgroundColor: Color(0xFFf33BE9F),
+        appBar: AppBar(
           backgroundColor: Color(0xFFf33BE9F),
-          appBar: AppBar(
-            backgroundColor: Color(0xFFf33BE9F),
-            centerTitle: true,
-            title: Text(AppController.strings.terms),
-          ),
-          body: data != null
-              ?Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Directionality(
-              textDirection: AppController.textDirection,
-              child: ListView(
-                children: [
-                  SizedBox(
-                    height: 20,
-                  ),
-                  languageState != 'Ar'
-                      ? Center(child: Text(
-                    '${data['TitleEn']}',
-                    textAlign: TextAlign.left,
-                    //AppController.strings.terms,
-                    style: new TextStyle(fontSize: 25.0, color: Colors.black),
-                  ),): Center(child: Text(
-                    '${data['TitleAr']}',
-                    textAlign: TextAlign.left,
-                    //AppController.strings.terms,
-                    style: new TextStyle(fontSize: 25.0, color: Colors.black),
-                  ),),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    width: 10.0,
-                    child: Center(
-                      child: languageState != 'Ar'
-                          ?  Text(
-                        '${data['DescriptionEn']}',
+          centerTitle: true,
+          title: Text(AppController.strings.PrivacyPolicy),
+        ),
+        body: data != null
+            ?Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Directionality(
+            textDirection: AppController.textDirection,
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: 20,
+                ),
+                languageState != 'Ar'
+                    ? Center(child: Text(
+                  '${data['TitleEn']}',
+                  textAlign: TextAlign.left,
+                  //AppController.strings.terms,
+                  style: new TextStyle(fontSize: 25.0, color: Colors.black),
+                ),): Center(child: Text(
+                  '${data['TitleAr']}',
+                  textAlign: TextAlign.left,
+                  //AppController.strings.terms,
+                  style: new TextStyle(fontSize: 25.0, color: Colors.black),
+                ),),
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  width: 10.0,
+                  child: Center(
+                    child: languageState != 'Ar'
+                        ?  Text(
+                      '${data['DescriptionEn']}',
 
 
-                      ):Text(
-                        data['DescriptionAr'],
-                      ),
+                    ):Text(
+                      data['DescriptionAr'],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ):Container(
-        height: double.infinity,
-        child: ModalProgressHUD(
-            color: Colors.white12,
-            inAsyncCall: loading,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                    child: loading
-                        ? Center(
-                        child: Text(
-                            '${AppController.strings.PleaseWait}'))
-                        : Center(
-                      child: Text(
-                        '${AppController.strings.NoServices}',
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black87),
-                      ),
-                    )),
+                ),
               ],
-            )),
-      ),),
+            ),
+          ),
+        ):Container(
+          height: double.infinity,
+          child: ModalProgressHUD(
+              color: Colors.white12,
+              inAsyncCall: loading,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                      child: loading
+                          ? Center(
+                          child: Text(
+                              '${AppController.strings.PleaseWait}'))
+                          : Center(
+                        child: Text(
+                          '${AppController.strings.NoServices}',
+                          style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black87),
+                        ),
+                      )),
+                ],
+              )),
+        ),),
     );
   }
 }

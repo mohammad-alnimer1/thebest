@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thebest/AppHelper/AppController.dart';
+import 'package:thebest/AppHelper/AppSharedPrefs.dart';
+import 'package:thebest/AppHelper/AppString.dart';
 import 'package:thebest/AppHelper/networking.dart';
 import 'package:thebest/api/Api.dart';
 
@@ -42,12 +44,17 @@ class _blogsState extends State<blogs> {
 
   var languageState;
 
-
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    languageState = preferences.getString("lng");
-  }
 
+    if (AppController.strings is ArabicString||languageState=='null'){
+      AppSharedPrefs.saveLangType('Ar');
+      languageState = preferences.getString("lng");
+    }else{
+      AppSharedPrefs.saveLangType('En');
+    }
+    print(languageState);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,33 +84,33 @@ class _blogsState extends State<blogs> {
                       child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      languageState=='Ar'? Padding(
+                      languageState!='Ar'? Padding(
                       padding: const EdgeInsets.all(5.0),
                     child: Text(
-                      '${datablogs[index]['TitleAr']}',
+                      '${datablogs[index]['TitleEn']}',
                       style: TextStyle(
                           fontSize: 17, fontWeight: FontWeight.bold),
                     ),
                   ):Padding(
                         padding: const EdgeInsets.all(5.0),
                         child: Text(
-                          '${datablogs[index]['TitleEn']}',
+                          '${datablogs[index]['TitleAr']}',
                           style: TextStyle(
                               fontSize: 17, fontWeight: FontWeight.bold),
                         ),
                       ),
-                      languageState=='Ar'? Container(
+                      languageState!='Ar'? Container(
           height: 60,
           padding: const EdgeInsets.all(5.0),
           child: Text(
-          '${datablogs[index]['DescriptionAr']}',
+          '${datablogs[index]['DescriptionEn']}',
           style: TextStyle(fontSize: 15, ),
           ),
           ): Container(
                         height: 60,
                         padding: const EdgeInsets.all(5.0),
                         child: Text(
-                          '${datablogs[index]['DescriptionEn']}',
+                          '${datablogs[index]['DescriptionAr']}',
                           style: TextStyle(fontSize: 15, ),
                         ),
                       ),

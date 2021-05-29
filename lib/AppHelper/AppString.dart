@@ -1,5 +1,5 @@
+ class Strings {
 
-abstract class Strings {
  String  PleaseWait;
   String appName;
   String langPage;
@@ -166,10 +166,16 @@ String writComment;
 String note;
 String Success;
 String NoComment;
+String Welcometo;
+String PrivacyPolicy;
+String CommentedSuccessfully;
+String Waitingadminapproval;
 
 }
 
 class EnglishString extends Strings {
+
+
   EnglishString() {
     appName = 'Al Hud hud';
     langPage = 'Language';
@@ -309,6 +315,10 @@ class EnglishString extends Strings {
     note='note';
     Success='Success, Thank you';
     NoComment='No Comment';
+    Welcometo='Welcome to';
+    PrivacyPolicy='Privacy Policy';
+    CommentedSuccessfully='Commented Successfully';
+    Waitingadminapproval='Waiting for admin approval';
   }
 
 }
@@ -458,5 +468,9 @@ class ArabicString extends Strings {
     note='تنويه';
     Success='تم بنجاح، شكرا';
     NoComment='لا يوجد تعليقات';
+    Welcometo ='مرحبا بك في';
+    PrivacyPolicy ='سياسة الخصوصية';
+    CommentedSuccessfully ='تم التعليق بنجاح ';
+    Waitingadminapproval ='في انتظار موافقة المسؤول';
   }
 }

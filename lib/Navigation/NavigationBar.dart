@@ -21,7 +21,6 @@ class NavigationBBar extends StatefulWidget {
 }
 
 class _NavigationBBarState extends State<NavigationBBar> {
-  AppController _controller = AppController();
   int currentPage = 1;
   bool isSelectHome = true;
 

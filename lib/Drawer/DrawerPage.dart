@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thebest/AppHelper/AppController.dart';
 import 'package:thebest/AppHelper/AppSharedPrefs.dart';
 import 'package:thebest/AppHelper/AppString.dart';
@@ -10,6 +11,7 @@ import 'package:expansion_tile_card/expansion_tile_card.dart';
 
 import 'AboutData.dart';
 import 'ContactUs.dart';
+import 'PrivacyPolicyPage.dart';
 import 'ServicesPage.dart';
 import 'SettingsPage.dart';
 import 'TermsAndConditions.dart';
@@ -48,10 +50,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   //   )) ??
   //       false;
   // }
-  bool loading=true;
+  bool loading = true;
 
   String name = ' ';
   String email = ' ';
+
+
 
   @override
   void initState() {
@@ -96,7 +100,8 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
                   // SizedBox(height: MediaQuery.of(context).size.height* 0.03,),
                   ListTile(
-                    title: Text('${AppController.strings.home}', style: TextStyle(fontSize: 20)),
+                    title: Text('${AppController.strings.home}',
+                        style: TextStyle(fontSize: 20)),
                     leading: Icon(
                       Icons.home,
                       size: 30,
@@ -104,7 +109,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     contentPadding: EdgeInsets.all(10),
                     onTap: () {
                       var Backdrawer = false;
-                    Navigator.pushReplacement(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => NavigationBBar(),
@@ -113,34 +118,41 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     },
                   ),
                   ListTile(
-                    title: Text('${AppController.strings.services}', style: TextStyle(fontSize: 20)),
+                    title: Text('${AppController.strings.services}',
+                        style: TextStyle(fontSize: 20)),
                     leading: Icon(
                       Icons.assignment_rounded,
                       size: 30,
                     ),
                     contentPadding: EdgeInsets.all(10),
                     onTap: () {
-                      bool back =false;
+                      bool back = false;
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ServicesPage(back: back,),
+                          builder: (context) => ServicesPage(
+                            back: back,
+                          ),
                         ),
                       );
                     },
                   ),
                   ListTile(
-                    title: Text('${AppController.strings.blogs}', style: TextStyle(fontSize: 20)),
+                    title: Text('${AppController.strings.blogs}',
+                        style: TextStyle(fontSize: 20)),
                     leading: Icon(
                       Icons.create_outlined,
-                      size: 30,),
+                      size: 30,
+                    ),
                     contentPadding: EdgeInsets.all(10),
                     onTap: () {
-                      bool back =false;
+                      bool back = false;
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => blogs(back: back,),
+                          builder: (context) => blogs(
+                            back: back,
+                          ),
                         ),
                       );
                     },
@@ -158,47 +170,40 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     ),
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(10),
-                        child: ListTile(
-                          title: Text('العربية'),
-                          onTap: (){
-                           setState(() {
-                             AppController.textDirection = TextDirection.rtl;
-                             AppController.strings = ArabicString();
-                             AppSharedPrefs.saveMainLangInSP(true);
-                             AppSharedPrefs.saveLangType('Ar');
-                               Navigator.pushReplacement(
-                                   context,
-                                   MaterialPageRoute(
-                                     builder: (context) => NavigationBBar(),
-                                   ));
-                           });
-
-                          },
-
-                        )
-                      ),
-                       Padding(
-                        padding: EdgeInsets.all(10),
-                        child: ListTile(
-                          title: Text('English'),
-                          onTap: (){
-                     setState(() {
-                       AppController.textDirection = TextDirection.ltr;
-                       AppController.strings = EnglishString();
-                       AppSharedPrefs.saveMainLangInSP(true);
-                       AppSharedPrefs.saveLangType('En');
-                       Navigator.pushReplacement(
-                           context,
-                           MaterialPageRoute(
-                             builder: (context) => NavigationBBar(),
-                           ));
-                     });
-                          }
-                        )
-                      ),
-
-
+                          padding: EdgeInsets.all(10),
+                          child: ListTile(
+                            title:Text('English'),
+                            onTap: () {
+                              setState(() {
+                                AppController.textDirection = TextDirection.rtl;
+                                AppController.strings = EnglishString();
+                                AppSharedPrefs.saveMainLangInSP(true);
+                                AppSharedPrefs.saveLangType('En');
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => NavigationBBar(),
+                                    ));
+                              });
+                            },
+                          )),
+                      Padding(
+                          padding: EdgeInsets.all(10),
+                          child: ListTile(
+                              title: Text('العربية') ,
+                              onTap: () {
+                                setState(() {
+                                  AppController.textDirection = TextDirection.ltr;
+                                  AppController.strings = ArabicString();
+                                  AppSharedPrefs.saveMainLangInSP(true);
+                                  AppSharedPrefs.saveLangType('Ar');
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => NavigationBBar(),
+                                      ));
+                                });
+                              })),
                     ],
                   ),
                   Divider(
@@ -208,36 +213,46 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
 
                   ListTile(
-                    title: Text('${AppController.strings.contactUs}', style: TextStyle(fontSize: 20)),
+                    title: Text('${AppController.strings.contactUs}',
+                        style: TextStyle(fontSize: 20)),
                     leading: Icon(
-                      Icons.info,
+                      Icons.local_phone_sharp,
                       size: 30,
                     ),
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  ContactUs(),
-                        ),
-                      );
-                    },
-                  ),    ListTile(
-                    title: Text('${AppController.strings.about}', style: TextStyle(fontSize: 20)),
-                    leading: Icon(
-                      Icons.info,
-                      size: 30,
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>  AboutData(),
+                          builder: (context) => ContactUs(),
                         ),
                       );
                     },
                   ),
                   ListTile(
-                    title: Text('${AppController.strings.terms}', style: TextStyle(fontSize: 20)),
+                    title: Text('${AppController.strings.about}',
+                        style: TextStyle(fontSize: 20)),
+                    leading: Icon(
+                      Icons.info,
+                      size: 30,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AboutData(),
+                        ),
+                      );
+                    },
+                  ),
+
+                  Divider(
+                    color: Colors.black26,
+                    height: 10,
+                    thickness: 2,
+                  ),
+              ListTile(
+                    title: Text('${AppController.strings.terms}',
+                        style: TextStyle(fontSize: 20)),
                     leading: Icon(
                       Icons.admin_panel_settings_rounded,
                       size: 30,
@@ -246,17 +261,27 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>  TermsConditions(),
+                   builder: (context) => TermsConditions(),
                         ),
                       );
                     },
                   ),
-                  Divider(
-                    color: Colors.black26,
-                    height: 10,
-                    thickness: 2,
+              ListTile(
+              title: Text('${AppController.strings.PrivacyPolicy}',
+                        style: TextStyle(fontSize: 20)),
+              leading: Icon(
+                      Icons.privacy_tip_outlined,
+                      size: 30,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                   builder: (context) => PrivacyPolicy(),
+                        ),
+                      );
+                    },
                   ),
-
                 ],
               ),
             ),

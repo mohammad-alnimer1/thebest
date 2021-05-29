@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thebest/AppHelper/AppController.dart';
+import 'package:thebest/AppHelper/AppSharedPrefs.dart';
+import 'package:thebest/AppHelper/AppString.dart';
 
 class BlogDisc extends StatefulWidget {
   final DescriptionAr;
@@ -27,12 +29,18 @@ class _BlogDiscState extends State<BlogDisc> {
 
   var languageState;
 
-
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
-      languageState = preferences.getString("lng");
-    });
+
+   setState(() {
+     if (AppController.strings is ArabicString||languageState=='null'){
+       AppSharedPrefs.saveLangType('Ar');
+       languageState = preferences.getString("lng");
+     }else{
+       AppSharedPrefs.saveLangType('En');
+     }
+   });
+    print(languageState);
   }
 
 
@@ -53,49 +61,56 @@ class _BlogDiscState extends State<BlogDisc> {
         //debugShowCheckedModeBanner: false,
         child: Scaffold(
       appBar: AppBar(backgroundColor: Color(0xFFf33BE9F),centerTitle: true,
-        title:   languageState=='Ar'? Padding(
-        padding: const EdgeInsets.all(5.0),
-        child: Text(
-          '${widget.TitleAr}',
-          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-        ),
-      ): Padding(
+        title:   languageState!='Ar'? Padding(
         padding: const EdgeInsets.all(5.0),
         child: Text(
           '${widget.TitleEn}',
           style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
         ),
+      ): Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Text(
+          '${widget.TitleAr}',
+          style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+        ),
       ),),
 
       body: Container(
-        padding: EdgeInsets.only(bottom: 30, right: 20, left: 20, top: 30),
-        height: 500,
+        padding: EdgeInsets.only(bottom: 20, right: 20, left: 20, top: 30),
+        height: MediaQuery.of(context).size.height*1,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Expanded(
+              flex: 2,
               child: CircleAvatar(
                 backgroundColor: Colors.white,
                 radius: 180,
                 backgroundImage: NetworkImage(widget.Images),
               ),
             ),
-            languageState=='Ar'? Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Text(
-                '${widget.TitleAr}',
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-              ),
-            ): Padding(
+            languageState!='Ar'? Padding(
               padding: const EdgeInsets.all(5.0),
               child: Text(
                 '${widget.TitleEn}',
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
+            ): Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Text(
+                '${widget.TitleAr}',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              ),
             ),
-             Expanded(child:languageState=='Ar'? Text(widget.DescriptionAr): Text(widget.DescriptionEn)),
+             Expanded(
+                 flex: 2,
+                 child:ListView(
+               children: [
+                 languageState!='Ar'?Text(widget.DescriptionEn) : Text(widget.DescriptionAr)
+               ],
+             )),
             Divider(
-              thickness: 3,
+              thickness: 2,
               color: Colors.blue,
             )
           ],

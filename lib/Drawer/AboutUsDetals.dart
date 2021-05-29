@@ -6,6 +6,8 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thebest/AppHelper/AppColors.dart';
 import 'package:thebest/AppHelper/AppController.dart';
+import 'package:thebest/AppHelper/AppSharedPrefs.dart';
+import 'package:thebest/AppHelper/AppString.dart';
 import 'package:thebest/AppHelper/networking.dart';
 import 'package:thebest/api/AllFunGet.dart';
 import 'package:thebest/api/Api.dart';
@@ -19,7 +21,12 @@ class AboutUsDetails extends StatefulWidget {
   final TitleAr;
   final TitleEn;
   final Images;
-  AboutUsDetails({this.DescriptionAr,this.DescriptionEn,this.TitleEn,this.Images,this.TitleAr});
+  AboutUsDetails(
+      {this.DescriptionAr,
+      this.DescriptionEn,
+      this.TitleEn,
+      this.Images,
+      this.TitleAr});
   @override
   _AboutUsDetailsState createState() => _AboutUsDetailsState();
 }
@@ -29,10 +36,16 @@ class _AboutUsDetailsState extends State<AboutUsDetails> {
 
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
-      languageState = preferences.getString("lng");
 
+    setState(() {
+      if (AppController.strings is ArabicString||languageState=='null'){
+        AppSharedPrefs.saveLangType('Ar');
+        languageState = preferences.getString("lng");
+      }else{
+        AppSharedPrefs.saveLangType('En');
+      }
     });
+    print(languageState);
   }
 
   bool loading = true;
@@ -70,11 +83,12 @@ class _AboutUsDetailsState extends State<AboutUsDetails> {
   //  }
   // print(response.body);
 
-@override
+  @override
   void initState() {
     super.initState();
     langState();
-}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -84,43 +98,62 @@ class _AboutUsDetailsState extends State<AboutUsDetails> {
             appBar: AppBar(
               centerTitle: true,
               backgroundColor: Color(0xFFf33BE9F),
-              title: languageState=='Ar'?Text('${widget.TitleAr}'):Text('${widget.TitleEn}'),
+              title: languageState != 'Ar'
+                  ? Text('${widget.TitleEn}')
+                  : Text('${widget.TitleAr}'),
               flexibleSpace: Container(
-                // decoration: BoxDecoration(
-                //     gradient: AppConstants().mainColors()),
-              ),
+                  // decoration: BoxDecoration(
+                  //     gradient: AppConstants().mainColors()),
+                  ),
             ),
             backgroundColor: Colors.white,
             body: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Directionality(
-                  textDirection: AppController.textDirection,
-                  child:
-                      Container(
-                        padding: EdgeInsets.only(bottom: 30,right: 20,left: 20,top: 30),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                radius: 180,
-                                backgroundImage: NetworkImage('${widget.Images}'),
-                              ),),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child:languageState=='Ar'? Text(
-                                '${widget.TitleAr}',
-                                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),):Text(
-                                '${widget.TitleEn}',
-                                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                              ),
+                    textDirection: AppController.textDirection,
+                    child: Container(
+                      padding: EdgeInsets.only(
+                          bottom: 30, right: 20, left: 20, top: 30),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 180,
+                              backgroundImage: NetworkImage('${widget.Images}'),
                             ),
-                            Expanded(child:languageState=='Ar'? Text('${widget.DescriptionAr}'):Text('${widget.DescriptionEn}')),
-                            Divider(thickness: 3,color: Colors.blue,)
-                          ],
-                        ),)
-
-                ))));
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: languageState != 'Ar'
+                                ? Text(
+                                    '${widget.TitleEn}',
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  )
+                                : Text(
+                                    '${widget.TitleAr}',
+                                    style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                          ),
+                          Expanded(
+                              child: ListView(
+                            children: [
+                              languageState != 'Ar'
+                                  ? Text('${widget.DescriptionEn}')
+                                  : Text('${widget.DescriptionAr}')
+                            ],
+                          )),
+                          Divider(
+                            thickness: 3,
+                            color: Colors.blue,
+                          )
+                        ],
+                      ),
+                    )))));
   }
 }

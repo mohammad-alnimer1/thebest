@@ -11,6 +11,8 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as https;
 import 'AppHelper/AppController.dart';
+import 'AppHelper/AppSharedPrefs.dart';
+import 'AppHelper/AppString.dart';
 import 'AppHelper/networking.dart';
 import 'Drawer/DrawerPage.dart';
 import 'SubCategory.dart';
@@ -147,24 +149,35 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-
-    getMainCAt();
-    getFacebook();
-    getinstagram();
-    getImgSlid();
-    getyoutube();
-    langState();
-    getsnapchat();
-  }
-
   var languageState;
 
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    languageState = preferences.getString("lng");
+
+    setState(() {
+      if (AppController.strings is ArabicString || languageState == 'null') {
+        AppSharedPrefs.saveLangType('Ar');
+        languageState = preferences.getString("lng");
+      } else {
+        AppSharedPrefs.saveLangType('En');
+      }
+    });
+    print(languageState);
+  }
+
+  @override
+  void initState() {
+    setState(() {
+      super.initState();
+
+      getMainCAt();
+      getFacebook();
+      getinstagram();
+      getImgSlid();
+      getyoutube();
+      getsnapchat();
+      langState();
+    });
   }
 
   @override
@@ -175,10 +188,8 @@ class _HomepageState extends State<Homepage> {
           drawer: DrawerWidget(),
           backgroundColor: Color(0xFFf33BE9F),
           body: data != null
-         ? ListView(
-         children: [
-
-
+              ? ListView(
+                  children: [
                     imgdata != null
                         ? Padding(
                             padding: const EdgeInsets.all(10),
@@ -214,36 +225,37 @@ class _HomepageState extends State<Homepage> {
                             ),
                           )
                         : Container(),
-
-                    Container(
-                      height: 80,
-                      margin: EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Welcome to ',
-                            style: TextStyle(
-                                fontSize: 22, fontStyle: FontStyle.italic),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 16),
-                            child: Container(
-                              child: Image.asset(
-                                'images/Logo.png',
-                              ),
-                              height: 50,
-                              width: 50,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-
+    Directionality(
+    textDirection: languageState == 'Ar'
+        ? TextDirection.rtl:TextDirection.ltr,
+    child: Container(
+                        height: 80,
+                        margin: EdgeInsets.all(15),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                              Text(
+                                  '${AppController.strings.Welcometo}  ',
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                       Padding(
+                                  padding: const EdgeInsets.only(bottom: 16),
+                                  child: Container(
+                                    child: Image.asset(
+                                      'images/Logo.png',
+                                    ),
+                                    height: 50,
+                                    width: 50,
+                                  ),
+                                ),
+                              ],
+                            ))),
                     GridView.builder(
                       shrinkWrap: true,
                       primary: false,
@@ -260,18 +272,16 @@ class _HomepageState extends State<Homepage> {
                         return Container(
                           child: InkWell(
                             onTap: () {
-                              var name =mainCat[index]['TitleAr'];
-                              var nameEN =mainCat[index]['TitleEn'];
+                              var name = mainCat[index]['TitleAr'];
+                              var nameEN = mainCat[index]['TitleEn'];
                               int id = data[index]['PagesID'];
                               print('id id id id id ${id}');
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => SubCategory(
-                                    id: id,
-                                      name:name,
-                                      nameEN:nameEN
-                                  ),
+                                      id: id, name: name, nameEN: nameEN),
                                 ),
                               );
                             },
@@ -279,7 +289,7 @@ class _HomepageState extends State<Homepage> {
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Expanded(
-                                  flex: 2,
+                                  flex: 4,
                                   child: CircleAvatar(
                                     backgroundColor: Colors.white,
                                     radius: 180,
@@ -289,57 +299,58 @@ class _HomepageState extends State<Homepage> {
                                   ),
                                 ),
                                 Expanded(
+                                    flex: 3,
                                     child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    languageState == 'Ar'
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              mainCat[index]['TitleAr'],
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          )
-                                        : Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              mainCat[index]['TitleEn'],
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Text(
+                                            languageState == 'Ar'
+                                                ? mainCat[index]['TitleAr']
+                                                : mainCat[index]['TitleEn'],
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold),
                                           ),
-                                    RaisedButton(
-                                      child: Text(
-                                        '${AppController.strings.viewServices}',
-                                        style: TextStyle(
-                                            fontSize: 18, color: Colors.white),
-                                      ),
-                                      onPressed: () {
-                                        int id = data[index]['PagesID'];
-                                        print('id id id id id ${id}');
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => SubCategory(
-                                              id: id,
-                                            ),
+                                        ),
+                                        RaisedButton(
+                                          child: Text(
+                                            '${AppController.strings.viewServices}',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.white),
                                           ),
-                                        );
-                                      },
-                                      color: Colors.black,
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                          side:
-                                              BorderSide(color: Colors.black)),
-                                    )
-                                  ],
-                                )),
+                                          onPressed: () {
+                                            var name =
+                                                mainCat[index]['TitleAr'];
+                                            var nameEN =
+                                                mainCat[index]['TitleEn'];
+                                            int id = data[index]['PagesID'];
+                                            print('id id id id id ${id}');
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SubCategory(
+                                                  name: name,
+                                                  nameEN: nameEN,
+                                                  id: id,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          color: Colors.black,
+                                          elevation: 2,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              side: BorderSide(
+                                                  color: Colors.black)),
+                                        )
+                                      ],
+                                    )),
                               ],
                             ),
                           ),

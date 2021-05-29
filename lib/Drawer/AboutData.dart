@@ -7,6 +7,8 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thebest/AppHelper/AppColors.dart';
 import 'package:thebest/AppHelper/AppController.dart';
+import 'package:thebest/AppHelper/AppSharedPrefs.dart';
+import 'package:thebest/AppHelper/AppString.dart';
 import 'package:thebest/AppHelper/networking.dart';
 import 'package:thebest/api/AllFunGet.dart';
 import 'package:thebest/api/Api.dart';
@@ -27,11 +29,18 @@ class _AboutDataState extends State<AboutData> {
 
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
-      languageState = preferences.getString("lng");
 
+    setState(() {
+      if (AppController.strings is ArabicString||languageState=='null'){
+        AppSharedPrefs.saveLangType('Ar');
+        languageState = preferences.getString("lng");
+      }else{
+        AppSharedPrefs.saveLangType('En');
+      }
     });
+    print(languageState);
   }
+
 
   bool loading = true;
 
@@ -128,7 +137,7 @@ class _AboutDataState extends State<AboutData> {
             appBar: AppBar(
               backgroundColor: Color(0xFFf33BE9F),
               centerTitle: true,
-              title: languageState=='Ar'?Text('${TitleAr}'):Text('${TitleEn}'),
+              title: AboutUsData != null?languageState=='Ar'?Text('${TitleEn}'):Text('${TitleAr}'):Container(),
               flexibleSpace: Container(
                   // decoration: BoxDecoration(
                   //     gradient: AppConstants().mainColors()),
@@ -163,13 +172,13 @@ class _AboutDataState extends State<AboutData> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(5.0),
-                                          child:languageState=='Ar'?Text(
-                                            '${TitleAr}',
+                                          child:languageState!='Ar'?Text(
+                                            '${TitleEn}',
                                             style: TextStyle(
                                                 fontSize: 17,
                                                 fontWeight: FontWeight.bold),
                                           ): Text(
-                                            '${TitleEn}',
+                                            '${TitleAr}',
                                             style: TextStyle(
                                                 fontSize: 17,
                                                 fontWeight: FontWeight.bold),
@@ -178,13 +187,13 @@ class _AboutDataState extends State<AboutData> {
                                         Container(
                                           height: 60,
                                           padding: const EdgeInsets.all(5.0),
-                                          child:languageState=='Ar'? Text(
-                                            '${DescriptionAr}',
+                                          child:languageState!='Ar'? Text(
+                                            '${DescriptionEn}',
                                             style: TextStyle(
                                               fontSize: 15,
                                             ),
                                           ):Text(
-                                            '${DescriptionEn}',
+                                            '${DescriptionAr}',
                                             style: TextStyle(
                                               fontSize: 15,
                                             ),
@@ -258,12 +267,12 @@ class _AboutDataState extends State<AboutData> {
                                             children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(5.0),
-                                                child:languageState=='Ar'?Text(
-                                                  '${data[index]['TitleAr']}',
+                                                child:languageState!='Ar'?Text(
+                                                  '${data[index]['TitleEn']}',
                                                   style: TextStyle(
                                                       fontSize: 17, fontWeight: FontWeight.bold),
                                                 ): Text(
-                                                  '${data[index]['TitleEn']}',
+                                                  '${data[index]['TitleAr']}',
                                                   style: TextStyle(
                                                       fontSize: 17, fontWeight: FontWeight.bold),
                                                 ),
@@ -271,11 +280,11 @@ class _AboutDataState extends State<AboutData> {
                                               Container(
                                                 height: 60,
                                                 padding: const EdgeInsets.all(5.0),
-                                                child:languageState=='Ar'? Text(
-                                                  '${data[index]['DescriptionAr']}',
+                                                child:languageState!='Ar'? Text(
+                                                  '${data[index]['DescriptionEn']}',
                                                   style: TextStyle(fontSize: 15, ),
                                                 ):Text(
-                                                  '${data[index]['DescriptionEn']}',
+                                                  '${data[index]['DescriptionAr']}',
                                                   style: TextStyle(fontSize: 15, ),
                                                 ),
                                               ),
