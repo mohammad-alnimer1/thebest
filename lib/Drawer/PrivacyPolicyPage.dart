@@ -97,14 +97,14 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                 Container(
                   width: 10.0,
                   child: Center(
-                    child: languageState != 'Ar'
-                        ?  Text(
-                      '${data['DescriptionEn']}',
+                    child: Text(
+                      languageState != 'Ar'
+                          ?   '${data['DescriptionEn']}':    data['DescriptionAr'],
 
-
-                    ):Text(
-                      data['DescriptionAr'],
-                    ),
+                      textAlign: languageState == "Ar"
+                          ? TextAlign.right
+                          : TextAlign.left,
+                    )
                   ),
                 ),
               ],

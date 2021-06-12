@@ -153,15 +153,12 @@ class _HomepageState extends State<Homepage> {
 
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    setState(() {
-      if (AppController.strings is ArabicString || languageState == 'null') {
-        AppSharedPrefs.saveLangType('Ar');
-        languageState = preferences.getString("lng");
-      } else {
-        AppSharedPrefs.saveLangType('En');
-      }
-    });
+    languageState = preferences.getString("lng");
+    if(languageState=='Ar'){
+      AppController.strings = ArabicString();
+    }else if(languageState=='En') {
+      AppController.strings = EnglishString();
+    }
     print(languageState);
   }
 

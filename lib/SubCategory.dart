@@ -44,6 +44,18 @@ class _SubCategoryState extends State<SubCategory> {
     }
   }
 
+
+  var languageState;
+  void langState() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if (languageState == 'Ar') {
+      AppController.strings = ArabicString();
+    } else if (languageState == 'En') {
+      AppController.strings = EnglishString();
+    }
+    languageState = preferences.getString("lng");
+    print(languageState);
+  }
   @override
   void initState() {
     super.initState();
@@ -57,20 +69,6 @@ class _SubCategoryState extends State<SubCategory> {
     getSubCat(widget.id);
     langState();
   });
-  }
-
-  var languageState;
-
-  void langState() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    if (AppController.strings is ArabicString||languageState=='null'){
-      AppSharedPrefs.saveLangType('Ar');
-      languageState = preferences.getString("lng");
-    }else{
-      AppSharedPrefs.saveLangType('En');
-    }
-    print(languageState);
   }
 
   @override
@@ -101,30 +99,32 @@ class _SubCategoryState extends State<SubCategory> {
                           padding: EdgeInsets.all(10),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Image.network(
                                 '${Api().baseImgURL + data[index]['Images']}',
                               ),
-                              languageState != 'Ar'
-                                  ? Padding(
+                               Padding(
                                       padding: EdgeInsets.all(10),
-                                      child:Text('${data[index]['TitleEn']}'),
-                                    )
-                                  : Padding(
-                                      padding: EdgeInsets.all(10),
-                                      child:  Text('${data[index]['TitleAr']}'),
+                                      child:Text(
+                                        languageState != 'Ar'
+                                          ?'${data[index]['TitleEn']}':'${data[index]['TitleAr']}',
+                                        textAlign: languageState == "Ar"
+                                        ? TextAlign.right
+                                        : TextAlign.left,
+                                      ),
                                     ),
-                              languageState != 'Ar'
-                                  ? Padding(
+
+                              Padding(
                                       padding: EdgeInsets.all(10),
-                                      child: Text("${data[index]['DescriptionEn']}"),
-                                    )
-                                  : Padding(
-                                      padding: EdgeInsets.all(10),
-                                      child: Text("${data[index]['DescriptionAr']}"),
+                                      child: Text(languageState != 'Ar' ? "${data[index]['DescriptionEn']}":"${data[index]['DescriptionAr']}",
+                                        textAlign: languageState == "Ar"
+                                          ? TextAlign.right
+                                          : TextAlign.left,),
                                     ),
+
+
                               Container(
                                 height: 50,
                                 color: Colors.grey.shade200,

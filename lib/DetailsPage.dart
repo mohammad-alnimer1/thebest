@@ -26,17 +26,16 @@ class DetailsPage extends StatefulWidget {
 
 class _DetailsPageState extends State<DetailsPage> {
   var languageState;
-
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    if (AppController.strings is ArabicString||languageState=='null'){
-      AppSharedPrefs.saveLangType('Ar');
-      languageState = preferences.getString("lng");
-    }else{
-      AppSharedPrefs.saveLangType('En');
+    if(languageState=='Ar'){
+      AppController.strings = ArabicString();
+    }else if(languageState=='En') {
+      AppController.strings = EnglishString();
     }
-   // print(languageState);
+    languageState = preferences.getString("lng");
+
+    print(languageState);
   }
 
   bool loading = true;
@@ -100,9 +99,7 @@ class _DetailsPageState extends State<DetailsPage> {
         String data = response.body;
         print('hi hi hi hi hi hi  data ${data}');
         setState(() {
-          if(mounted)
-          jsonEncode(data);
-
+          if (mounted) jsonEncode(data);
         });
       } else {
         print(response.statusCode);
@@ -134,7 +131,6 @@ class _DetailsPageState extends State<DetailsPage> {
             backgroundColor: Color(0xFFf33BE9F),
             elevation: 0,
             centerTitle: true,
-
           ),
           backgroundColor: Color(0xFFf33BE9F),
           body: servicesDetails != null && servicesDetails.isNotEmpty
@@ -142,6 +138,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   itemCount: 1,
                   itemBuilder: (context, index) {
                     return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
                           decoration: BoxDecoration(
@@ -150,16 +147,20 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                           margin: EdgeInsets.all(20),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.end,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: languageState != 'Ar'
-                                    ? Text('${servicesDetails['TitleEn']}',
-                                        style: TextStyle(fontSize: 22))
-                                    : Text('${servicesDetails['TitleAr']}',
-                                        style: TextStyle(fontSize: 22)),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                  languageState != 'Ar'
+                                      ? Text('${servicesDetails['TitleEn']}',
+                                      style: TextStyle(fontSize: 22))
+                                      : Text('${servicesDetails['TitleAr']}',
+                                      style: TextStyle(fontSize: 22)),
+                                ],)
                               ),
                               Padding(
                                 padding:
@@ -183,13 +184,15 @@ class _DetailsPageState extends State<DetailsPage> {
                                       ))),
                               Container(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: languageState != 'Ar'
-                                      ? Text(
-                                          "${servicesDetails['DescriptionEn']}",
-                                          style: TextStyle(fontSize: 18))
-                                      : Text(
-                                          "${servicesDetails['DescriptionAr']}",
-                                          style: TextStyle(fontSize: 18))),
+                                  child:
+                                         Text(
+                                    languageState != 'Ar'? "${servicesDetails['DescriptionEn']}":"${servicesDetails['DescriptionAr']}",
+                                            style: TextStyle(fontSize: 18),
+                                  textAlign: languageState == "Ar"
+                                  ? TextAlign.right
+                                      : TextAlign.left,
+                                  ))
+
                               // Container(
                               //   padding: EdgeInsets.all(16),
                               //   child: Row(
@@ -222,12 +225,14 @@ class _DetailsPageState extends State<DetailsPage> {
                           ),
                           margin: EdgeInsets.all(20),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text('${AppController.strings.Comments}',
+                                    textAlign: languageState == "Ar"
+                                        ? TextAlign.right
+                                        : TextAlign.left,
                                     style: TextStyle(fontSize: 22)),
                               ),
                               Padding(
@@ -240,8 +245,8 @@ class _DetailsPageState extends State<DetailsPage> {
                               ),
                               Container(
                                 height: 300,
-                                child: comm.isNotEmpty||comm==null?
-                                    ListView.separated(
+                                child: comm.isNotEmpty || comm == null
+                                    ? ListView.separated(
                                         shrinkWrap: true,
                                         itemCount: comm.length,
                                         separatorBuilder: (context, index) =>
@@ -360,73 +365,78 @@ class _DetailsPageState extends State<DetailsPage> {
                                   color: Colors.black45,
                                 ),
                               ),
-                              Form(
-                                key: commentKey,
-                                child: Container(
-                                    padding: EdgeInsets.all(16),
-                                    child: ExpansionTileCard(
-                                      title: Text(
-                                          '${AppController.strings.LeaveComment}'),
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.all(10),
-                                          child: TextFormField(
-                                              controller: nameController,
-                                              textAlign: TextAlign.center,
-                                              validator: validdata,
-                                              decoration: KDecoration.copyWith(
-                                                  labelText:
-                                                      '${AppController.strings.EnteryourName}')),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(10),
-                                          child: TextFormField(
-                                              controller: emailController,
-                                              textAlign: TextAlign.center,
-                                              keyboardType:
-                                                  TextInputType.emailAddress,
-                                              validator: validdata,
-                                              decoration: KDecoration.copyWith(
-                                                  labelText:
-                                                      '${AppController.strings.EnteryourEmail}')),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(10),
-                                          child: TextFormField(
-                                              controller: CommentController,
-                                              maxLines: 5,
-                                              textAlign: TextAlign.center,
-                                              keyboardType:
-                                                  TextInputType.emailAddress,
-                                              validator: validdata,
-                                              decoration: KDecoration.copyWith(
-                                                  labelText:
-                                                      '${AppController.strings.writComment}')),
-                                        ),
-                                        MaterialButton(
-                                            onPressed: () {
-                                              setState(() {
-                                                senddata();
-                                                Navigator.pushReplacement(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (BuildContext context) => super.widget));
-                                                _showMaterialDialog();
-                                              });
-                                              nameController.clear();
-                                              emailController.clear();
-                                              CommentController.clear();
-                                            },
-                                            color: Color(0xFFf33BE9F),
-                                            child: Text(
-                                              '${AppController.strings.send}',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20),
-                                            ))
-                                      ],
-                                    )),
-                              )
+                     Align(
+                       alignment: Alignment.topRight,
+                       child:          Form(
+                       key: commentKey,
+                       child: Container(
+                           padding: EdgeInsets.all(16),
+                           child: ExpansionTileCard(
+                             title: Text(
+                                 '${AppController.strings.LeaveComment}'),
+                             children: [
+                               Padding(
+                                 padding: EdgeInsets.all(10),
+                                 child: TextFormField(
+                                     controller: nameController,
+                                     textAlign: TextAlign.center,
+                                     validator: validdata,
+                                     decoration: KDecoration.copyWith(
+                                         labelText:
+                                         '${AppController.strings.EnteryourName}')),
+                               ),
+                               Padding(
+                                 padding: EdgeInsets.all(10),
+                                 child: TextFormField(
+                                     controller: emailController,
+                                     textAlign: TextAlign.center,
+                                     keyboardType:
+                                     TextInputType.emailAddress,
+                                     validator: validdata,
+                                     decoration: KDecoration.copyWith(
+                                         labelText:
+                                         '${AppController.strings.EnteryourEmail}')),
+                               ),
+                               Padding(
+                                 padding: EdgeInsets.all(10),
+                                 child: TextFormField(
+                                     controller: CommentController,
+                                     maxLines: 5,
+                                     textAlign: TextAlign.center,
+                                     keyboardType:
+                                     TextInputType.emailAddress,
+                                     validator: validdata,
+                                     decoration: KDecoration.copyWith(
+                                         labelText:
+                                         '${AppController.strings.writComment}')),
+                               ),
+                               MaterialButton(
+                                   onPressed: () {
+                                     setState(() {
+                                       if(commentKey.currentState.validate()){
+                                         senddata();
+                                         Navigator.pushReplacement(
+                                             context,
+                                             MaterialPageRoute(
+                                                 builder: (BuildContext
+                                                 context) =>
+                                                 super.widget));
+                                         _showMaterialDialog();}
+                                     });
+                                     nameController.clear();
+                                     emailController.clear();
+                                     CommentController.clear();
+                                   },
+                                   color: Color(0xFFf33BE9F),
+                                   child: Text(
+                                     '${AppController.strings.send}',
+                                     style: TextStyle(
+                                         color: Colors.white,
+                                         fontSize: 20),
+                                   ))
+                             ],
+                           )),
+                     ),)
                             ],
                           ),
                         ),
@@ -467,7 +477,8 @@ class _DetailsPageState extends State<DetailsPage> {
         context: context,
         builder: (_) => new AlertDialog(
               title: new Text("${AppController.strings.CommentedSuccessfully}"),
-              content: new Text("${AppController.strings.Waitingadminapproval}"),
+              content:
+                  new Text("${AppController.strings.Waitingadminapproval}"),
               // actions: <Widget>[
               //   FlatButton(
               //     child: Text('${AppController.strings.ok}'),

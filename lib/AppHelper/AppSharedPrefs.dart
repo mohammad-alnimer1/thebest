@@ -15,8 +15,8 @@ class AppSharedPrefs {
     return await preferences.setBool(doneLangMain, langMain);
   }
 
-  static Future<bool> saveLangType(String lang) async {
+  static Future saveLangType(String lang) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    return await preferences.setString(langType, lang='Ar');
+    return await preferences.setString(langType, lang);
   }
 }

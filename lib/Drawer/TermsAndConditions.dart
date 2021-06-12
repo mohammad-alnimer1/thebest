@@ -29,19 +29,14 @@ class _TermsConditionsState extends State<TermsConditions> {
 
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    setState(() {
-      if (AppController.strings is ArabicString||languageState=='null'){
-        AppSharedPrefs.saveLangType('Ar');
-        languageState = preferences.getString("lng");
-      }else{
-        AppSharedPrefs.saveLangType('En');
-      }
-    });
+    languageState = preferences.getString("lng");
+    if(languageState=='Ar'){
+      AppController.strings = ArabicString();
+    }else if(languageState=='En') {
+      AppController.strings = EnglishString();
+    }
     print(languageState);
   }
-
-
   var data;
   Future<dynamic> getTermsConditions() async {
     NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}tearmcondition/en');
@@ -90,20 +85,22 @@ class _TermsConditionsState extends State<TermsConditions> {
                     //AppController.strings.terms,
                     style: new TextStyle(fontSize: 25.0, color: Colors.black),
                   ),),
+
+
                   SizedBox(
                     height: 10,
                   ),
                   Container(
                     width: 10.0,
                     child: Center(
-                      child: languageState != 'Ar'
-                          ?  Text(
-                        '${data['DescriptionEn']}',
+                      child: Text(
+                        languageState != 'Ar'
+                            ?  '${data['DescriptionEn']}': data['DescriptionAr'],
+                        textAlign: languageState == "Ar"
+                            ? TextAlign.right
+                            : TextAlign.left,
 
-
-                      ):Text(
-                        data['DescriptionAr'],
-                      ),
+                      )
                     ),
                   ),
                 ],

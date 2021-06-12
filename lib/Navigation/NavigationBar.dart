@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thebest/AppHelper/AppSharedPrefs.dart';
+import 'package:thebest/AppHelper/AppString.dart';
 import 'package:thebest/Drawer/DrawerPage.dart';
 import 'package:thebest/homepage.dart';
 
@@ -30,6 +33,7 @@ class _NavigationBBarState extends State<NavigationBBar> {
       currentPage = widget.currentIndex;
       isSelectHome = false;
     }
+
 
     super.initState();
   }

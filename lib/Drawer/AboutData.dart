@@ -29,18 +29,14 @@ class _AboutDataState extends State<AboutData> {
 
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    setState(() {
-      if (AppController.strings is ArabicString||languageState=='null'){
-        AppSharedPrefs.saveLangType('Ar');
-        languageState = preferences.getString("lng");
-      }else{
-        AppSharedPrefs.saveLangType('En');
-      }
-    });
+    languageState = preferences.getString("lng");
+    if(languageState=='Ar'){
+      AppController.strings = ArabicString();
+    }else if(languageState=='En') {
+      AppController.strings = EnglishString();
+    }
     print(languageState);
   }
-
 
   bool loading = true;
 
@@ -137,7 +133,7 @@ class _AboutDataState extends State<AboutData> {
             appBar: AppBar(
               backgroundColor: Color(0xFFf33BE9F),
               centerTitle: true,
-              title: AboutUsData != null?languageState=='Ar'?Text('${TitleEn}'):Text('${TitleAr}'):Container(),
+              title: AboutUsData != null?languageState!='Ar'?Text('${TitleEn}'):Text('${TitleAr}'):Container(),
               flexibleSpace: Container(
                   // decoration: BoxDecoration(
                   //     gradient: AppConstants().mainColors()),
@@ -172,31 +168,33 @@ class _AboutDataState extends State<AboutData> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(5.0),
-                                          child:languageState!='Ar'?Text(
+                                          child:Container(
+
+                                            child: languageState!='Ar'?
+                                          Text(
                                             '${TitleEn}',
                                             style: TextStyle(
-                                                fontSize: 17,
+                                                fontSize: 15,
                                                 fontWeight: FontWeight.bold),
-                                          ): Text(
+                                          ):
+                                          Text(
                                             '${TitleAr}',
                                             style: TextStyle(
-                                                fontSize: 17,
+                                                fontSize: 15,
                                                 fontWeight: FontWeight.bold),
-                                          ),
+                                          ),)
                                         ),
                                         Container(
                                           height: 60,
                                           padding: const EdgeInsets.all(5.0),
-                                          child:languageState!='Ar'? Text(
-                                            '${DescriptionEn}',
+                                          child: Text(
+                                            languageState!='Ar'? '${DescriptionEn}':'${DescriptionAr}',
                                             style: TextStyle(
                                               fontSize: 15,
                                             ),
-                                          ):Text(
-                                            '${DescriptionAr}',
-                                            style: TextStyle(
-                                              fontSize: 15,
-                                            ),
+                                            textAlign: languageState == "Ar"
+                                                ? TextAlign.right
+                                                : TextAlign.left,
                                           ),
                                         ),
                                         RaisedButton(
@@ -267,26 +265,26 @@ class _AboutDataState extends State<AboutData> {
                                             children: [
                                               Padding(
                                                 padding: const EdgeInsets.all(5.0),
-                                                child:languageState!='Ar'?Text(
-                                                  '${data[index]['TitleEn']}',
+                                                child:Text(
+                                                  languageState!='Ar'?    '${data[index]['TitleEn']}':'${data[index]['TitleAr']}',
                                                   style: TextStyle(
-                                                      fontSize: 17, fontWeight: FontWeight.bold),
-                                                ): Text(
-                                                  '${data[index]['TitleAr']}',
-                                                  style: TextStyle(
-                                                      fontSize: 17, fontWeight: FontWeight.bold),
+                                                      fontSize: 15, fontWeight: FontWeight.bold),
+                                                  textAlign: languageState == "Ar"
+                                                      ? TextAlign.right
+                                                      : TextAlign.left,
                                                 ),
                                               ),
                                               Container(
                                                 height: 60,
                                                 padding: const EdgeInsets.all(5.0),
-                                                child:languageState!='Ar'? Text(
-                                                  '${data[index]['DescriptionEn']}',
+                                                child: Text(languageState!='Ar'?
+                                                  '${data[index]['DescriptionEn']}':'${data[index]['DescriptionAr']}',
+
                                                   style: TextStyle(fontSize: 15, ),
-                                                ):Text(
-                                                  '${data[index]['DescriptionAr']}',
-                                                  style: TextStyle(fontSize: 15, ),
-                                                ),
+                                                  textAlign: languageState == "Ar"
+                                                      ? TextAlign.right
+                                                      : TextAlign.left,
+                                                )
                                               ),
                                               RaisedButton(
                                                 child: Text(

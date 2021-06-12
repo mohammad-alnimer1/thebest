@@ -38,18 +38,27 @@ class _ServicesPageState extends State<ServicesPage> {
 
   var languageState;
 
+  // void langState() async {
+  //   SharedPreferences preferences = await SharedPreferences.getInstance();
+  //
+  //   if (AppController.strings is ArabicString||languageState=='null'){
+  //     AppSharedPrefs.saveLangType('Ar');
+  //     languageState = preferences.getString("lng");
+  //   }else{
+  //     AppSharedPrefs.saveLangType('En');
+  //   }
+  //   print(languageState);
+  // }
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-
-    if (AppController.strings is ArabicString||languageState=='null'){
-      AppSharedPrefs.saveLangType('Ar');
-      languageState = preferences.getString("lng");
-    }else{
-      AppSharedPrefs.saveLangType('En');
+    languageState = preferences.getString("lng");
+    if(languageState=='Ar'){
+      AppController.strings = ArabicString();
+    }else if(languageState=='En') {
+      AppController.strings = EnglishString();
     }
     print(languageState);
   }
-
   @override
   void initState() {
     super.initState();

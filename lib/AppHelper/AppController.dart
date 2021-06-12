@@ -10,5 +10,6 @@ class AppController{
 
   static Strings strings = ArabicString();
   static TextDirection textDirection = TextDirection.ltr;
+
 }
 

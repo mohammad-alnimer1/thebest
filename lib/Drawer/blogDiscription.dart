@@ -106,7 +106,11 @@ class _BlogDiscState extends State<BlogDisc> {
                  flex: 2,
                  child:ListView(
                children: [
-                 languageState!='Ar'?Text(widget.DescriptionEn) : Text(widget.DescriptionAr)
+                Text( languageState!='Ar'? widget.DescriptionEn:widget.DescriptionAr,
+                  textAlign: languageState == "Ar"
+                      ? TextAlign.right
+                      : TextAlign.left,
+                )
                ],
              )),
             Divider(
