@@ -131,7 +131,7 @@ class _blogsState extends State<blogs> {
                                     Container(
                                         height:
                                             MediaQuery.of(context).size.height *
-                                                0.11,
+                                                0.08,
                                         padding: const EdgeInsets.all(5.0),
                                         child: Text(
                                           languageState != "Ar"

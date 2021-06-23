@@ -58,125 +58,121 @@ class _ContactUsState extends State<ContactUs> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-        textDirection: AppController.textDirection,
-        //textDirection: AppController.textDirection,
-        //debugShowCheckedModeBanner: false,
-        child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Color(0xFFf33BE9F),
-                centerTitle: true,
-                title: Text('${AppController.strings.contactUs}'),
+    return Scaffold(
+      appBar: AppBar(
 
-              ),
-              backgroundColor: Color(0xFFf33BE9F),
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // CircleAvatar(
-                    //   backgroundColor: Colors.white,
-                    //
-                    //    maxRadius: 80,
-                    //    backgroundImage: AssetImage('images/Logo.png'),
-                    //
-                    // ),
+        backgroundColor: Color(0xFFf33BE9F),
+        centerTitle: true,
+        title: Text('${AppController.strings.contactUs}'),
+      ),
+      backgroundColor: Color(0xFFf33BE9F),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // CircleAvatar(
+            //   backgroundColor: Colors.white,
+            //
+            //    maxRadius: 80,
+            //    backgroundImage: AssetImage('images/Logo.png'),
+            //
+            // ),
 
-                    CircleAvatar(
-                      maxRadius: 80,
-                      backgroundColor: Colors.white,
-                      child: ClipOval(
-                          child: Image.asset(
-                        'images/Logo.png',
-                        fit: BoxFit.contain,
-                        matchTextDirection: true,
-                        height: 150,
-                        width: 150,
-                      )),
+            CircleAvatar(
+              maxRadius: 80,
+              backgroundColor: Colors.white,
+              child: ClipOval(
+                  child: Image.asset(
+                'images/Logo.png',
+                fit: BoxFit.contain,
+                matchTextDirection: true,
+                height: 150,
+                width: 150,
+              )),
+            ),
+
+            data != null
+                ? Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(50)),
+                    height: 80,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.alternate_email),
+                        ),
+                        Title != null
+                            ? Text(
+                                '  ${Title}   ',
+                                style: TextStyle(fontSize: 18),
+                              )
+                            : Container(),
+                        Email != null
+                            ? Text(
+                                ': ${Email} ',
+                                style: TextStyle(fontSize: 18),
+                              )
+                            : Container(),
+                      ],
                     ),
+                  )
+                : Container(),
+            data != null
+                ? Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(50)),
+                    height: 80,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.phone),
+                        ),
+                        Text(
+                          '${phone} : ',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          '  ${titlephone}   ',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
+                  )
+                : Container(),
 
-                    data != null
-                        ? Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(50)),
-                            height: 80,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.alternate_email),
-                                ),
-                                Title != null
-                                    ? Text(
-                                        '  ${Title}   ',
-                                        style: TextStyle(fontSize: 18),
-                                      )
-                                    : Container(),
-                                Email != null
-                                    ? Text(
-                                        ': ${Email} ',
-                                        style: TextStyle(fontSize: 18),
-                                      )
-                                    : Container(),
-                              ],
-                            ),
-                          )
-                        : Container(),
-                    data != null
-                        ? Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(50)),
-                            height: 80,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.phone),
-                                ),
-                                Text(
-                                  '${phone} : ',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  '  ${titlephone}   ',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          )
-                        : Container(),
-
-                    data != null
-                        ? Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(50)),
-                            height: 80,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Icon(Icons.web),
-                                ),
-                                Text(
-                                  'web site  :  ',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  'wwww.thebest.com',
-                                  style: TextStyle(fontSize: 18),
-                                )
-                              ],
-                            ),
-                          )
-                        : Container(),
-                  ],
-                ),
-              ),
-            ));
+            data != null
+                ? Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(50)),
+                    height: 80,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(Icons.web),
+                        ),
+                        Text(
+                          'web site  :  ',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        Text(
+                          'wwww.thebest.com',
+                          style: TextStyle(fontSize: 18),
+                        )
+                      ],
+                    ),
+                  )
+                : Container(),
+          ],
+        ),
+      ),
+    );
   }
 }
