@@ -127,7 +127,7 @@ class _AboutDataState extends State<AboutData> {
   Widget build(BuildContext context) {
     return Directionality(
         textDirection: AppController.textDirection,
-        //debugShowCheckedModeBanner: false,
+
         child: Scaffold(
             backgroundColor: Color(0xFFf33BE9F),
             appBar: AppBar(
@@ -141,19 +141,20 @@ class _AboutDataState extends State<AboutData> {
             ),
             body: Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: Directionality(
-                  textDirection: AppController.textDirection,
-                  child: AboutUsData != null
-                      ? ListView(
-                          children: [
-                          Card(
-                              child: Container(
+            child:  AboutUsData != null||data!=null
+                ? ListView(
+              children: [
+                Card(
+                  child: Container(
+                    child: Directionality(
+            textDirection: languageState == "Ar"
+            ? TextDirection.ltr
+              : TextDirection.rtl,
 
-                                child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Expanded(
+              child:Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Expanded(
                                       child: CircleAvatar(
                                         backgroundColor: Colors.white,
                                         radius: 180,
@@ -161,7 +162,7 @@ class _AboutDataState extends State<AboutData> {
                                             "${Api().baseImgURL + Images}"),
                                       ),
                                     ),
-                                    Expanded(
+                        Expanded(
                                         child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceAround,
@@ -235,43 +236,47 @@ class _AboutDataState extends State<AboutData> {
                                         )
                                       ],
                                     )),
-                                  ],
+                      ],
+                    )),
+                    height: 150,
+                  ),
+                ),
+                Container(
+                  child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount:data.length ,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return    Card(
+                        child: Container(
+                          child:Directionality(
+                          textDirection: languageState == "Ar"
+                          ? TextDirection.ltr
+                              : TextDirection.rtl,
+
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                child: CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  radius: 180,
+                                  backgroundImage: NetworkImage("${ Api().baseImgURL + data[index]['Images']}"),
                                 ),
-                                height: 150,
                               ),
-                            ),
-                          Container(
-                            child:
-                          ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount:data.length ,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return    Card(
-                                child: Container(
-                                  child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                              Expanded(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: [
-                                      Expanded(
-                                        child: CircleAvatar(
-                                          backgroundColor: Colors.white,
-                                          radius: 180,
-                                          backgroundImage: NetworkImage("${ Api().baseImgURL + data[index]['Images']}"),
-                                        ),
-                                      ),
-                                      Expanded(
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.all(5.0),
-                                                child:Text(
-                                                  languageState!='Ar'?    '${data[index]['TitleEn']}':'${data[index]['TitleAr']}',
-                                                  style: TextStyle(
-                                                      fontSize: 15, fontWeight: FontWeight.bold),
-                                                  textAlign: languageState == "Ar"
-                                                      ? TextAlign.right
-                                                      : TextAlign.left,
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child:Text(
+                                          languageState!='Ar'?    '${data[index]['TitleEn']}':'${data[index]['TitleAr']}',
+                                          style: TextStyle(
+                                              fontSize: 15, fontWeight: FontWeight.bold),
+                                          textAlign: languageState == "Ar"
+                                              ? TextAlign.right
+                                              : TextAlign.left,
                                                 ),
                                               ),
                                               Container(
@@ -317,21 +322,21 @@ class _AboutDataState extends State<AboutData> {
                                             ],
                                           )),
                                     ],
-                                  ),
+                                  ),),
                                   height: 150,
                                 ),
                               );
                             },),)
                           ],
                         )
-                      : Container(
-                          height: double.infinity,
-                          child: ModalProgressHUD(
-                              color: Colors.white12,
-                              inAsyncCall: loading,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                : Container(
+              height: double.infinity,
+              child: ModalProgressHUD(
+                  color: Colors.white12,
+                  inAsyncCall: loading,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
             children: [
             Expanded(
             child: loading ? Center(child: Text(
@@ -346,6 +351,6 @@ class _AboutDataState extends State<AboutData> {
                 )),],
                 )),
                 ),
-                ))));
+                )));
   }
 }

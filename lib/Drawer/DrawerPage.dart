@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -5,14 +6,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thebest/AppHelper/AppController.dart';
 import 'package:thebest/AppHelper/AppSharedPrefs.dart';
 import 'package:thebest/AppHelper/AppString.dart';
+import 'package:thebest/AppHelper/logOut.dart';
+import 'package:thebest/AppHelper/shared_preference.dart';
+import 'package:thebest/Model/UserModel.dart';
 import 'package:thebest/Navigation/NavigationBar.dart';
-import 'package:thebest/homepage.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
 
+import '../Login_Page.dart';
 import 'AboutData.dart';
 import 'ContactUs.dart';
 import 'PrivacyPolicyPage.dart';
 import 'ServicesPage.dart';
+import 'Setting_page.dart';
 import 'SettingsPage.dart';
 import 'TermsAndConditions.dart';
 import 'aboutVision.dart';
@@ -24,42 +29,63 @@ class DrawerWidget extends StatefulWidget {
 }
 
 class _DrawerWidgetState extends State<DrawerWidget> {
-  // Future<bool> _onWillPop() async {
-  //   return (await showDialog(
-  //       context: context,
-  //       builder: (context) =>   Directionality(
-  //         textDirection: TextDecoration.
-  //         child:  AlertDialog(
-  //           title:   Text('${AppController.strings.alertExitTitle}'),
-  //
-  //           content:   Text('${AppController.strings.exitapp}'),
-  //           actions: <Widget>[
-  //             FlatButton(
-  //               onPressed: () => Navigator.of(context).pop(false),
-  //               child:   Text('${AppController.strings.no}'),
-  //             ),
-  //             FlatButton(
-  //               onPressed: () {
-  //                 Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => registration()));
-  //               } ,
-  //               //exit(0) ,//Navigator.of(context).pop(true),
-  //               child:   Text('${AppController.strings.yes}'),
-  //             ),
-  //           ],
-  //         ),)
-  //   )) ??
-  //       false;
-  // }
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+            context: context,
+            builder: (context) => Directionality(
+                  textDirection: AppController.textDirection,
+                  child: AlertDialog(
+                    title: Text('${AppController.strings.alertExitTitle}'),
+                    content: Text('${AppController.strings.exitapp}'),
+                    actions: <Widget>[
+                      FlatButton(
+                        onPressed: () => Navigator.of(context).pop(false),
+                        child: Text('${AppController.strings.no}'),
+                      ),
+                      FlatButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      new NavigationBBar()));
+                          AppConstants().logOutApp();
+                        }, //exit(0) ,//Navigator.of(context).pop(true),
+                        child: new Text('${AppController.strings.yes}'),
+                      ),
+                    ],
+                  ),
+                ))) ??
+        false;
+  }
+
   bool loading = true;
 
-  String name = ' ';
-  String email = ' ';
+  String name ;
+  String email ;
 
+  bool userIsLoggedIn = false;
 
+  getLoggedInState() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      userIsLoggedIn = preferences.getBool('isLogin');
+       name = preferences.getString("Name");
+       email = preferences.getString("Email");    });
+    print(userIsLoggedIn);
+    print('userIsLoggedIn');
+    print('user.name${name}' );
+    print('user.name${email}' );
+  }
 
+  UserPreferences  user = UserPreferences();
   @override
   void initState() {
+
+    getLoggedInState();
     super.initState();
+
+
   }
 
   @override
@@ -93,6 +119,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       ),
                     ),
                   ),
+                  name!=null ?ListTile(
+                    title:Text('${name}',
+                        style: TextStyle(fontSize: 20)),
+                    subtitle: Text('${email}'),
+                    contentPadding: EdgeInsets.all(10),
+                  ):Container(),
                   Divider(
                     color: Colors.black26,
                     height: 10,
@@ -162,20 +194,27 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     height: 10,
                     thickness: 2,
                   ),
-                  ExpansionTileCard(
-                    title: Text('${AppController.strings.Changelanguage}'),
-                    leading: Icon(
-                      Icons.settings,
-                      size: 30,
-                    ),
+                  userIsLoggedIn==false|| userIsLoggedIn==null?    ListTile(
+                 title: Text('${AppController.strings.login}'),
+                 leading: Icon(
+                   Icons.login_outlined, size: 30,),
+                 onTap: () {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (context) => LogInPage(),),);
+                   },
+               ):Container(),
+                ExpansionTileCard(
+                  title: Text('${AppController.strings.Changelanguage}'),
+                  leading: Icon(Icons.language, size: 30,),
                     children: [
                       Padding(
                           padding: EdgeInsets.all(10),
                           child: ListTile(
-                            title:Text('English'),
+                            title: Text('English'),
                             onTap: () {
                               setState(() {
-                                AppController.textDirection = TextDirection.rtl;
+                                AppController.textDirection = TextDirection.ltr;
                                 AppController.strings = EnglishString();
                                 AppSharedPrefs.saveMainLangInSP(true);
                                 AppSharedPrefs.saveLangType('En');
@@ -190,10 +229,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Padding(
                           padding: EdgeInsets.all(10),
                           child: ListTile(
-                              title: Text('العربية') ,
+                              title: Text('العربية'),
                               onTap: () {
                                 setState(() {
-                                  AppController.textDirection = TextDirection.ltr;
+                                  AppController.textDirection =
+                                      TextDirection.rtl;
                                   AppController.strings = ArabicString();
                                   AppSharedPrefs.saveMainLangInSP(true);
                                   AppSharedPrefs.saveLangType('Ar');
@@ -206,15 +246,30 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                               })),
                     ],
                   ),
+                  userIsLoggedIn==true?
+                  ListTile(
+                    title: Text('${AppController.strings.Settings}'),
+                    leading: Icon(
+                      Icons.settings,
+                      size: 30,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Setting_page(),
+                        ),
+                      );
+                    },
+                  ):Container(),
                   Divider(
                     color: Colors.black26,
                     height: 10,
                     thickness: 2,
                   ),
-
                   ListTile(
                     title: Text('${AppController.strings.contactUs}',
-                        style: TextStyle(fontSize: 20)),
+                    ),
                     leading: Icon(
                       Icons.local_phone_sharp,
                       size: 30,
@@ -230,7 +285,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   ),
                   ListTile(
                     title: Text('${AppController.strings.about}',
-                        style: TextStyle(fontSize: 20)),
+                    ),
                     leading: Icon(
                       Icons.info,
                       size: 30,
@@ -250,9 +305,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     height: 10,
                     thickness: 2,
                   ),
-              ListTile(
+                  ListTile(
                     title: Text('${AppController.strings.terms}',
-                        style: TextStyle(fontSize: 20)),
+                    ),
                     leading: Icon(
                       Icons.admin_panel_settings_rounded,
                       size: 30,
@@ -261,15 +316,15 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                   builder: (context) => TermsConditions(),
+                          builder: (context) => TermsConditions(),
                         ),
                       );
                     },
                   ),
-              ListTile(
-              title: Text('${AppController.strings.PrivacyPolicy}',
-                        style: TextStyle(fontSize: 20)),
-              leading: Icon(
+                  ListTile(
+                    title: Text('${AppController.strings.PrivacyPolicy}',
+                    ),
+                    leading: Icon(
                       Icons.privacy_tip_outlined,
                       size: 30,
                     ),
@@ -277,11 +332,31 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                   builder: (context) => PrivacyPolicy(),
+                          builder: (context) => PrivacyPolicy(),
                         ),
                       );
                     },
                   ),
+                  Divider(
+                    color: Colors.black26,
+                    height: 10,
+                    thickness: 2,
+                  ),
+
+                  userIsLoggedIn==true?   ListTile(
+                    title: Text(AppController.strings.logout,
+                    ),
+                    leading: Icon(
+                      Icons.logout,
+                      size: 30,
+                    ),
+                    contentPadding: EdgeInsets.all(10),
+                    onTap: () {
+                      setState(() {
+                        _onWillPop();
+                      });
+                    },
+                  ):Container(),
                 ],
               ),
             ),
@@ -291,3 +366,5 @@ class _DrawerWidgetState extends State<DrawerWidget> {
     );
   }
 }
+
+

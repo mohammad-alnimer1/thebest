@@ -11,6 +11,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thebest/AppHelper/AppSharedPrefs.dart';
 import 'package:thebest/AppHelper/AppString.dart';
+import 'package:thebest/Login_Page.dart';
 
 import 'AppHelper/AppController.dart';
 import 'AppHelper/networking.dart';
@@ -28,9 +29,9 @@ class _DetailsPageState extends State<DetailsPage> {
   var languageState;
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    if(languageState=='Ar'){
+    if (languageState == 'Ar') {
       AppController.strings = ArabicString();
-    }else if(languageState=='En') {
+    } else if (languageState == 'En') {
       AppController.strings = EnglishString();
     }
     languageState = preferences.getString("lng");
@@ -80,9 +81,12 @@ class _DetailsPageState extends State<DetailsPage> {
   GlobalKey<FormState> commentKey = new GlobalKey<FormState>();
   TextEditingController nameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
-  TextEditingController CommentController = new TextEditingController();
+  static final TextEditingController CommentController = TextEditingController();
 
   Future<dynamic> senddata() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String name = prefs.getString("Name");
+    String email = prefs.getString("Email");
     var url =
         'http://mohamadfaqeh-001-site37.itempurl.com/api/mobile/addcomment';
     var commentdata = commentKey.currentState;
@@ -90,8 +94,8 @@ class _DetailsPageState extends State<DetailsPage> {
       var dataToSend = {
         "ServiceID": widget.id.toString(),
         "Description": CommentController.text,
-        "Title": nameController.text,
-        "Email": emailController.text
+        "Title": name.toString(),
+        "Email": email.toString()
       };
       print('))))))))))))))))');
       https.Response response = await https.post(url, body: dataToSend);
@@ -113,6 +117,19 @@ class _DetailsPageState extends State<DetailsPage> {
     }
   }
 
+  bool userIsLoggedIn = false;
+
+  getLoggedInState() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    setState(() {
+      userIsLoggedIn = preferences.getBool('isLogin');
+    });
+    print(userIsLoggedIn);
+    print('userIsLoggedIn');
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -120,6 +137,7 @@ class _DetailsPageState extends State<DetailsPage> {
     getdetails(widget.id);
     getAllComment(widget.id);
     langState();
+    getLoggedInState();
   }
 
   @override
@@ -151,17 +169,19 @@ class _DetailsPageState extends State<DetailsPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                  languageState != 'Ar'
-                                      ? Text('${servicesDetails['TitleEn']}',
-                                      style: TextStyle(fontSize: 22))
-                                      : Text('${servicesDetails['TitleAr']}',
-                                      style: TextStyle(fontSize: 22)),
-                                ],)
-                              ),
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      languageState != 'Ar'
+                                          ? Text(
+                                              '${servicesDetails['TitleEn']}',
+                                              style: TextStyle(fontSize: 22))
+                                          : Text(
+                                              '${servicesDetails['TitleAr']}',
+                                              style: TextStyle(fontSize: 22)),
+                                    ],
+                                  )),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(right: 10, left: 10),
@@ -184,13 +204,14 @@ class _DetailsPageState extends State<DetailsPage> {
                                       ))),
                               Container(
                                   padding: const EdgeInsets.all(8.0),
-                                  child:
-                                         Text(
-                                    languageState != 'Ar'? "${servicesDetails['DescriptionEn']}":"${servicesDetails['DescriptionAr']}",
-                                            style: TextStyle(fontSize: 18),
-                                  textAlign: languageState == "Ar"
-                                  ? TextAlign.right
-                                      : TextAlign.left,
+                                  child: Text(
+                                    languageState != 'Ar'
+                                        ? "${servicesDetails['DescriptionEn']}"
+                                        : "${servicesDetails['DescriptionAr']}",
+                                    style: TextStyle(fontSize: 18),
+                                    textAlign: languageState == "Ar"
+                                        ? TextAlign.right
+                                        : TextAlign.left,
                                   ))
 
                               // Container(
@@ -291,11 +312,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                                                     .start,
                                                             children: [
                                                               Container(
-                                                                width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width *
-                                                                    0.60,
+                                                                width: MediaQuery.of(context).size.width * 0.60,
                                                                 child: Text(
                                                                   "${comm[index]['Title']}  ",
                                                                   style: TextStyle(
@@ -365,78 +382,135 @@ class _DetailsPageState extends State<DetailsPage> {
                                   color: Colors.black45,
                                 ),
                               ),
-                     Align(
-                       alignment: Alignment.topRight,
-                       child:          Form(
-                       key: commentKey,
-                       child: Container(
-                           padding: EdgeInsets.all(16),
-                           child: ExpansionTileCard(
-                             title: Text(
-                                 '${AppController.strings.LeaveComment}'),
-                             children: [
-                               Padding(
-                                 padding: EdgeInsets.all(10),
-                                 child: TextFormField(
-                                     controller: nameController,
-                                     textAlign: TextAlign.center,
-                                     validator: validdata,
-                                     decoration: KDecoration.copyWith(
-                                         labelText:
-                                         '${AppController.strings.EnteryourName}')),
-                               ),
-                               Padding(
-                                 padding: EdgeInsets.all(10),
-                                 child: TextFormField(
-                                     controller: emailController,
-                                     textAlign: TextAlign.center,
-                                     keyboardType:
-                                     TextInputType.emailAddress,
-                                     validator: validdata,
-                                     decoration: KDecoration.copyWith(
-                                         labelText:
-                                         '${AppController.strings.EnteryourEmail}')),
-                               ),
-                               Padding(
-                                 padding: EdgeInsets.all(10),
-                                 child: TextFormField(
-                                     controller: CommentController,
-                                     maxLines: 5,
-                                     textAlign: TextAlign.center,
-                                     keyboardType:
-                                     TextInputType.emailAddress,
-                                     validator: validdata,
-                                     decoration: KDecoration.copyWith(
-                                         labelText:
-                                         '${AppController.strings.writComment}')),
-                               ),
-                               MaterialButton(
-                                   onPressed: () {
-                                     setState(() {
-                                       if(commentKey.currentState.validate()){
-                                         senddata();
-                                         Navigator.pushReplacement(
-                                             context,
-                                             MaterialPageRoute(
-                                                 builder: (BuildContext
-                                                 context) =>
-                                                 super.widget));
-                                         _showMaterialDialog();}
-                                     });
-                                     nameController.clear();
-                                     emailController.clear();
-                                     CommentController.clear();
-                                   },
-                                   color: Color(0xFFf33BE9F),
-                                   child: Text(
-                                     '${AppController.strings.send}',
-                                     style: TextStyle(
-                                         color: Colors.white,
-                                         fontSize: 20),
-                                   ))
-                             ],
-                           )),
-                     ),)
+                              Align(
+                                alignment: Alignment.topCenter,
+                                child: Form(
+                                  key: commentKey,
+                                  child: userIsLoggedIn==null||userIsLoggedIn==false?  Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: Container(
+                                      color: Colors.black12,
+                                      child: TextButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              bool loginback=true;
+
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => LogInPage(loginback: loginback,),
+                                                ),
+                                              );
+
+                                            });
+                                          },
+
+                                          child: Text(
+                                            '${AppController.strings.LoginCommented}',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+
+                                              color: Colors.black87,
+                                              fontSize: 18,
+                                            ),
+                                          )),
+                                    ),
+                                  ): Container(
+                                      padding: EdgeInsets.all(16),
+                                      child:  ExpansionTileCard(
+                                        title: Text(
+                                            '${AppController.strings.LeaveComment}'),
+                                        children: [
+                                          // Padding(
+                                          //   padding: EdgeInsets.all(10),
+                                          //   child: TextFormField(
+                                          //       controller: nameController,
+                                          //       textAlign: TextAlign.center,
+                                          //       validator: validdata,
+                                          //       decoration:
+                                          //           KDecoration.copyWith(
+                                          //         labelText:
+                                          //             '${AppController.strings.EnteryourName}',
+                                          //       )),
+                                          // ),
+                                          // Padding(
+                                          //   padding: EdgeInsets.all(10),
+                                          //   child: TextFormField(
+                                          //       controller: emailController,
+                                          //       textAlign: TextAlign.center,
+                                          //       keyboardType:
+                                          //           TextInputType.emailAddress,
+                                          //       validator: validdata,
+                                          //       decoration: KDecoration.copyWith(
+                                          //           labelText:
+                                          //               '${AppController.strings.EnteryourEmail}')),
+                                          // ),
+                                          Padding(
+                                            padding: EdgeInsets.all(10),
+                                            child: TextFormField(
+                                                controller: CommentController,
+                                                maxLines: 5,
+                                                textAlign: TextAlign.center,
+                                                keyboardType:
+                                                    TextInputType.emailAddress,
+                                                validator: validdata,
+                                                decoration: KDecoration.copyWith(
+                                                    labelText:
+                                                        '${AppController.strings.writComment}')),
+                                          ),
+                                          MaterialButton(
+                                              onPressed: () {
+                                                setState(() {
+                                                  if (commentKey.currentState.validate()) {
+                                                    if (userIsLoggedIn==null||userIsLoggedIn==false){
+                                                      _showMaterialDialog(textcontent: '${AppController.strings.LoginCommented  }',textTitle: '${AppController.strings.noteLogin }',
+                                                     function: [
+                                                       FlatButton(
+                                                         child: Text('${AppController.strings.login}'),
+                                                         onPressed: (){
+                                                           bool loginback=true;
+                                                           Navigator.push(
+                                                             context,
+                                                             MaterialPageRoute(
+                                                               builder: (context) => LogInPage(loginback: loginback,),
+                                                             ),
+                                                           );
+                                                         },
+                                                       )
+                                                     ]
+                                                      );
+
+
+                                                    }else{
+                                                      senddata();
+                                                      Navigator.pushReplacement(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder: (BuildContext
+                                                              context) =>
+                                                              super.widget));
+                                                      _showMaterialDialog(textcontent: '${AppController.strings.Waitingadminapproval}',textTitle: '${AppController.strings.CommentedSuccessfully}',);
+                                                      nameController.clear();
+                                                      emailController.clear();
+                                                      CommentController.clear();
+                                                   }
+
+                                                  }
+                                                });
+
+                                              },
+                                              color: Color(0xFFf33BE9F),
+                                              child: Text(
+                                                '${AppController.strings.send}',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ))
+                                        ],
+                                      )
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -472,23 +546,19 @@ class _DetailsPageState extends State<DetailsPage> {
         ));
   }
 
-  _showMaterialDialog() {
+  _showMaterialDialog( {String textTitle,String textcontent,List<Widget> function}) {
+
+
+
     showDialog(
         context: context,
         builder: (_) => new AlertDialog(
-              title: new Text("${AppController.strings.CommentedSuccessfully}"),
+              title: Center(child: new Text(textTitle)),
               content:
-                  new Text("${AppController.strings.Waitingadminapproval}"),
-              // actions: <Widget>[
-              //   FlatButton(
-              //     child: Text('${AppController.strings.ok}'),
-              //     onPressed: () {
-              //       setState(() {
-              //
-              //       });
-              //     },
-              //   )
-              // ],
+                  new Text(textcontent,textAlign: TextAlign.center,),
+              actions: function
             ));
   }
 }
+//
+//

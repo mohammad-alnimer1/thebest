@@ -7,6 +7,7 @@ import 'AppHelper/AppColors.dart';
 import 'AppHelper/AppController.dart';
 import 'AppHelper/AppSharedPrefs.dart';
 import 'AppHelper/AppString.dart';
+import 'Login_Page.dart';
 import 'Navigation/NavigationBar.dart';
 
 // import 'package:group_button/group_button.dart';
@@ -71,7 +72,7 @@ class _LangpageMain extends State<LangpageMain> {
                     child: Text('English'),
                     onPressed: () {
                       setState(() {
-                        AppController.textDirection = TextDirection.rtl;
+                        AppController.textDirection = TextDirection.ltr;
                         AppController.strings = EnglishString();
                         AppSharedPrefs.saveMainLangInSP(true);
                         AppSharedPrefs.saveLangType('En');

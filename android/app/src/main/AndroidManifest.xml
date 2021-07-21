@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="mohammadalnimer.thebest">
+    package="servesApp.thebest">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
    <application
@@ -40,5 +42,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-    </application>
+       <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCevnd6E46_F0OzTC3_4fD3QSK1gVpw8dA"/>
+
+   </application>
 </manifest>

@@ -106,15 +106,12 @@ class _SubCategoryState extends State<SubCategory> {
                                 '${Api().baseImgURL + data[index]['Images']}',
                               ),
                                Padding(
-                                      padding: EdgeInsets.all(10),
-                                      child:Text(
-                                        languageState != 'Ar'
-                                          ?'${data[index]['TitleEn']}':'${data[index]['TitleAr']}',
-                                        textAlign: languageState == "Ar"
-                                        ? TextAlign.right
-                                        : TextAlign.left,
-                                      ),
-                                    ),
+                                 padding: EdgeInsets.all(10),
+                                 child:Center(child: Text(
+                                   languageState != 'Ar'
+                                       ?'${data[index]['TitleEn']}':'${data[index]['TitleAr']}',
+                                 ),)
+                               ),
 
                               Padding(
                                       padding: EdgeInsets.all(10),
@@ -123,7 +120,6 @@ class _SubCategoryState extends State<SubCategory> {
                                           ? TextAlign.right
                                           : TextAlign.left,),
                                     ),
-
 
                               Container(
                                 height: 50,
@@ -138,9 +134,7 @@ class _SubCategoryState extends State<SubCategory> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => DetailsPage(
-                                                    id: id,
-                                                  )),
+                                              builder: (context) => DetailsPage(id: id,)),
                                         );
                                       },
                                       child: Container(

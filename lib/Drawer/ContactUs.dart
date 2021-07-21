@@ -58,15 +58,22 @@ class _ContactUsState extends State<ContactUs> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
+    return    Directionality(
+        textDirection: AppController.textDirection,
+        //textDirection: AppController.textDirection,
+        //debugShowCheckedModeBanner: false,
+     child: Scaffold(
 
+      appBar:  AppBar(
         backgroundColor: Color(0xFFf33BE9F),
         centerTitle: true,
         title: Text('${AppController.strings.contactUs}'),
       ),
       backgroundColor: Color(0xFFf33BE9F),
-      body: Padding(
+      body:  Directionality(
+      textDirection: TextDirection.ltr,
+
+       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -173,6 +180,6 @@ class _ContactUsState extends State<ContactUs> {
           ],
         ),
       ),
-    );
+    )));
   }
 }

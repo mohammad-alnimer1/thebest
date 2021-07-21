@@ -9,7 +9,7 @@ import 'AppString.dart';
 class AppController{
 
   static Strings strings = ArabicString();
-  static TextDirection textDirection = TextDirection.ltr;
+  static TextDirection textDirection = TextDirection.rtl;
 
 }
 

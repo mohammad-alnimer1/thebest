@@ -109,6 +109,7 @@
   String ChangePhoneNumber;
   String ChangeLocation ;
   String Cancel ;
+  String Note ;
   String Change ;
   String OldPassword;
   String NewPassword;
@@ -140,6 +141,7 @@
  String wrongEmailOrPassword;
  String accNotActive;
  String outOfTime;
+ String pleaseEnterYourName;
 
  String checkYourEmail;
  String sendPassword;
@@ -170,6 +172,24 @@ String Welcometo;
 String PrivacyPolicy;
 String CommentedSuccessfully;
 String Waitingadminapproval;
+String enterFullName;
+ String enterYourEmail;
+ String forgotYourPassword;
+ String createANewAccount;
+ String registration;
+ String pleaseEnterRealName;
+ String pleaseFilltheData;
+ String pleaseEnterYourEmail;
+ String enterValedEmail;
+ String ClientAccountcreated;
+ String ChooseLocation;
+ String ChooseyourLocation;
+ String ForgotPassword;
+ String FillEmail;
+ String EmailInvalid;
+ String PleaseCheckPassword;
+ String noteLogin;
+ String LoginCommented;
 
 }
 
@@ -177,7 +197,20 @@ class EnglishString extends Strings {
 
 
   EnglishString() {
-    appName = 'Al Hud hud';
+    ClientAccountcreated='Your account has been successfully created as a customer';
+    ForgotPassword = 'Write your e-mail and we will send to you the password';
+    FillEmail = 'Write your Email';
+    EmailInvalid = 'Email Invalid';
+    PleaseCheckPassword='Please Check Password';
+    ChangePassword='Change Password';
+    ChooseyourLocation='Choose your Location';
+    enterYourEmail='Enter Your Email';
+    forgotYourPassword='Forgot your password?';
+    pleaseEnterYourName='Please Enter Your Name';
+    pleaseFilltheData='please Fill the Data';
+    pleaseEnterYourEmail='Please Enter Real Email';
+    registration='Registration';
+    createANewAccount='Create A New Account?';
     langPage = 'Language';
     arabicLang = 'العربية';
     englishLang = 'English';
@@ -196,6 +229,7 @@ class EnglishString extends Strings {
     contract='Contract';
     notification='Notification';
     news='News';
+    Note='Note';
     municipalCouncils='Municipal Councils';
     theMedia='The Media';
     about='About Us';
@@ -264,6 +298,8 @@ class EnglishString extends Strings {
     sendNote ='send Note ';
     AdminNotes='Admin Notes';
     WriteYourNotes='Write Your Notes';
+    noteLogin='You are not logged in';
+    LoginCommented='Please login to be able to comment';
 
     ChangeUserName='Change User Name';
     ChangePhoneNumber='Change Phone Number';
@@ -319,12 +355,26 @@ class EnglishString extends Strings {
     PrivacyPolicy='Privacy Policy';
     CommentedSuccessfully='Commented Successfully';
     Waitingadminapproval='Waiting for admin approval';
+    enterFullName='Enter Full Name';
+    pleaseEnterRealName='Please Enter Real Name';
+    enterValedEmail='Enter Valid Email';
+    ChooseLocation='Choose your location on map';
+    Settings='Settings';
+    wrongEmailOrPassword = 'The e-mail or password is incorrect!';
+
   }
 
 }
 class ArabicString extends Strings {
   ArabicString() {
-    appName = 'الهدهد';
+    pleaseEnterRealName='الرجاء إدخال إسم حقيقي';
+    pleaseFilltheData='يرجى ملء البيانات';
+    pleaseEnterYourEmail='الرجاء إدخال البريد الالكتروني';
+    enterValedEmail='الرجاء إدخال بريد الكاتروني صالح';
+    noteLogin='لم تقم بتسجيل الدخول';
+    LoginCommented='الرجاء تسجيل الدخول لتتمكن من التعليق';
+
+    enterYourEmail='أدخل بريدك الإلكتروني';
     langPage = 'اللغة ';
     arabicLang = 'العربية';
     englishLang = 'English';
@@ -333,10 +383,13 @@ class ArabicString extends Strings {
     alertExitTitle='تنبيه الخروج';
     exitApp = 'هل تريد الخروج من التطبيق';
     home = 'الرئيسية';
-    schedule = 'جدول المواعيد';
+    pleaseEnterYourName='الرجاء إدخال الإسم';
     profile = 'الملف الشخصي';
     product = 'منتجات';
+    Note = 'ملاحظة';
     services = 'الخدمات';
+    ClientAccountcreated='تم انشاء حسابك بنجاح قم بتسجيل الدخول';
+    sendPassword='لقد تم ارسال كلمة السر الى البريد الالكتروني الرجاء التاكد ';
     serviceNoti = 'الخدمة:';
     selectServices = 'حدد الخدمات';
     servicesDetails = 'تفاصيل الخدمة';
@@ -383,6 +436,7 @@ class ArabicString extends Strings {
     ComplaintTitle='إذا كان لديك أي اقتراح أو شكاوى ، فأخبرنا بذلك. ';
     addAppointment='أضف موعد';
     location='موقعك ';
+    EmailInvalid='البريد الالكتروني غير فعال ';
     locationClient='موقع العميل';
     uploadImage='  تحميل صورة ';
     yourProblem='مشكلتك ! ';
@@ -450,6 +504,8 @@ class ArabicString extends Strings {
     sendDone = 'تم الإرسال بنجاح';
     wrongEmailOrPassword = 'البريد الالكتروني او كلمة السر غير صحيحة !';
     accNotActive = 'حسابك غير فعال';
+    forgotYourPassword='هل نسيت كلمة السر؟';
+    PleaseCheckPassword='الرجاء التحقق من كلمة المرور';
 
     menu='القائمة';
     viewServices='إظهار الخدمات';
@@ -472,5 +528,13 @@ class ArabicString extends Strings {
     PrivacyPolicy ='سياسة الخصوصية';
     CommentedSuccessfully ='تم التعليق بنجاح ';
     Waitingadminapproval ='في انتظار موافقة المسؤول';
+    enterFullName='أدخل الاسم الكامل';
+    createANewAccount='انشاء حساب جديد ؟';
+    registration='إنشاء حساب';
+    ChooseLocation=' إختر الموقع على الخارطة';
+    ChooseyourLocation='إختر موقعك';
+    ForgotPassword = 'أكتب البريدالإلكتروني وسنرسل لك كلمة المرور ';
+    FillEmail = 'الرجاء كتابة البريد الالكتروني';
+
   }
 }

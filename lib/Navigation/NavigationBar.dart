@@ -27,13 +27,13 @@ class _NavigationBBarState extends State<NavigationBBar> {
   int currentPage = 1;
   bool isSelectHome = true;
 
+
   @override
   void initState() {
     if (widget.currentIndex != null) {
       currentPage = widget.currentIndex;
       isSelectHome = false;
     }
-
 
     super.initState();
   }
@@ -74,8 +74,8 @@ class _NavigationBBarState extends State<NavigationBBar> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-        textDirection: AppController.textDirection,
-        child:  WillPopScope(
+      textDirection: AppController.textDirection,
+     child:  WillPopScope(
       onWillPop: _onWillPop,
       child: Scaffold(
         drawer: DrawerWidget(),

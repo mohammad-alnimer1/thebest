@@ -59,11 +59,8 @@ class _blogsState extends State<blogs> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-        textDirection: languageState == "Ar"
-            ? TextDirection.ltr
-            : TextDirection.rtl,
-        //textDirection: AppController.textDirection,
-        //debugShowCheckedModeBanner: false,
+        textDirection: AppController.textDirection,
+
         child: Scaffold(
           backgroundColor: Color(0xFFf33BE9F),
           appBar: widget.back == false
@@ -73,33 +70,30 @@ class _blogsState extends State<blogs> {
                   title: Text('${AppController.strings.blogs}'),
                 )
               : null,
-          body: datablogs != null
-              ? ListView.builder(
-         itemCount: datablogs.length, itemBuilder: (context, index) {
-                    return Card(
-                      child: Container(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
+          body: Directionality(
+          textDirection: languageState == "Ar"
+          ? TextDirection.ltr
+          : TextDirection.rtl,
 
-                        Expanded(
+          child: datablogs != null
+              ? ListView.builder(
+         itemCount: datablogs.length,
+         itemBuilder: (context, index) {
+            return Card(
+             child: Container(
+               child: Row(
+               crossAxisAlignment: CrossAxisAlignment.stretch,
+                 children: [
+                   Expanded(
                           flex: 3,
-                          child:     ClipOval(
+                          child: ClipOval(
                             child: Image.network(
                               "${Api().baseImgURL + datablogs[index]['Images']}",
                               fit: BoxFit.fill,
                               height: 150,
                               width: 150,
                             )),),
-                            // CircleAvatar(
-                            //
-                            //   backgroundColor: Colors.white,
-                            //   backgroundImage: NetworkImage(
-                            //   ),
-                            //   maxRadius: 70,
-                            //
-                            // ),
-                            Expanded(
+                   Expanded(
                                 flex: 4,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -128,10 +122,9 @@ class _blogsState extends State<blogs> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.08,
+                                   Container(
+                                       height:
+                                       MediaQuery.of(context).size.height * 0.10,
                                         padding: const EdgeInsets.all(5.0),
                                         child: Text(
                                           languageState != "Ar"
@@ -179,20 +172,19 @@ class _blogsState extends State<blogs> {
                                       elevation: 2,
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(10.0),
+                                          BorderRadius.circular(10.0),
                                           side:
-                                              BorderSide(color: Colors.black)),
+                                          BorderSide(color: Colors.black)),
                                     )
                                   ],
                                 )),
-                          ],
-                        ),
-                        height: 150,
-                      ),
-                    );
-                  },
-                )
-              : Container(
+                 ],
+               ),
+               height: 150,
+             ),
+            );
+            },
+          ) : Container(
                   height: double.infinity,
                   child: ModalProgressHUD(
                       color: Colors.white12,
@@ -217,6 +209,12 @@ class _blogsState extends State<blogs> {
                         ],
                       )),
                 ),
-        ));
+        )));
   }
 }
+//Directionality(
+//           textDirection: languageState == "Ar"
+//           ? TextDirection.ltr
+//           : TextDirection.rtl,
+//
+//           child:

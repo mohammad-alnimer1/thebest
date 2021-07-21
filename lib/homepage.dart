@@ -85,6 +85,33 @@ class _HomepageState extends State<Homepage> {
   var slidImg;
   List data;
   List imgdata;
+
+  var servicetitle;
+  Future<dynamic> getservicetitle() async {
+    try {
+      NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}servicetitle/en');
+      servicetitle = await networkHelper.getdata();
+      setState(() {
+        return servicetitle;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+  var welcomebannar;
+
+  Future<dynamic> getwelcomebannar() async {
+    try {
+      NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}welcome?lang=en');
+      welcomebannar = await networkHelper.getdata();
+      setState(() {
+        return welcomebannar;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Future<dynamic> getMainCAt() async {
     try {
       NetworkHelper networkHelper =
@@ -166,7 +193,7 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     setState(() {
       super.initState();
-
+      getservicetitle();
       getMainCAt();
       getFacebook();
       getinstagram();
@@ -174,12 +201,13 @@ class _HomepageState extends State<Homepage> {
       getyoutube();
       getsnapchat();
       langState();
+      getwelcomebannar();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
+    return  Directionality(
         textDirection: AppController.textDirection,
         child: Scaffold(
           drawer: DrawerWidget(),
@@ -236,7 +264,8 @@ class _HomepageState extends State<Homepage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                               Text(
-                                  '${AppController.strings.Welcometo}  ',
+                                languageState == 'Ar'
+                                    ?  '${welcomebannar['TitleAr']} ':'${welcomebannar['TitleEn']} ',
                                   style: TextStyle(
                                       fontSize: 22,
                                       fontStyle: FontStyle.italic),
@@ -244,8 +273,9 @@ class _HomepageState extends State<Homepage> {
                        Padding(
                                   padding: const EdgeInsets.only(bottom: 16),
                                   child: Container(
-                                    child: Image.asset(
-                                      'images/Logo.png',
+                                    child: Image.network(
+
+                                        '${Api().baseImgURL + welcomebannar['Images']}'
                                     ),
                                     height: 50,
                                     width: 50,
@@ -314,7 +344,9 @@ class _HomepageState extends State<Homepage> {
                                         ),
                                         RaisedButton(
                                           child: Text(
-                                            '${AppController.strings.viewServices}',
+                                          //  '${AppController.strings.viewServices}',
+                                            languageState == 'Ar'
+                                                ?  '${servicetitle['TitleAr']}':'${servicetitle['TitleEn']}',
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.white),
