@@ -149,30 +149,9 @@ class _LogInPageState extends State<LogInPage> {
                 color: Colors.black,
                 onpress: () async {
                   setState(() {
-                    // loginform();
+
                     doLogin().then((value) =>  loading1=false);
                   });
-                  // print(email);
-                  // print(password);
-                  // try {
-                  //   setState(() {
-                  //     ShowSpinar=true;
-                  //   });
-                  //   final newuser = await _auth.createUserWithEmailAndPassword(
-                  //       email: email, password: password);
-                  //
-                  //
-                  //   if (newuser != null) {
-                  //     Navigator.pushNamed(context, ChatScreen.id);
-                  //   }
-                  //
-                  //
-                  // } catch (e) {
-                  //   setState(() {
-                  //     ShowSpinar=false;
-                  //   });
-                  //   print(e);
-                  // }
                 },
               ),
             ),
