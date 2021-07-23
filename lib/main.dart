@@ -14,7 +14,6 @@ import 'homepage.dart';
 
 void main()  {
   runApp(MyApp());
-  var languageState;
 }
 
 class MyApp extends StatefulWidget {
@@ -25,18 +24,28 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var languageState;
-  langState()async{
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    setState(() {
-        languageState = preferences.getString("lng");
-        if(languageState=='Ar'){
-          AppController.strings = ArabicString();
-        }else if(languageState=='En') {
-          AppController.strings = EnglishString();
-        }
-    });
-  }
 
+  void langState() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    languageState = preferences.getString('lng');
+    print('languageState');
+    print(languageState);
+
+    if (languageState == null) {
+      await AppSharedPrefs.saveLangType('Ar');
+    }
+    languageState = preferences.getString('lng');
+    print(languageState);
+    if (languageState == 'Ar') {
+      setState(() {
+        AppController.textDirection = TextDirection.rtl;
+        AppController.strings = ArabicString();
+      });
+    } else {
+      AppController.textDirection = TextDirection.ltr;
+      AppController.strings = EnglishString();
+    }
+  }
 
   @override
   void initState() {

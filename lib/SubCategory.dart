@@ -48,12 +48,13 @@ class _SubCategoryState extends State<SubCategory> {
   var languageState;
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
+    languageState = preferences.getString("lng");
+
     if (languageState == 'Ar') {
       AppController.strings = ArabicString();
     } else if (languageState == 'En') {
       AppController.strings = EnglishString();
     }
-    languageState = preferences.getString("lng");
     print(languageState);
   }
   @override

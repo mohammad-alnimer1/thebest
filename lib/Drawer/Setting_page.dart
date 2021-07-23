@@ -67,6 +67,15 @@ class _Setting_pageState extends State<Setting_page> {
       }
     }
   }
+  var languageState;
+  langState()async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      languageState = preferences.getString("lng");
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(

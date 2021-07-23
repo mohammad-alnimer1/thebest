@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:thebest/Navigation/NavigationBar.dart';
 import 'AppHelper/AppController.dart';
@@ -93,6 +95,22 @@ class _LogInPageState extends State<LogInPage> {
   // }
   bool loading1 = false;
 
+
+  var languageState;
+  langState()async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      languageState = preferences.getString("lng");
+
+    });
+  }
+
+
+  @override
+  void initState() {
+    langState();
+    super.initState();
+  }
   GlobalKey<FormState> GlobalFormKey = new GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -185,6 +203,7 @@ class _LogInPageState extends State<LogInPage> {
       body:Form(
     key: GlobalFormKey,
     child: ListView(
+
         // crossAxisAlignment: CrossAxisAlignment.center,
         // mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -204,6 +223,7 @@ class _LogInPageState extends State<LogInPage> {
             child: Container(
               color: Colors.black12.withOpacity(0.01),
               child:  Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Center(
                       child: Padding(
@@ -218,7 +238,7 @@ class _LogInPageState extends State<LogInPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(10),
                       child: TextFormField(
                           autocorrect: false,
                         validator: staticWidget().emailvalid,
@@ -232,7 +252,7 @@ class _LogInPageState extends State<LogInPage> {
                               labelText: '${AppController.strings.enterYourEmail}')),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(10),
                       child: TextFormField(
                           autocorrect: false,
                         validator: staticWidget().validEmpty,

@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thebest/AppHelper/location.dart';
 import 'package:thebest/Navigation/Map_Page.dart';
 import 'AppHelper/AppController.dart';
@@ -75,9 +76,23 @@ class _RegistrationPageState extends State<RegistrationPage> {
     });
   }
 
+  var languageState;
+  langState()async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      languageState = preferences.getString("lng");
+
+    });
+  }
+
+
+
+
   @override
   void initState() {
     setState(() {
+      langState();
+
       print('myMarker${myMarker}');
       getlocation().then((value) {
         if(long==null&&lat==null){

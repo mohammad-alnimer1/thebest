@@ -5,11 +5,7 @@ import 'AppString.dart';
 
 
 
-
-class AppController{
-
-  static Strings strings = ArabicString();
+class AppController {
+  static Strings strings = new ArabicString();
   static TextDirection textDirection = TextDirection.rtl;
-
 }
-

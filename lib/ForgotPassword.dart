@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dialogs/flutter_dialogs.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thebest/Drawer/Constants.dart';
 import 'package:thebest/Login_Page.dart';
 import 'package:thebest/Registration.dart';
@@ -82,6 +83,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 ],
               )));
     }
+  }
+  var languageState;
+  langState()async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    setState(() {
+      languageState = preferences.getString("lng");
+
+    });
   }
 
   @override
