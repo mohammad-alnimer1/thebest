@@ -75,8 +75,8 @@ class _blogsState extends State<blogs> {
           ? TextDirection.ltr
           : TextDirection.rtl,
 
-          child: datablogs != null
-              ? ListView.builder(
+          child: datablogs != null ?
+          ListView.builder(
          itemCount: datablogs.length,
          itemBuilder: (context, index) {
             return Card(
@@ -94,24 +94,20 @@ class _blogsState extends State<blogs> {
                               width: 150,
                             )),),
                    Expanded(
-                                flex: 4,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-
-                                    Container(
-                                      height:
-                                          MediaQuery.of(context).size.width *
-                                              0.08,
-                                      width: MediaQuery.of(context).size.width *
-                                          0.60,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(
-                                          languageState != 'Ar'
-                                              ? '${datablogs[index]['TitleEn']}'
+                       flex: 4,
+                       child: Column(
+                         crossAxisAlignment: CrossAxisAlignment.center,
+                         mainAxisAlignment:
+                         MainAxisAlignment.spaceAround,
+                         children: [
+                           Container(
+                             height: MediaQuery.of(context).size.width * 0.10,
+                             width: MediaQuery.of(context).size.width * 0.60,
+                             child: Padding(
+                               padding: const EdgeInsets.all(5.0),
+                               child: Text(
+                                 languageState != 'Ar'
+                                     ? '${datablogs[index]['TitleEn']}'
                                               : '${datablogs[index]['TitleAr']}',
                                           style: TextStyle(
                                               fontSize: 15,
@@ -180,7 +176,7 @@ class _blogsState extends State<blogs> {
                                 )),
                  ],
                ),
-               height: 150,
+               height: 190,
              ),
             );
             },

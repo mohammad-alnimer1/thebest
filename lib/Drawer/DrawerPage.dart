@@ -15,6 +15,7 @@ import 'package:expansion_tile_card/expansion_tile_card.dart';
 import '../Login_Page.dart';
 import 'AboutData.dart';
 import 'ContactUs.dart';
+import 'FAQPage.dart';
 import 'PrivacyPolicyPage.dart';
 import 'ServicesPage.dart';
 import 'Setting_page.dart';
@@ -22,6 +23,7 @@ import 'SettingsPage.dart';
 import 'TermsAndConditions.dart';
 import 'aboutVision.dart';
 import 'blogspage.dart';
+import 'ourclientsPage.dart';
 
 class DrawerWidget extends StatefulWidget {
   @override
@@ -268,6 +270,22 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     thickness: 2,
                   ),
                   ListTile(
+                    title: Text('${AppController.strings.ourclients}',
+                    ),
+                    leading: Icon(
+                      Icons.assignment_ind_outlined,
+                      size: 30,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ourclientsPage(),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
                     title: Text('${AppController.strings.contactUs}',
                     ),
                     leading: Icon(
@@ -304,6 +322,22 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     color: Colors.black26,
                     height: 10,
                     thickness: 2,
+                  ),
+                  ListTile(
+                    title: Text('${AppController.strings.FAQ}',
+                    ),
+                    leading: Icon(
+                      Icons.question_answer_rounded,
+                      size: 30,
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FAQPage(),
+                        ),
+                      );
+                    },
                   ),
                   ListTile(
                     title: Text('${AppController.strings.terms}',

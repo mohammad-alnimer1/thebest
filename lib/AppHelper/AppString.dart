@@ -142,6 +142,8 @@
  String accNotActive;
  String outOfTime;
  String pleaseEnterYourName;
+ String FAQ;
+ String partner;
 
  String checkYourEmail;
  String sendPassword;
@@ -190,6 +192,8 @@ String enterFullName;
  String PleaseCheckPassword;
  String noteLogin;
  String LoginCommented;
+ String offers;
+ String ourclients;
 
 }
 
@@ -219,8 +223,11 @@ class EnglishString extends Strings {
     alertExitTitle='Alert Exit';
     exitApp='Do you want to exit an App ';
     home='Home';
+    ourclients='our clients';
+    FAQ='FAQ';
     schedule='Schedule';
     profile='Profile';
+    partner='Partner';
     product='Products';
     services='Services';
     serviceNoti='Service:';
@@ -230,6 +237,7 @@ class EnglishString extends Strings {
     notification='Notification';
     news='News';
     Note='Note';
+    offers='Offers';
     municipalCouncils='Municipal Councils';
     theMedia='The Media';
     about='About Us';
@@ -387,6 +395,8 @@ class ArabicString extends Strings {
     profile = 'الملف الشخصي';
     product = 'منتجات';
     Note = 'ملاحظة';
+    ourclients = 'عملاؤنا';
+    partner = 'العملاء';
     services = 'الخدمات';
     ClientAccountcreated='تم انشاء حسابك بنجاح قم بتسجيل الدخول';
     sendPassword='لقد تم ارسال كلمة السر الى البريد الالكتروني الرجاء التاكد ';
@@ -400,8 +410,10 @@ class ArabicString extends Strings {
     theMedia = 'وسائل الاعلام';
     about = 'من نحن';
     contactUs = 'تواصل معنا';
+    FAQ = 'الأسئلة الأكثر تكرار';
     complaintsAndSuggestions = 'شكاوي وإقتراحات';
      logout = 'تسجيل خروج';
+    offers = 'العروض';
     login='تسجيل الدخول';
     userName='إسم المستخدم';
     fillDataError = 'يرجى إدخال المعلومات المطلوبة';

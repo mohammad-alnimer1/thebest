@@ -100,12 +100,16 @@ class _SubCategoryState extends State<SubCategory> {
                           padding: EdgeInsets.all(10),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
+
                             children: [
-                              Image.network(
-                                '${Api().baseImgURL + data[index]['Images']}',
-                              ),
+                            Container(
+                              height: MediaQuery.of(context).size.height*0.5,
+                              child:   Image.network(
+                              '${Api().baseImgURL + data[index]['Images']}',
+                                fit: BoxFit.fill,
+                            ),),
                                Padding(
                                  padding: EdgeInsets.all(10),
                                  child:Center(child: Text(

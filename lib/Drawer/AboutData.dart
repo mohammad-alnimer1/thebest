@@ -102,8 +102,7 @@ class _AboutDataState extends State<AboutData> {
   var aboutvision;
   List data;
   Future<dynamic> getaboutvision() async {
-    NetworkHelper networkHelper =
-        NetworkHelper('${Api().baseURL}aboutvision/en');
+    NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}aboutvision/en');
     aboutvision = await networkHelper.getdata();
     setState(() {
       print(aboutvision);

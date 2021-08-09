@@ -81,7 +81,8 @@ class _DetailsPageState extends State<DetailsPage> {
   GlobalKey<FormState> commentKey = new GlobalKey<FormState>();
   TextEditingController nameController = new TextEditingController();
   TextEditingController emailController = new TextEditingController();
-  static final TextEditingController CommentController = TextEditingController();
+  static final TextEditingController CommentController =
+      TextEditingController();
 
   Future<dynamic> senddata() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -129,7 +130,6 @@ class _DetailsPageState extends State<DetailsPage> {
     print('userIsLoggedIn');
   }
 
-
   @override
   void initState() {
     super.initState();
@@ -151,69 +151,70 @@ class _DetailsPageState extends State<DetailsPage> {
             centerTitle: true,
           ),
           backgroundColor: Color(0xFFf33BE9F),
-          body: servicesDetails != null && servicesDetails.isNotEmpty
-              ? ListView.builder(
-                  itemCount: 1,
-                  itemBuilder: (context, index) {
-                    return Column(
+          body: servicesDetails != null && servicesDetails.isNotEmpty ?
+          ListView.builder(
+            itemCount: 1,
+            itemBuilder: (context, index) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Colors.white,
+                    ),
+                    margin: EdgeInsets.all(20),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                languageState != 'Ar'
+                                    ? Text(
+                                    '${servicesDetails['TitleEn']}',
+                                    style: TextStyle(fontSize: 22))
+                                    : Text(
+                                    '${servicesDetails['TitleAr']}',
+                                    style: TextStyle(fontSize: 22)),
+                              ],
+                            )),
+                        Padding(
+                          padding:
+                          const EdgeInsets.only(right: 10, left: 10),
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.black45,
                           ),
-                          margin: EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      languageState != 'Ar'
-                                          ? Text(
-                                              '${servicesDetails['TitleEn']}',
-                                              style: TextStyle(fontSize: 22))
-                                          : Text(
-                                              '${servicesDetails['TitleAr']}',
-                                              style: TextStyle(fontSize: 22)),
-                                    ],
-                                  )),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(right: 10, left: 10),
-                                child: Divider(
-                                  thickness: 1,
-                                  color: Colors.black45,
-                                ),
-                              ),
-                              Container(
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Colors.white,
-                                  ),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      child: Image.network(
-                                        '${Api().baseImgURL + servicesDetails['Images']}',
-                                        fit: BoxFit.cover,
-                                      ))),
-                              Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    languageState != 'Ar'
-                                        ? "${servicesDetails['DescriptionEn']}"
-                                        : "${servicesDetails['DescriptionAr']}",
-                                    style: TextStyle(fontSize: 18),
-                                    textAlign: languageState == "Ar"
-                                        ? TextAlign.right
-                                        : TextAlign.left,
-                                  ))
-
+                        ),
+                        Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.white,
+                            ),
+                            child: ClipRRect(
+                                borderRadius: BorderRadius.circular(8.0),
+                                child: Container(
+                                    height: MediaQuery.of(context).size.height * 0.5,
+                                    child: Image.network(
+                                      '${Api().baseImgURL + servicesDetails['Images']}',
+                                      fit: BoxFit.fill,
+                                    )))),
+                        Container(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              languageState != 'Ar' ?
+                              "${servicesDetails['DescriptionEn']}"
+                                  : "${servicesDetails['DescriptionAr']}",
+                              style: TextStyle(fontSize: 18),
+                              textAlign: languageState == "Ar"
+                                  ? TextAlign.right
+                                  : TextAlign.left,
+                            ))
                               // Container(
                               //   padding: EdgeInsets.all(16),
                               //   child: Row(
@@ -312,7 +313,11 @@ class _DetailsPageState extends State<DetailsPage> {
                                                                     .start,
                                                             children: [
                                                               Container(
-                                                                width: MediaQuery.of(context).size.width * 0.60,
+                                                                width: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .width *
+                                                                    0.60,
                                                                 child: Text(
                                                                   "${comm[index]['Title']}  ",
                                                                   style: TextStyle(
@@ -386,129 +391,156 @@ class _DetailsPageState extends State<DetailsPage> {
                                 alignment: Alignment.topCenter,
                                 child: Form(
                                   key: commentKey,
-                                  child: userIsLoggedIn==null||userIsLoggedIn==false?  Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: Container(
-                                      color: Colors.black12,
-                                      child: TextButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              bool loginback=true;
+                                  child: userIsLoggedIn == null ||
+                                          userIsLoggedIn == false
+                                      ? Padding(
+                                          padding: EdgeInsets.all(10),
+                                          child: Container(
+                                            color: Colors.black12,
+                                            child: TextButton(
+                                                onPressed: () {
+                                                  setState(() {
+                                                    bool loginback = true;
 
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => LogInPage(loginback: loginback,),
-                                                ),
-                                              );
-
-                                            });
-                                          },
-
-                                          child: Text(
-                                            '${AppController.strings.LoginCommented}',
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-
-                                              color: Colors.black87,
-                                              fontSize: 18,
-                                            ),
-                                          )),
-                                    ),
-                                  ): Container(
-                                      padding: EdgeInsets.all(16),
-                                      child:  ExpansionTileCard(
-                                        title: Text(
-                                            '${AppController.strings.LeaveComment}'),
-                                        children: [
-                                          // Padding(
-                                          //   padding: EdgeInsets.all(10),
-                                          //   child: TextFormField(
-                                          //       controller: nameController,
-                                          //       textAlign: TextAlign.center,
-                                          //       validator: validdata,
-                                          //       decoration:
-                                          //           KDecoration.copyWith(
-                                          //         labelText:
-                                          //             '${AppController.strings.EnteryourName}',
-                                          //       )),
-                                          // ),
-                                          // Padding(
-                                          //   padding: EdgeInsets.all(10),
-                                          //   child: TextFormField(
-                                          //       controller: emailController,
-                                          //       textAlign: TextAlign.center,
-                                          //       keyboardType:
-                                          //           TextInputType.emailAddress,
-                                          //       validator: validdata,
-                                          //       decoration: KDecoration.copyWith(
-                                          //           labelText:
-                                          //               '${AppController.strings.EnteryourEmail}')),
-                                          // ),
-                                          Padding(
-                                            padding: EdgeInsets.all(10),
-                                            child: TextFormField(
-                                                controller: CommentController,
-                                                maxLines: 5,
-                                                textAlign: TextAlign.center,
-                                                keyboardType:
-                                                    TextInputType.emailAddress,
-                                                validator: validdata,
-                                                decoration: KDecoration.copyWith(
-                                                    labelText:
-                                                        '${AppController.strings.writComment}')),
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            LogInPage(
+                                                          loginback: loginback,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  });
+                                                },
+                                                child: Text(
+                                                  '${AppController.strings.LoginCommented}',
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    color: Colors.black87,
+                                                    fontSize: 18,
+                                                  ),
+                                                )),
                                           ),
-                                          MaterialButton(
-                                              onPressed: () {
-                                                setState(() {
-                                                  if (commentKey.currentState.validate()) {
-                                                    if (userIsLoggedIn==null||userIsLoggedIn==false){
-                                                      _showMaterialDialog(textcontent: '${AppController.strings.LoginCommented  }',textTitle: '${AppController.strings.noteLogin }',
-                                                     function: [
-                                                       FlatButton(
-                                                         child: Text('${AppController.strings.login}'),
-                                                         onPressed: (){
-                                                           bool loginback=true;
-                                                           Navigator.push(
-                                                             context,
-                                                             MaterialPageRoute(
-                                                               builder: (context) => LogInPage(loginback: loginback,),
-                                                             ),
-                                                           );
-                                                         },
-                                                       )
-                                                     ]
-                                                      );
-
-
-                                                    }else{
-                                                      senddata();
-                                                      Navigator.pushReplacement(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                              builder: (BuildContext
-                                                              context) =>
-                                                              super.widget));
-                                                      _showMaterialDialog(textcontent: '${AppController.strings.Waitingadminapproval}',textTitle: '${AppController.strings.CommentedSuccessfully}',);
-                                                      nameController.clear();
-                                                      emailController.clear();
-                                                      CommentController.clear();
-                                                   }
-
-                                                  }
-                                                });
-
-                                              },
-                                              color: Color(0xFFf33BE9F),
-                                              child: Text(
-                                                '${AppController.strings.send}',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 20),
-                                              ))
-                                        ],
-                                      )
-                                  ),
+                                        )
+                                      : Container(
+                                          padding: EdgeInsets.all(16),
+                                          child: ExpansionTileCard(
+                                            title: Text(
+                                                '${AppController.strings.LeaveComment}'),
+                                            children: [
+                                              // Padding(
+                                              //   padding: EdgeInsets.all(10),
+                                              //   child: TextFormField(
+                                              //       controller: nameController,
+                                              //       textAlign: TextAlign.center,
+                                              //       validator: validdata,
+                                              //       decoration:
+                                              //           KDecoration.copyWith(
+                                              //         labelText:
+                                              //             '${AppController.strings.EnteryourName}',
+                                              //       )),
+                                              // ),
+                                              // Padding(
+                                              //   padding: EdgeInsets.all(10),
+                                              //   child: TextFormField(
+                                              //       controller: emailController,
+                                              //       textAlign: TextAlign.center,
+                                              //       keyboardType:
+                                              //           TextInputType.emailAddress,
+                                              //       validator: validdata,
+                                              //       decoration: KDecoration.copyWith(
+                                              //           labelText:
+                                              //               '${AppController.strings.EnteryourEmail}')),
+                                              // ),
+                                              Padding(
+                                                padding: EdgeInsets.all(10),
+                                                child: TextFormField(
+                                                    controller:
+                                                        CommentController,
+                                                    maxLines: 5,
+                                                    textAlign: TextAlign.center,
+                                                    keyboardType: TextInputType
+                                                        .emailAddress,
+                                                    validator: validdata,
+                                                    decoration:
+                                                        KDecoration.copyWith(
+                                                            labelText:
+                                                                '${AppController.strings.writComment}')),
+                                              ),
+                                              MaterialButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      if (commentKey
+                                                          .currentState
+                                                          .validate()) {
+                                                        if (userIsLoggedIn ==
+                                                                null ||
+                                                            userIsLoggedIn ==
+                                                                false) {
+                                                          _showMaterialDialog(
+                                                              textcontent:
+                                                                  '${AppController.strings.LoginCommented}',
+                                                              textTitle:
+                                                                  '${AppController.strings.noteLogin}',
+                                                              function: [
+                                                                FlatButton(
+                                                                  child: Text(
+                                                                      '${AppController.strings.login}'),
+                                                                  onPressed:
+                                                                      () {
+                                                                    bool
+                                                                        loginback =
+                                                                        true;
+                                                                    Navigator
+                                                                        .push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                LogInPage(
+                                                                          loginback:
+                                                                              loginback,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  },
+                                                                )
+                                                              ]);
+                                                        } else {
+                                                          senddata();
+                                                          Navigator.pushReplacement(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                  builder: (BuildContext
+                                                                          context) =>
+                                                                      super
+                                                                          .widget));
+                                                          _showMaterialDialog(
+                                                            textcontent:
+                                                                '${AppController.strings.Waitingadminapproval}',
+                                                            textTitle:
+                                                                '${AppController.strings.CommentedSuccessfully}',
+                                                          );
+                                                          nameController
+                                                              .clear();
+                                                          emailController
+                                                              .clear();
+                                                          CommentController
+                                                              .clear();
+                                                        }
+                                                      }
+                                                    });
+                                                  },
+                                                  color: Color(0xFFf33BE9F),
+                                                  child: Text(
+                                                    '${AppController.strings.send}',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20),
+                                                  ))
+                                            ],
+                                          )),
                                 ),
                               )
                             ],
@@ -546,18 +578,17 @@ class _DetailsPageState extends State<DetailsPage> {
         ));
   }
 
-  _showMaterialDialog( {String textTitle,String textcontent,List<Widget> function}) {
-
-
-
+  _showMaterialDialog(
+      {String textTitle, String textcontent, List<Widget> function}) {
     showDialog(
         context: context,
         builder: (_) => new AlertDialog(
-              title: Center(child: new Text(textTitle)),
-              content:
-                  new Text(textcontent,textAlign: TextAlign.center,),
-              actions: function
-            ));
+            title: Center(child: new Text(textTitle)),
+            content: new Text(
+              textcontent,
+              textAlign: TextAlign.center,
+            ),
+            actions: function));
   }
 }
 //
