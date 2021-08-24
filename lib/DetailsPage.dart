@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:ui';
 import 'dart:convert';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as https;
-
+import 'package:share/share.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -77,6 +79,22 @@ class _DetailsPageState extends State<DetailsPage> {
       print(e);
     }
   }
+  var thankpage;
+  Future<dynamic> getthankpage() async {
+    try {
+      NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}thankpage/en');
+      thankpage = await networkHelper.getdata();
+
+      setState(() {
+        print(thankpage);
+        loading1 = false;
+        return thankpage;
+      });
+
+    } catch (e) {
+      print(e);
+    }
+  }
 
   GlobalKey<FormState> commentKey = new GlobalKey<FormState>();
   TextEditingController nameController = new TextEditingController();
@@ -139,6 +157,35 @@ class _DetailsPageState extends State<DetailsPage> {
     langState();
     getLoggedInState();
   }
+
+  // _onShare(BuildContext context) async {
+  //   // A builder is used to retrieve the context immediately
+  //   // surrounding the ElevatedButton.
+  //   //
+  //   // The context's `findRenderObject` returns the first
+  //   // RenderObject in its descendent tree when it's not
+  //   // a RenderObjectWidget. The ElevatedButton's RenderObject
+  //   // has its position and size after it's built.
+  //   final RenderBox box = context.findRenderObject() as RenderBox;
+  //
+  //
+  //     await Share.shareFiles(imagePaths,
+  //         text: text,
+  //         subject: subject,
+  //         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
+  //   }
+
+
+  _onShareWithEmptyOrigin(BuildContext context) async {
+    if(Platform.isAndroid){
+      await Share.share("https://play.google.com/store/apps/details?id=servesApp.thebest");
+
+    }else{
+      await Share.share("https://apps.apple.com/us/app/the-best/id1573635575");
+
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -489,18 +536,10 @@ class _DetailsPageState extends State<DetailsPage> {
                                                                       '${AppController.strings.login}'),
                                                                   onPressed:
                                                                       () {
-                                                                    bool
-                                                                        loginback =
-                                                                        true;
-                                                                    Navigator
-                                                                        .push(
-                                                                      context,
-                                                                      MaterialPageRoute(
-                                                                        builder:
-                                                                            (context) =>
-                                                                                LogInPage(
-                                                                          loginback:
-                                                                              loginback,
+                                                                    bool loginback = true;
+                                                                    Navigator.push(context, MaterialPageRoute(
+                                                                        builder: (context) => LogInPage(
+                                                                          loginback: loginback,
                                                                         ),
                                                                       ),
                                                                     );
@@ -509,25 +548,63 @@ class _DetailsPageState extends State<DetailsPage> {
                                                               ]);
                                                         } else {
                                                           senddata();
-                                                          Navigator.pushReplacement(
-                                                              context,
-                                                              MaterialPageRoute(
-                                                                  builder: (BuildContext
-                                                                          context) =>
-                                                                      super
-                                                                          .widget));
-                                                          _showMaterialDialog(
-                                                            textcontent:
-                                                                '${AppController.strings.Waitingadminapproval}',
-                                                            textTitle:
-                                                                '${AppController.strings.CommentedSuccessfully}',
-                                                          );
-                                                          nameController
-                                                              .clear();
-                                                          emailController
-                                                              .clear();
-                                                          CommentController
-                                                              .clear();
+                                                          //Navigator.push(context, MaterialPageRoute(builder: (BuildContextcontext) => super.widget));
+                                                          getthankpage().then((value) => showDialog(
+                                                              context: context,
+                                                              builder: (_) => new AlertDialog(
+                                                                  title:    Container(child: Icon(FontAwesomeIcons.solidCheckCircle,size: 50,color: Colors.greenAccent,),),
+
+                                                                  content: Column(
+                                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                                      children: [
+
+
+                                                                        Center(child:  languageState != 'Ar'
+                                                                            ? Text(
+                                                                            '${thankpage['TitleEn']}',
+                                                                            style: TextStyle(fontSize: 22),
+                                                                        textAlign: TextAlign.center,
+                                                                        )
+                                                                            : Text(
+                                                                            '${thankpage['TitleAr']}',
+                                                                            style: TextStyle(fontSize: 22),
+                                                                          textAlign: TextAlign.center,
+
+                                                                        ),),
+
+
+                                                                        new Center(child:  languageState != 'Ar'
+                                                                            ? Text(
+                                                                            '${thankpage['DescriptionEn']}',
+                                                                            style: TextStyle(fontSize: 19),
+                                                                          textAlign: TextAlign.center,
+
+                                                                        )
+                                                                            : Text(
+                                                                            '${thankpage['DescriptionAr']}',
+                                                                            style: TextStyle(fontSize: 19),
+                                                                          textAlign: TextAlign.center,
+
+                                                                        ),),
+                                                                        ElevatedButton(
+                                                                          child: Text('${AppController.strings.ok}'),
+                                                                          onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContextcontext) => super.widget)), // passing true
+                                                                        ),
+                                                                        SizedBox(height: 40,),
+                                                                        GestureDetector(
+                                                                          child: Text('${AppController.strings.share}'),
+                                                                          onTap: () {
+                                                                            _onShareWithEmptyOrigin(context);
+                                                                          },
+                                                                         ), // passing true
+
+                                                                      ]
+                                                                  ))));
+                                                          nameController.clear();
+                                                          emailController.clear();
+                                                          CommentController.clear();
+
                                                         }
                                                       }
                                                     });
@@ -579,16 +656,26 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   _showMaterialDialog(
-      {String textTitle, String textcontent, List<Widget> function}) {
+      {BuildContext context ,String textTitle, String textcontent, List<Widget> function}) {
     showDialog(
         context: context,
         builder: (_) => new AlertDialog(
             title: Center(child: new Text(textTitle)),
-            content: new Text(
-              textcontent,
-              textAlign: TextAlign.center,
-            ),
-            actions: function));
+            content: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+              Container(child: Icon(FontAwesomeIcons.checkCircle),),
+
+              new Text(
+                textcontent,
+                textAlign: TextAlign.center,
+              ),
+
+            ],),
+            actions: function,
+
+        ));
   }
 }
 //

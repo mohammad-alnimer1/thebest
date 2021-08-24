@@ -180,7 +180,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
             color: Colors.white12,
             inAsyncCall: loading1,
             child: SafeArea(
-              child:long!=null&&lat!=null? Stack(
+              child:long!=null&&lat!=null?
+              Stack(
                 children: [
                   ListView(
                     // crossAxisAlignment: CrossAxisAlignment.stretch,

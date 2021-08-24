@@ -54,6 +54,7 @@
   String emailUsed;
    String send;
    String FirstName;
+   String share;
   String secondname;
    String photoAlbum;
   String videoAlbum;
@@ -161,6 +162,7 @@ String viewServices;
 String details;
 String NoServices;
 String blogs;
+String subscribeService;
 String Changelanguage;
 String Comments;
 String LeaveComment;
@@ -193,7 +195,14 @@ String enterFullName;
  String noteLogin;
  String LoginCommented;
  String offers;
+ String IndestryType;
+ String Instegram;
+ String Address;
+ String Twitter;
  String ourclients;
+ String companyName;
+ String Facebook;
+ String SnapChat;
 
 }
 
@@ -218,13 +227,16 @@ class EnglishString extends Strings {
     langPage = 'Language';
     arabicLang = 'العربية';
     englishLang = 'English';
+    subscribeService = 'subscribe Service';
     languages = 'عربي';
+    Facebook = 'Facebook url';
     languagesDes = 'Language';
     alertExitTitle='Alert Exit';
     exitApp='Do you want to exit an App ';
     home='Home';
     ourclients='our clients';
     FAQ='FAQ';
+    SnapChat='SnapChat url';
     schedule='Schedule';
     profile='Profile';
     partner='Partner';
@@ -238,6 +250,7 @@ class EnglishString extends Strings {
     news='News';
     Note='Note';
     offers='Offers';
+    Address='Address';
     municipalCouncils='Municipal Councils';
     theMedia='The Media';
     about='About Us';
@@ -280,6 +293,7 @@ class EnglishString extends Strings {
     PreviousCouncils = 'Previous Councils';
     MunicipalMembers = 'Municipal Members';
     employees = 'Employees';
+    share = 'share App';
     yes = 'Yes';
     no = 'No';
     ReadMore = 'Read More';
@@ -360,6 +374,7 @@ class EnglishString extends Strings {
     Success='Success, Thank you';
     NoComment='No Comment';
     Welcometo='Welcome to';
+    IndestryType='IndestryType';
     PrivacyPolicy='Privacy Policy';
     CommentedSuccessfully='Commented Successfully';
     Waitingadminapproval='Waiting for admin approval';
@@ -368,6 +383,9 @@ class EnglishString extends Strings {
     enterValedEmail='Enter Valid Email';
     ChooseLocation='Choose your location on map';
     Settings='Settings';
+    companyName='company Name';
+    Instegram='Instegram url';
+    Twitter='Twitter url';
     wrongEmailOrPassword = 'The e-mail or password is incorrect!';
 
   }
@@ -385,18 +403,27 @@ class ArabicString extends Strings {
     enterYourEmail='أدخل بريدك الإلكتروني';
     langPage = 'اللغة ';
     arabicLang = 'العربية';
+    Twitter = 'رابط التويتر';
     englishLang = 'English';
     languages = 'English';
     languagesDes = 'اللغة';
+    subscribeService = 'الاشتراك بالخدمات ';
     alertExitTitle='تنبيه الخروج';
     exitApp = 'هل تريد الخروج من التطبيق';
     home = 'الرئيسية';
     pleaseEnterYourName='الرجاء إدخال الإسم';
     profile = 'الملف الشخصي';
+    share = 'مشاركة التطبيق';
     product = 'منتجات';
+    Facebook = 'رابط الفيسبوك';
     Note = 'ملاحظة';
+    Instegram = 'رباط الإنستجرام';
     ourclients = 'عملاؤنا';
     partner = 'العملاء';
+    companyName = 'اسم الشركة ';
+    Address = 'العملاء';
+    IndestryType = 'نوع الصناعة';
+    SnapChat = 'رابط السنابشات';
     services = 'الخدمات';
     ClientAccountcreated='تم انشاء حسابك بنجاح قم بتسجيل الدخول';
     sendPassword='لقد تم ارسال كلمة السر الى البريد الالكتروني الرجاء التاكد ';

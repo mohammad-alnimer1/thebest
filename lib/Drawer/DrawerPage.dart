@@ -11,6 +11,7 @@ import 'package:thebest/AppHelper/shared_preference.dart';
 import 'package:thebest/Model/UserModel.dart';
 import 'package:thebest/Navigation/NavigationBar.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'subscribe_Page.dart';
 
 import '../Login_Page.dart';
 import 'AboutData.dart';
@@ -187,6 +188,24 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           builder: (context) => blogs(
                             back: back,
                           ),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: Text('${AppController.strings.subscribeService}',
+                        style: TextStyle(fontSize: 20)),
+                    leading: Icon(
+                      Icons.assignment_turned_in_rounded,
+                      size: 30,
+                    ),
+                    contentPadding: EdgeInsets.all(10),
+                    onTap: () {
+                      bool back = false;
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => subscribe_Page(),
                         ),
                       );
                     },
