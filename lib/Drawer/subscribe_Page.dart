@@ -313,7 +313,7 @@ class _subscribe_PageState extends State<subscribe_Page> {
                         Padding(
                           padding: EdgeInsets.symmetric(vertical: 5),
                           child: button(
-                            buttonName: '${AppController.strings.signUp}',
+                            buttonName: '${AppController.strings.send}',
                             color: Colors.black,
                             onpress: () async {
                               try {
@@ -324,7 +324,17 @@ class _subscribe_PageState extends State<subscribe_Page> {
 
 
                                   if (myMarker.isNotEmpty){
-                                    senddata().then((value) =>loading1=false);
+                                    senddata().then((value) =>loading1=false).then((value) {
+                                      Fluttertoast.showToast(
+                                          msg: "${AppController.strings.sendDone}",
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Color(0xFFFFADAD),
+                                          textColor: Colors.white,
+                                          fontSize: 16.0
+                                      );
+                                    });
 
                                   }else{
                                     Fluttertoast.showToast(
