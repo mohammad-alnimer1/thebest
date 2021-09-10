@@ -38,6 +38,7 @@
   String register ;
   String alreadyHaveAccount ;
   String signUp;
+  String loginGist;
   String firstUserName;
   String lastUserName;
   String phoneNum ;
@@ -223,6 +224,7 @@ class EnglishString extends Strings {
     pleaseFilltheData='please Fill the Data';
     pleaseEnterYourEmail='Please Enter Real Email';
     registration='Registration';
+    loginGist='login as Gist';
     createANewAccount='Create A New Account?';
     langPage = 'Language';
     arabicLang = 'العربية';
@@ -417,6 +419,7 @@ class ArabicString extends Strings {
     product = 'منتجات';
     Facebook = 'رابط الفيسبوك';
     Note = 'ملاحظة';
+    loginGist = 'الدخول كزائر';
     Instegram = 'رباط الإنستجرام';
     ourclients = 'عملاؤنا';
     partner = 'العملاء';

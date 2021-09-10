@@ -10,6 +10,7 @@ import 'AppHelper/AppSharedPrefs.dart';
 import 'AppHelper/AppString.dart';
 import 'AppHelper/Provider.dart';
 import 'LanguagePageMain.dart';
+import 'entryPage.dart';
 import 'homepage.dart';
 
 void main()  {
@@ -27,24 +28,9 @@ class _MyAppState extends State<MyApp> {
 
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    languageState = preferences.getString('lng');
+    languageState = preferences.getBool('isLogin');
     print('languageState');
     print(languageState);
-
-    if (languageState == null) {
-      await AppSharedPrefs.saveLangType('Ar');
-    }
-    languageState = preferences.getString('lng');
-    print(languageState);
-    if (languageState == 'Ar') {
-      setState(() {
-        AppController.textDirection = TextDirection.rtl;
-        AppController.strings = ArabicString();
-      });
-    } else {
-      AppController.textDirection = TextDirection.ltr;
-      AppController.strings = EnglishString();
-    }
   }
 
   @override
@@ -63,7 +49,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(fontFamily:'HappyMonkey-Regular' ),
       debugShowCheckedModeBanner: false,
       title: 'The Best',
-      home: languageState=='Ar'||languageState=='En' ? NavigationBBar() : LangpageMain(),
+      home: languageState==true ? NavigationBBar() : entrypage(),
     ));
   }
 }
