@@ -173,7 +173,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
         child: Form(
           key: RegistrationKey,
           child: Scaffold(
-
+              appBar: AppBar(elevation: 0.0,
+                backgroundColor: Color(0xFFf33BE9F),
+              ),
             backgroundColor: Color(0xFFf33BE9F),
             // bottomNavigationBar:
             body: ModalProgressHUD(

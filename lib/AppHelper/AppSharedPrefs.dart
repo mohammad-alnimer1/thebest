@@ -14,6 +14,13 @@ class AppSharedPrefs {
   static String isEmpKey = 'isEmp';
   static String onBoard = 'onBoard';
   static String notificationOn = 'notificationOn';
+  static String isShow ='isshow';
+
+
+  static Future<bool> saveIsShow(bool isshow) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    return await preferences.setBool(isShow, isshow);
+  }
 
   static Future<bool> saveLangInSP(bool lang) async {
     SharedPreferences preferences = await SharedPreferences.getInstance();

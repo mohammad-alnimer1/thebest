@@ -261,7 +261,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               textAlign: languageState == "Ar"
                                   ? TextAlign.right
                                   : TextAlign.left,
-                            ))
+                            )),
                               // Container(
                               //   padding: EdgeInsets.all(16),
                               //   child: Row(
@@ -281,6 +281,15 @@ class _DetailsPageState extends State<DetailsPage> {
                               //     ],
                               //   ),
                               // )
+                        userIsLoggedIn == null || userIsLoggedIn == false ?
+                        Container():ElevatedButton(onPressed: (){},
+                          child: languageState != 'Ar'
+                              ? Text(
+                              'Request the service now',
+                              style: TextStyle(fontSize: 22))
+                              : Text(
+                              'أطلب الخدمة الان',
+                              style: TextStyle(fontSize: 22)),),
                             ],
                           ),
                         ),

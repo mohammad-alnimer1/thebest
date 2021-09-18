@@ -47,8 +47,7 @@ dependencies:
   flutter_dialogs: ^1.1.0
   device_info: ^2.0.2
   share: ^2.0.4
-
-
+  concentric_transition: ^1.0.1
 
 dev_dependencies:
   flutter_test:

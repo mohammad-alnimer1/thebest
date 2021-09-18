@@ -11,6 +11,7 @@ import 'AppHelper/AppString.dart';
 import 'AppHelper/Provider.dart';
 import 'LanguagePageMain.dart';
 import 'entryPage.dart';
+import 'entrypagess.dart';
 import 'homepage.dart';
 
 void main()  {
@@ -24,17 +25,50 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  var State;
+
+
   var languageState;
 
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    languageState = preferences.getBool('isLogin');
+    languageState = preferences.getString('lng');
     print('languageState');
     print(languageState);
+
+    if (languageState == null) {
+      await AppSharedPrefs.saveLangType('Ar');
+    }
+    languageState = preferences.getString('lng');
+    print(languageState);
+    if (languageState == 'Ar') {
+      setState(() {
+        AppController.textDirection = TextDirection.rtl;
+        AppController.strings = ArabicString();
+      });
+    } else {
+      AppController.textDirection = TextDirection.ltr;
+      AppController.strings = EnglishString();
+    }
+  }
+  void State1() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    State = preferences.getBool('isLogin');
+    print('languageState');
+  }
+  var isShow;
+
+  void show() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    isShow = preferences.getBool('isshow');
+    print('isShow');
+    print(isShow);
   }
 
   @override
   void initState() {
+    State1();
+    show();
     langState();
     super.initState();
   }
@@ -43,13 +77,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-        ChangeNotifierProvider(create: (_) => AuthProvider()),
-    ],
-    child: MaterialApp(
-      theme: ThemeData(fontFamily:'HappyMonkey-Regular' ),
-      debugShowCheckedModeBanner: false,
-      title: 'The Best',
-      home: languageState==true ? NavigationBBar() : entrypage(),
-    ));
+          ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ],
+        child: MaterialApp(
+          theme: ThemeData(fontFamily:'HappyMonkey-Regular' ),
+          debugShowCheckedModeBanner: false,
+          title: 'The Best',
+          home: State==true ? NavigationBBar() : entrypagess(),
+        ));
   }
 }
