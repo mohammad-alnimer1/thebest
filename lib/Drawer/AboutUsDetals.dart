@@ -97,7 +97,7 @@ class _AboutUsDetailsState extends State<AboutUsDetails> {
         child: Scaffold(
             appBar: AppBar(
               centerTitle: true,
-              backgroundColor: Color(0xFFf33BE9F),
+              backgroundColor: Color(0xFF8973d9),
               title: languageState != 'Ar'
                   ? Text('${widget.TitleEn}')
                   : Text('${widget.TitleAr}'),

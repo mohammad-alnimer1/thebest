@@ -7,10 +7,12 @@ import 'package:thebest/AppHelper/AppController.dart';
 import 'package:thebest/AppHelper/AppSharedPrefs.dart';
 import 'package:thebest/AppHelper/AppString.dart';
 import 'package:thebest/AppHelper/logOut.dart';
+import 'package:thebest/AppHelper/networking.dart';
 import 'package:thebest/AppHelper/shared_preference.dart';
 import 'package:thebest/Model/UserModel.dart';
 import 'package:thebest/Navigation/NavigationBar.dart';
 import 'package:expansion_tile_card/expansion_tile_card.dart';
+import 'package:thebest/api/Api.dart';
 import 'subscribe_Page.dart';
 
 import '../Login_Page.dart';
@@ -69,7 +71,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   bool userIsLoggedIn = false;
 
-  getLoggedInState() async {
+ Future getLoggedInState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     setState(() {
       userIsLoggedIn = preferences.getBool('isLogin');
@@ -83,16 +85,29 @@ class _DrawerWidgetState extends State<DrawerWidget> {
 
   UserPreferences  user = UserPreferences();
   @override
-  void initState() {
+  void initState(){
 
     getLoggedInState();
     super.initState();
+    getwelcomebannar();
+  }
+  var welcomebannar;
 
-
+  Future getwelcomebannar() async {
+    try {
+      NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}welcome?lang=en');
+      welcomebannar = await networkHelper.getdata();
+       setState(()  {
+       return welcomebannar;
+       });
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Directionality(
       textDirection: AppController.textDirection,
       child: Drawer(
@@ -109,23 +124,37 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                   SizedBox(
                     height: 10.0,
                   ),
-                  Padding(
+                  welcomebannar!=null?  Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CircleAvatar(
                       backgroundColor: Colors.white,
                       radius: 60.0,
-                      child: Image.asset(
-                        'images/Logo.png',
+                      child:
+                    Image.network('${Api().baseImgURL + welcomebannar['Images']}',
                         width: 100,
                         height: 100,
-                        fit: BoxFit.contain,
-                      ),
+                        fit: BoxFit.contain,)
+
+
+                    ),
+                  ):Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 60.0,
+                      child:  Container(
+                        width: 100,
+                        height: 100,
+                        child:   CircularProgressIndicator(),
+                      )
+
+
                     ),
                   ),
                   name!=null ?ListTile(
-                    title:Text('${name}',
-                        style: TextStyle(fontSize: 20)),
-                    subtitle: Text('${email}'),
+                    title:Center(child: Text('${name}',
+                        style: TextStyle(fontSize: 20)),),
+                    subtitle: Center(child: Text('${email}'),),
                     contentPadding: EdgeInsets.all(10),
                   ):Container(),
                   Divider(

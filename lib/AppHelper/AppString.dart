@@ -204,6 +204,8 @@ String enterFullName;
  String companyName;
  String Facebook;
  String SnapChat;
+ String Submittedsuccessfully;
+ String assoon;
 
 }
 
@@ -215,6 +217,7 @@ class EnglishString extends Strings {
     ForgotPassword = 'Write your e-mail and we will send to you the password';
     FillEmail = 'Write your Email';
     EmailInvalid = 'Email Invalid';
+    assoon = 'we will contact with you as soon as possible';
     PleaseCheckPassword='Please Check Password';
     ChangePassword='Change Password';
     ChooseyourLocation='Choose your Location';
@@ -236,6 +239,7 @@ class EnglishString extends Strings {
     alertExitTitle='Alert Exit';
     exitApp='Do you want to exit an App ';
     home='Home';
+    Submittedsuccessfully='Submitted successfully';
     ourclients='our clients';
     FAQ='FAQ';
     SnapChat='SnapChat url';
@@ -403,6 +407,7 @@ class ArabicString extends Strings {
     LoginCommented='الرجاء تسجيل الدخول لتتمكن من التعليق';
 
     enterYourEmail='أدخل بريدك الإلكتروني';
+    enterYourEmail='أدخل بريدك الإلكتروني';
     langPage = 'اللغة ';
     arabicLang = 'العربية';
     Twitter = 'رابط التويتر';
@@ -419,10 +424,12 @@ class ArabicString extends Strings {
     product = 'منتجات';
     Facebook = 'رابط الفيسبوك';
     Note = 'ملاحظة';
+    assoon = 'سيتم التواصل معك في اقرب وقت ';
     loginGist = 'الدخول كزائر';
     Instegram = 'رباط الإنستجرام';
     ourclients = 'عملاؤنا';
     partner = 'العملاء';
+    Submittedsuccessfully = 'تم التقديم بنجاح ';
     companyName = 'اسم الشركة ';
     Address = 'العملاء';
     IndestryType = 'نوع الصناعة';

@@ -62,10 +62,10 @@ class _blogsState extends State<blogs> {
         textDirection: AppController.textDirection,
 
         child: Scaffold(
-          backgroundColor: Color(0xFFf33BE9F),
+          backgroundColor: Color(0xFF04b2d9),
           appBar: widget.back == false
               ? AppBar(
-                  backgroundColor: Color(0xFFf33BE9F),
+                  backgroundColor: Color(0xFF8973d9),
                   centerTitle: true,
                   title: Text('${AppController.strings.blogs}'),
                 )

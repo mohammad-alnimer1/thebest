@@ -51,9 +51,9 @@ class _FAQPageState extends State<FAQPage> {
     return Directionality(
         textDirection: AppController.textDirection,
         child: Scaffold(
-          backgroundColor: Color(0xFFf33BE9F),
+          backgroundColor: Color(0xFF04b2d9),
           appBar: AppBar(
-            backgroundColor: Color(0xFFf33BE9F),
+            backgroundColor: Color(0xFF8973d9),
             centerTitle: true,
             title: Text('${AppController.strings.FAQ}'),
             flexibleSpace: Container(
@@ -71,7 +71,7 @@ class _FAQPageState extends State<FAQPage> {
               return   Container(child:
 
               ExpansionTileCard(
-              baseColor:Color(0xFFf33BE9F) ,
+              baseColor:Color(0xFF04b2d9) ,
                 key: cardKeyList[index],
                 onExpansionChanged: (value) {
                   if (value) {

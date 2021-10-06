@@ -128,9 +128,9 @@ class _AboutDataState extends State<AboutData> {
         textDirection: AppController.textDirection,
 
         child: Scaffold(
-            backgroundColor: Color(0xFFf33BE9F),
+            backgroundColor: Color(0xFF04b2d9),
             appBar: AppBar(
-              backgroundColor: Color(0xFFf33BE9F),
+              backgroundColor: Color(0xFF8973d9),
               centerTitle: true,
               title: AboutUsData != null?languageState!='Ar'?Text('${TitleEn}'):Text('${TitleAr}'):Container(),
               flexibleSpace: Container(

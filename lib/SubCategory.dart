@@ -77,9 +77,9 @@ class _SubCategoryState extends State<SubCategory> {
     return Directionality(
         textDirection: AppController.textDirection,
         child: Scaffold(
-          backgroundColor: Color(0xFFf33BE9F),
+          backgroundColor: Color(0xFF04b2d9),
           appBar: AppBar(
-            backgroundColor: Color(0xFFf33BE9F),
+            backgroundColor: Color(0xFF8973d9),
             elevation: 0,
             toolbarHeight: 70,
             centerTitle: true,

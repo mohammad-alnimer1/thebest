@@ -7,6 +7,8 @@ import 'package:thebest/AppHelper/shared_preference.dart';
 import 'package:thebest/Model/UserModel.dart';
 import 'package:thebest/api/Api.dart';
 
+import 'networking.dart';
+
 
 enum Status {
   NotLoggedIn,
@@ -100,7 +102,6 @@ class AuthProvider with ChangeNotifier {
     return result;
 
   }
-
 
 
 }

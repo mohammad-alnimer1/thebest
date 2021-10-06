@@ -248,7 +248,7 @@ class _HomepageState extends State<Homepage> {
         textDirection: AppController.textDirection,
         child: Scaffold(
           drawer: DrawerWidget(),
-          backgroundColor: Color(0xFFf33BE9F),
+          backgroundColor: Color(0xFF04b2d9),
           body: data != null
               ? ListView(
                   children: [
@@ -266,7 +266,7 @@ class _HomepageState extends State<Homepage> {
                                     animationCurve: Curves.fastOutSlowIn,
                                     dotSize: 10.0,
                                     autoplay: true,
-                                    dotIncreasedColor: Color(0xFFf33BE9F),
+                                    dotIncreasedColor: Color(0xFF04b2d9),
                                     dotBgColor: Colors.transparent,
                                     dotPosition: DotPosition.bottomCenter,
                                     dotVerticalPadding: 10.0,
@@ -298,7 +298,7 @@ class _HomepageState extends State<Homepage> {
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,
                             ),
-                            child: Row(
+                            child: welcomebannar!=null?Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
@@ -319,7 +319,7 @@ class _HomepageState extends State<Homepage> {
                                   ),
                                 ),
                               ],
-                            ))),
+                            ):Container(child:  CircularProgressIndicator(),))),
                     GridView.builder(
                       shrinkWrap: true,
                       primary: false,
@@ -439,7 +439,7 @@ class _HomepageState extends State<Homepage> {
 
 
 
-                 Container(margin: EdgeInsets.only(top: 20,bottom: 20),child:  ListView.builder(
+                    cardKeyList!=null? Container(margin: EdgeInsets.only(top: 20,bottom: 20),child:  ListView.builder(
                    physics: NeverScrollableScrollPhysics(),
                    padding:EdgeInsets.only(bottom: 50),
                    shrinkWrap: true,
@@ -480,7 +480,7 @@ class _HomepageState extends State<Homepage> {
                          ),
                        ],
                      ),width: 150,);
-                   },),),
+                   },),):Container(),
 
                     Container(
                       color: Color(0xd2fefefb),
@@ -495,14 +495,15 @@ class _HomepageState extends State<Homepage> {
                         ],
                       ),),
 
-                    Container(child: Carousel(
+                    Container(child:
+    imgslideoffer!=null? Carousel(
                       animationDuration: Duration(seconds: 1),
                       pageController: PageController(),
                       boxFit: BoxFit.cover,
                       animationCurve: Curves.fastOutSlowIn,
                       dotSize: 10.0,
                       autoplay: true,
-                      dotIncreasedColor: Color(0xFFf33BE9F),
+                      dotIncreasedColor: Color(0xFF04b2d9),
                       dotBgColor: Colors.transparent,
                       dotPosition: DotPosition.bottomCenter,
                       dotVerticalPadding: 10.0,
@@ -517,7 +518,10 @@ class _HomepageState extends State<Homepage> {
                         // NetworkImage('${Api().baseImgURL + imgdata[1]['Images']}'),
                         // NetworkImage('${Api().baseImgURL + imgdata[2]['Images']}'),
                       ],
-                    ),height: 250,margin: EdgeInsets.only(bottom: 50,top: 50),),
+                    ):Container(),
+
+                      height: 250,
+                      margin: EdgeInsets.only(bottom: 50,top: 50),),
 
                   ],
                 )

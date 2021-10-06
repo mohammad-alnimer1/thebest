@@ -120,7 +120,7 @@ class _entrypageState extends State<entrypage> {
         //textDirection: AppController.textDirection,
         //debugShowCheckedModeBanner: false,
         child: Scaffold(
-            backgroundColor: Color(0xFFf33BE9F),
+            backgroundColor: Color(0xFFf33BE9F1),
             body: Directionality(
               textDirection: TextDirection.ltr,
               child:ConcentricPageView(

@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.1+3
+version: 1.0.1+4
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -34,7 +34,7 @@ dependencies:
   expansion_tile_card: ^2.0.0
   shared_preferences: ^2.0.5
   modal_progress_hud: ^0.1.3
-  splash_screen_view: ^1.0.3
+
   http:
   cached_network_image:
   contactus: ^1.1.9
@@ -48,17 +48,16 @@ dependencies:
   device_info: ^2.0.2
   share: ^2.0.4
   concentric_transition: ^1.0.1
+  rflutter_alert: ^2.0.4
+  easy_splash_screen: ^1.0.3
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
 
-flutter_native_splash:
-  color: "#51dbb1"
-  image: images/sip.png
-  ios: true
-  android_gravity: fill
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -87,13 +86,13 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: HappyMonkey-Regular
+    - family: Nunito-Regular
       fonts:
-        - asset: fonts/HappyMonkey-Regular.ttf
+        - asset: fonts/Nunito-Regular.ttf
   #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
+    - family: alfont_com_Air-Strip
+      fonts:
+        - asset: fonts/alfont_com_Air-Strip.ttf
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #

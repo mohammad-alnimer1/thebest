@@ -102,7 +102,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         child: Form(
           key: _Form,
           child: Scaffold(
-            backgroundColor: Color(0xFFf33BE9F),
+            backgroundColor: Color(0x04b2d9),
             bottomNavigationBar: Container(
           height: MediaQuery.of(context).size.height * 0.2,
           child: Column(

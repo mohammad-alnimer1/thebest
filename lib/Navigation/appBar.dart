@@ -63,7 +63,7 @@ class _AppBarMState extends State<AppBarM> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFFf33BE9F),
+      color: Color(0xFF8973d9),
       child: new Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

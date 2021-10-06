@@ -60,7 +60,7 @@ class _BlogDiscState extends State<BlogDisc> {
         //textDirection: AppController.textDirection,
         //debugShowCheckedModeBanner: false,
         child: Scaffold(
-      appBar: AppBar(backgroundColor: Color(0xFFf33BE9F),centerTitle: true,
+      appBar: AppBar(backgroundColor: Color(0xFF04b2d9),centerTitle: true,
         title:   languageState!='Ar'? Padding(
         padding: const EdgeInsets.all(5.0),
         child: Text(

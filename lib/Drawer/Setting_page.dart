@@ -82,7 +82,7 @@ class _Setting_pageState extends State<Setting_page> {
         textDirection: AppController.textDirection,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xFFf33BE9F),
+            backgroundColor: Color(0xFF8973d9),
             centerTitle: true,
             title: Text(AppController.strings.Settings),
           ),
@@ -97,7 +97,7 @@ class _Setting_pageState extends State<Setting_page> {
                     )),
                     child: ExpansionTile(
                       collapsedBackgroundColor:
-                          Color(0xFff33BE9F).withOpacity(0.7),
+                          Color(0x04b2d9).withOpacity(0.7),
                       backgroundColor: Colors.white,
 
                       // onExpansionChanged: _onExpansionChanged,

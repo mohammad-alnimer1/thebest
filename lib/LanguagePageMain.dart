@@ -30,7 +30,7 @@ class _LangpageMain extends State<LangpageMain> {
       child: DefaultTabController(
         length: 3,
         child: Scaffold(
-          backgroundColor: Color(0xFFf33BE9F),
+          backgroundColor: Color(0xFF04b2d9),
           body: Align(
             alignment: Alignment.center,
             child: Center(

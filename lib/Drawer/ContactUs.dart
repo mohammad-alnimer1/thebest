@@ -65,11 +65,11 @@ class _ContactUsState extends State<ContactUs> {
      child: Scaffold(
 
       appBar:  AppBar(
-        backgroundColor: Color(0xFFf33BE9F),
+        backgroundColor: Color(0xFF8973d9),
         centerTitle: true,
         title: Text('${AppController.strings.contactUs}'),
       ),
-      backgroundColor: Color(0xFFf33BE9F),
+      backgroundColor: Color(0xFF04b2d9),
       body:  Directionality(
       textDirection: TextDirection.ltr,
 
@@ -93,7 +93,7 @@ class _ContactUsState extends State<ContactUs> {
               child: ClipOval(
                   child: Image.asset(
                 'images/Logo.png',
-                fit: BoxFit.contain,
+                fit: BoxFit.cover,
                 matchTextDirection: true,
                 height: 150,
                 width: 150,

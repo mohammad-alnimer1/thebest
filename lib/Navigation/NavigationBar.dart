@@ -86,7 +86,7 @@ class _NavigationBBarState extends State<NavigationBBar> {
           // resizeToAvoidBottomPadding: true,
           body: _pageOptions[currentPage],
           floatingActionButton: FloatingActionButton(
-            backgroundColor: Color(0xff22ffb4),
+            backgroundColor: Color(0xFF8973d9),
             onPressed: () {
               setState(() {
                 isSelectHome = true;
@@ -107,7 +107,7 @@ class _NavigationBBarState extends State<NavigationBBar> {
 
   _buildBottomTab() {
     return BottomAppBar(
-      color:Color(0xff9df7da),
+      color:Color(0xFF04b2d9),
       shape: CircularNotchedRectangle(),
       child: Container(
         child: Row(

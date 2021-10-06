@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'dart:convert';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as https;
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:share/share.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -130,6 +131,30 @@ class _DetailsPageState extends State<DetailsPage> {
     }
   }
 
+  Future<dynamic> sendrequest() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String name = prefs.getString("Name");
+    String email = prefs.getString("Email");
+    var url = 'http://mohamadfaqeh-001-site37.itempurl.com/api/mobile/insertadvuser';
+      var dataToSend = {
+        "Phone": "000000000",
+        "Title": name.toString(),
+        "Email": email.toString()
+      };
+      print('))))))))))))))))');
+      https.Response response = await https.post(url, body: dataToSend);
+      if (response.statusCode == 200) {
+        String data = response.body;
+        print('hi hi hi hi hi hi  data ${data}');
+        setState(() {
+          if (mounted) jsonEncode(data);
+        });
+      } else {
+        print(response.statusCode);
+      }
+    
+  }
+
   String validdata(String val) {
     if (val.trim().isEmpty) {
       return "${AppController.strings.fillDataError}";
@@ -193,11 +218,11 @@ class _DetailsPageState extends State<DetailsPage> {
         textDirection: AppController.textDirection,
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Color(0xFFf33BE9F),
+            backgroundColor: Color(0xFF8973d9),
             elevation: 0,
             centerTitle: true,
           ),
-          backgroundColor: Color(0xFFf33BE9F),
+          backgroundColor: Color(0xFF04b2d9),
           body: servicesDetails != null && servicesDetails.isNotEmpty ?
           ListView.builder(
             itemCount: 1,
@@ -282,7 +307,38 @@ class _DetailsPageState extends State<DetailsPage> {
                               //   ),
                               // )
                         userIsLoggedIn == null || userIsLoggedIn == false ?
-                        Container():ElevatedButton(onPressed: (){},
+                        Container():ElevatedButton(
+                          onPressed: (){
+                            setState(() {
+                              sendrequest().then((value) =>
+                                  Alert(
+
+                                    context: context,
+                                    type: AlertType.success,
+                                    title: "${AppController.strings.Submittedsuccessfully}",
+                                    desc: "${AppController.strings.assoon}",
+                                    buttons: [
+                                      DialogButton(
+                                        child: Text(
+                                          "${AppController.strings.ok}",
+                                          style: TextStyle(color: Colors.white, fontSize: 20),
+                                        ),
+                                        onPressed: () => Navigator.pop(context),
+                                        width: 120,
+                                      )
+                                    ],
+
+                                    style: AlertStyle(titleStyle: TextStyle(fontSize: 18),
+                                    isCloseButton: false,
+
+                                      animationDuration: Duration(milliseconds: 400),
+
+                                    )
+
+                                  ).show()
+                              );
+                            });
+                        },
                           child: languageState != 'Ar'
                               ? Text(
                               'Request the service now',
@@ -618,7 +674,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                                       }
                                                     });
                                                   },
-                                                  color: Color(0xFFf33BE9F),
+                                                  color: Color(0xFF04b2d9),
                                                   child: Text(
                                                     '${AppController.strings.send}',
                                                     style: TextStyle(

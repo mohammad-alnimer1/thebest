@@ -155,9 +155,9 @@ class _LogInPageState extends State<LogInPage> {
         inAsyncCall: loading1,
         child:  Scaffold(
           appBar: AppBar(elevation: 0.0,
-            backgroundColor: Color(0xFFf33BE9F),
+            backgroundColor: Color(0xFF04b2d9),
           ),
-          backgroundColor: Color(0xFFf33BE9F),
+          backgroundColor: Color(0xFF04b2d9),
 
       bottomNavigationBar: Container(
         height: 125,
@@ -216,7 +216,7 @@ class _LogInPageState extends State<LogInPage> {
             child: ClipOval(
                 child: Image.asset(
                   'images/Logo.png',
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.cover,
                   height: 150,
                   width: 150,
                 )),

@@ -174,9 +174,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
           key: RegistrationKey,
           child: Scaffold(
               appBar: AppBar(elevation: 0.0,
-                backgroundColor: Color(0xFFf33BE9F),
-              ),
-            backgroundColor: Color(0xFFf33BE9F),
+                backgroundColor: Color(0xFF04b2d9),
+              ),//0xFF04b2d9
+            backgroundColor: Color(0xFF04b2d9),
             // bottomNavigationBar:
             body: ModalProgressHUD(
             color: Colors.white12,
@@ -194,10 +194,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         backgroundColor: Colors.white,
                         child: ClipOval(
                             child: Image.asset(
-                          'images/Logo.png',
-                          fit: BoxFit.fitWidth,
-                          height: 80,
-                          width: 80,
+                              'images/LOGO2.png',
+                          fit: BoxFit.cover,
+                          height: 150,
+                          width: 150,
                         )),
                       ),
                       Padding(

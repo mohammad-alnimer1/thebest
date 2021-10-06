@@ -75,12 +75,12 @@ class _ServicesPageState extends State<ServicesPage> {
         child: Scaffold(
           appBar: widget.back == false
               ? AppBar(
-                  backgroundColor: Color(0xFFf33BE9F),
+                  backgroundColor: Color(0xFF8973d9),
                   centerTitle: true,
                   title: Text('${AppController.strings.services}'),
                 )
               : null,
-          backgroundColor: Color(0xFFf33BE9F),
+          backgroundColor: Color(0xFF04b2d9),
           body: data != null
               ? ListView(
                   children: [

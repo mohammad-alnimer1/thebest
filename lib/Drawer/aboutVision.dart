@@ -42,10 +42,6 @@ class _AboutVisionState extends State<AboutVision> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(body:
-
-
-
-
     data!=null?  ListView.builder(
          itemCount: data.length,
          itemBuilder:(context, index) {
