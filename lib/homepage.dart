@@ -136,8 +136,7 @@ class _HomepageState extends State<Homepage> {
 
   Future<dynamic> getMainCAt() async {
     try {
-      NetworkHelper networkHelper =
-          NetworkHelper('${Api().baseURL}servicescategory/en');
+      NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}servicescategory/en');
       mainCat = await networkHelper.getdata();
       setState(() {
         print(mainCat.runtimeType);
