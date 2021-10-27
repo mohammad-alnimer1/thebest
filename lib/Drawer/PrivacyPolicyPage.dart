@@ -17,7 +17,7 @@ class PrivacyPolicy extends StatefulWidget {
 }
 
 class _PrivacyPolicyState extends State<PrivacyPolicy> {
-  bool loading =true;
+  bool loading = true;
   @override
   void initState() {
     getTermsConditions();
@@ -25,36 +25,33 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
     super.initState();
   }
 
-
   var languageState;
 
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     setState(() {
-      if (AppController.strings is ArabicString||languageState=='null'){
+      if (AppController.strings is ArabicString || languageState == 'null') {
         AppSharedPrefs.saveLangType('Ar');
         languageState = preferences.getString("lng");
-      }else{
+      } else {
         AppSharedPrefs.saveLangType('En');
       }
     });
     print(languageState);
   }
 
-
   var data;
   Future<dynamic> getTermsConditions() async {
     NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}privacy/en');
     data = await networkHelper.getdata();
     setState(() {
-      loading=false;
+      loading = false;
 
       print(data);
       return data;
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -70,71 +67,78 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
           title: Text(AppController.strings.PrivacyPolicy),
         ),
         body: data != null
-            ?Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Directionality(
-            textDirection: AppController.textDirection,
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: 20,
-                ),
-                languageState != 'Ar'
-                    ? Center(child: Text(
-                  '${data['TitleEn']}',
-                  textAlign: TextAlign.left,
-                  //AppController.strings.terms,
-                  style: new TextStyle(fontSize: 25.0, color: Colors.black),
-                ),): Center(child: Text(
-                  '${data['TitleAr']}',
-                  textAlign: TextAlign.left,
-                  //AppController.strings.terms,
-                  style: new TextStyle(fontSize: 25.0, color: Colors.black),
-                ),),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  width: 10.0,
-                  child: Center(
-                    child: Text(
+            ? Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Directionality(
+                  textDirection: AppController.textDirection,
+                  child: ListView(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
                       languageState != 'Ar'
-                          ?   '${data['DescriptionEn']}':    data['DescriptionAr'],
-
-                      textAlign: languageState == "Ar"
-                          ? TextAlign.right
-                          : TextAlign.left,
-                    )
+                          ? Center(
+                              child: Text(
+                                '${data['TitleEn']}',
+                                textAlign: TextAlign.left,
+                                //AppController.strings.terms,
+                                style: new TextStyle(
+                                    fontSize: 25.0, color: Colors.black),
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                '${data['TitleAr']}',
+                                textAlign: TextAlign.left,
+                                //AppController.strings.terms,
+                                style: new TextStyle(
+                                    fontSize: 25.0, color: Colors.black),
+                              ),
+                            ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        width: 10.0,
+                        child: Center(
+                            child: Text(
+                          languageState != 'Ar'
+                              ? '${data['DescriptionEn']}'
+                              : data['DescriptionAr'],
+                          textAlign: languageState == "Ar"
+                              ? TextAlign.right
+                              : TextAlign.left,
+                        )),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ):Container(
-          height: double.infinity,
-          child: ModalProgressHUD(
-              color: Colors.white12,
-              inAsyncCall: loading,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: loading
-                          ? Center(
-                          child: Text(
-                              '${AppController.strings.PleaseWait}'))
-                          : Center(
-                        child: Text(
-                          '${AppController.strings.NoServices}',
-                          style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black87),
-                        ),
-                      )),
-                ],
-              )),
-        ),),
+              )
+            : Container(
+                height: double.infinity,
+                child: ModalProgressHUD(
+                    color: Colors.white12,
+                    inAsyncCall: loading,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                            child: loading
+                                ? Center(
+                                    child: Text(
+                                        '${AppController.strings.pleaseWait}'))
+                                : Center(
+                                    child: Text(
+                                      '${AppController.strings.NoServices}',
+                                      style: TextStyle(
+                                          fontSize: 18, color: Colors.black87),
+                                    ),
+                                  )),
+                      ],
+                    )),
+              ),
+      ),
     );
   }
 }

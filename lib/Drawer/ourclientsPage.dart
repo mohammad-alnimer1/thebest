@@ -13,14 +13,12 @@ class ourclientsPage extends StatefulWidget {
 }
 
 class _ourclientsPageState extends State<ourclientsPage> {
-
-
   List Listpartner;
   var partner;
 
   Future<dynamic> getpartner() async {
     NetworkHelper networkHelper =
-    NetworkHelper('${Api().baseURL}getpartner/en');
+        NetworkHelper('${Api().baseURL}getpartner/en');
     partner = await networkHelper.getdata();
     setState(() {
       Listpartner = partner;
@@ -35,10 +33,10 @@ class _ourclientsPageState extends State<ourclientsPage> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
     setState(() {
-      if (AppController.strings is ArabicString||languageState=='null'){
+      if (AppController.strings is ArabicString || languageState == 'null') {
         AppSharedPrefs.saveLangType('Ar');
         languageState = preferences.getString("lng");
-      }else{
+      } else {
         AppSharedPrefs.saveLangType('En');
       }
     });
@@ -51,6 +49,7 @@ class _ourclientsPageState extends State<ourclientsPage> {
     langState();
     getpartner();
   }
+
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -58,91 +57,95 @@ class _ourclientsPageState extends State<ourclientsPage> {
         //textDirection: AppController.textDirection,
         //debugShowCheckedModeBanner: false,
         child: Scaffold(
-          backgroundColor:Color(0xFF04b2d9) ,
-            appBar: AppBar(
-              backgroundColor: Color(0xFF8973d9),
-              centerTitle: true,
-              title: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Text(
-                  '${AppController.strings.ourclients}',
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                ),
+          backgroundColor: Color(0xFF04b2d9),
+          appBar: AppBar(
+            backgroundColor: Color(0xFF8973d9),
+            centerTitle: true,
+            title: Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Text(
+                '${AppController.strings.ourclients}',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
               ),
             ),
-            body: Listpartner!=null?   GridView.builder(
-              padding: const EdgeInsets.all(20),
-              itemCount: Listpartner.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 15,
-                crossAxisCount: 2,
-                childAspectRatio: MediaQuery.of(context).size.width /
-                    (MediaQuery.of(context).size.height / 1),
-              ),
-              itemBuilder: (context, index) {
-                return Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Expanded(
-                        flex: 4,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          radius: 180,
-                          backgroundImage: NetworkImage(
-                              Api().baseImgURL + Listpartner[index]['Images']),
-                        ),
-                      ),
-                      Listpartner[index]['TitleAr']!=null|| Listpartner[index]['TitleEn']!=null?
-                      Expanded(
-                          flex: 3,
-                          child: Column(
-                            mainAxisAlignment:
-                            MainAxisAlignment.spaceAround,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(
-                                  languageState == 'Ar'
-                                      ? Listpartner[index]['TitleAr']
-                                      : Listpartner[index]['TitleEn'],
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-
-                            ],
-                          )):Container(),
-                    ],
+          ),
+          body: Listpartner != null
+              ? GridView.builder(
+                  padding: const EdgeInsets.all(20),
+                  itemCount: Listpartner.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: 5,
+                    mainAxisSpacing: 15,
+                    crossAxisCount: 2,
+                    childAspectRatio: MediaQuery.of(context).size.width /
+                        (MediaQuery.of(context).size.height / 1),
                   ),
-                );
-              },
-            ):Container(
-              height: double.infinity,
-              child: ModalProgressHUD(
-                  color: Colors.white12,
-                  inAsyncCall: loading,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                          child: loading
-                              ? Center(
-                              child: Text(
-                                  '${AppController.strings.PleaseWait}'))
-                              : Center(
-                            child: Text(
-                              '${AppController.strings.NoServices}',
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black87),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(
+                            flex: 4,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.white,
+                              radius: 180,
+                              backgroundImage: NetworkImage(Api().baseImgURL +
+                                  Listpartner[index]['Images']),
                             ),
-                          )),
-                    ],
-                  )),
-            ),));
+                          ),
+                          Listpartner[index]['TitleAr'] != null ||
+                                  Listpartner[index]['TitleEn'] != null
+                              ? Expanded(
+                                  flex: 3,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Text(
+                                          languageState == 'Ar'
+                                              ? Listpartner[index]['TitleAr']
+                                              : Listpartner[index]['TitleEn'],
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ))
+                              : Container(),
+                        ],
+                      ),
+                    );
+                  },
+                )
+              : Container(
+                  height: double.infinity,
+                  child: ModalProgressHUD(
+                      color: Colors.white12,
+                      inAsyncCall: loading,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              child: loading
+                                  ? Center(
+                                      child: Text(
+                                          '${AppController.strings.pleaseWait}'))
+                                  : Center(
+                                      child: Text(
+                                        '${AppController.strings.NoServices}',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.black87),
+                                      ),
+                                    )),
+                        ],
+                      )),
+                ),
+        ));
   }
 }

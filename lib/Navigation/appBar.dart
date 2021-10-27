@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:thebest/AppHelper/AppController.dart';
 import 'package:thebest/AppHelper/networking.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -62,9 +61,9 @@ class _AppBarMState extends State<AppBarM> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Color(0xFF8973d9),
-      child: new Center(
+    return AppBar(
+      backgroundColor: Color(0xFF8973d9),
+      title: Center(
           child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -94,30 +93,6 @@ class _AppBarMState extends State<AppBarM> {
               }
             },
           ),
-          Container(
-            height: 100,
-            width: 150,
-            decoration: BoxDecoration(
-              borderRadius:
-                  BorderRadius.vertical(bottom: Radius.elliptical(50, 50)),
-              color: Colors.white,
-            ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '${AppController.strings.menu}',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                Builder(
-                    builder: (context) => IconButton(
-                        icon: Icon(Icons.menu),
-                        onPressed: () => Scaffold.of(context).openDrawer()))
-              ],
-            ),
-          ),
           IconButton(
             icon: FaIcon(FontAwesomeIcons.youtube, color: Colors.white),
             onPressed: () async {
@@ -144,7 +119,4 @@ class _AppBarMState extends State<AppBarM> {
       )),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(20.0);
 }

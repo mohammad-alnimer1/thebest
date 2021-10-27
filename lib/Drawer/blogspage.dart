@@ -60,152 +60,161 @@ class _blogsState extends State<blogs> {
   Widget build(BuildContext context) {
     return Directionality(
         textDirection: AppController.textDirection,
-
         child: Scaffold(
-          backgroundColor: Color(0xFF04b2d9),
-          appBar: widget.back == false
-              ? AppBar(
-                  backgroundColor: Color(0xFF8973d9),
-                  centerTitle: true,
-                  title: Text('${AppController.strings.blogs}'),
-                )
-              : null,
-          body: Directionality(
-          textDirection: languageState == "Ar"
-          ? TextDirection.ltr
-          : TextDirection.rtl,
-
-          child: datablogs != null ?
-          ListView.builder(
-         itemCount: datablogs.length,
-         itemBuilder: (context, index) {
-            return Card(
-             child: Container(
-               child: Row(
-               crossAxisAlignment: CrossAxisAlignment.stretch,
-                 children: [
-                   Expanded(
-                          flex: 3,
-                          child: ClipOval(
-                            child: Image.network(
-                              "${Api().baseImgURL + datablogs[index]['Images']}",
-                              fit: BoxFit.fill,
-                              height: 150,
-                              width: 150,
-                            )),),
-                   Expanded(
-                       flex: 4,
-                       child: Column(
-                         crossAxisAlignment: CrossAxisAlignment.center,
-                         mainAxisAlignment:
-                         MainAxisAlignment.spaceAround,
-                         children: [
-                           Container(
-                             height: MediaQuery.of(context).size.width * 0.10,
-                             width: MediaQuery.of(context).size.width * 0.60,
-                             child: Padding(
-                               padding: const EdgeInsets.all(5.0),
-                               child: Text(
-                                 languageState != 'Ar'
-                                     ? '${datablogs[index]['TitleEn']}'
-                                              : '${datablogs[index]['TitleAr']}',
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold),
-                                          textAlign: languageState == "Ar"
-                                              ? TextAlign.right
-                                              : TextAlign.left,
-                                        ),
-                                      ),
-                                    ),
-                                   Container(
-                                       height:
-                                       MediaQuery.of(context).size.height * 0.10,
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(
-                                          languageState != "Ar"
-                                              ? '${datablogs[index]['DescriptionEn']}'
-                                              : '${datablogs[index]['DescriptionAr']}',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                          textAlign: languageState == "Ar"
-                                              ? TextAlign.right
-                                              : TextAlign.left,
-                                        )),
-                                    RaisedButton(
-                                      child: Text(
-                                        '${AppController.strings.ReadMore}',
-                                        style: TextStyle(
-                                            fontSize: 18, color: Colors.white),
-                                      ),
-                                      onPressed: () {
-                                        var DescriptionAr =
-                                            '${datablogs[index]['DescriptionAr']}';
-                                        var DescriptionEn =
-                                            '${datablogs[index]['DescriptionEn']}';
-                                        var TitleAr =
-                                            '${datablogs[index]['TitleAr']}';
-                                        var TitleEn =
-                                            '${datablogs[index]['TitleEn']}';
-                                        var Images =
-                                            "${Api().baseImgURL + datablogs[index]['Images']}";
-
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => BlogDisc(
-                                              DescriptionAr: DescriptionAr,
-                                              DescriptionEn: DescriptionEn,
-                                              Images: Images,
-                                              TitleEn: TitleEn,
-                                              TitleAr: TitleAr,
+            backgroundColor: Color(0xFF04b2d9),
+            appBar: widget.back == false
+                ? AppBar(
+                    backgroundColor: Color(0xFF8973d9),
+                    centerTitle: true,
+                    title: Text('${AppController.strings.blogs}'),
+                  )
+                : null,
+            body: Directionality(
+              textDirection:
+                  languageState == "Ar" ? TextDirection.ltr : TextDirection.rtl,
+              child: datablogs != null
+                  ? ListView.builder(
+                      itemCount: datablogs.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          child: Container(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: ClipOval(
+                                      child: Image.network(
+                                    "${Api().baseImgURL + datablogs[index]['Images']}",
+                                    fit: BoxFit.fill,
+                                    height: 150,
+                                    width: 150,
+                                  )),
+                                ),
+                                Expanded(
+                                    flex: 4,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.10,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.60,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Text(
+                                              languageState != 'Ar'
+                                                  ? '${datablogs[index]['TitleEn']}'
+                                                  : '${datablogs[index]['TitleAr']}',
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold),
+                                              textAlign: languageState == "Ar"
+                                                  ? TextAlign.right
+                                                  : TextAlign.left,
                                             ),
                                           ),
-                                        );
-                                      },
-                                      color: Colors.black,
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                          BorderRadius.circular(10.0),
-                                          side:
-                                          BorderSide(color: Colors.black)),
-                                    )
-                                  ],
-                                )),
-                 ],
-               ),
-               height: 190,
-             ),
-            );
-            },
-          ) : Container(
-                  height: double.infinity,
-                  child: ModalProgressHUD(
-                      color: Colors.white12,
-                      inAsyncCall: loading,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                              child: loading
-                                  ? Center(
-                                      child: Text(
-                                          '${AppController.strings.PleaseWait}'))
-                                  : Center(
-                                      child: Text(
-                                        '${AppController.strings.NoServices}',
-                                        style: TextStyle(
-                                            fontSize: 18,
-                                            color: Colors.black87),
-                                      ),
+                                        ),
+                                        Container(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.10,
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: Text(
+                                              languageState != "Ar"
+                                                  ? '${datablogs[index]['DescriptionEn']}'
+                                                  : '${datablogs[index]['DescriptionAr']}',
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                              ),
+                                              textAlign: languageState == "Ar"
+                                                  ? TextAlign.right
+                                                  : TextAlign.left,
+                                            )),
+                                        RaisedButton(
+                                          child: Text(
+                                            '${AppController.strings.ReadMore}',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.white),
+                                          ),
+                                          onPressed: () {
+                                            var DescriptionAr =
+                                                '${datablogs[index]['DescriptionAr']}';
+                                            var DescriptionEn =
+                                                '${datablogs[index]['DescriptionEn']}';
+                                            var TitleAr =
+                                                '${datablogs[index]['TitleAr']}';
+                                            var TitleEn =
+                                                '${datablogs[index]['TitleEn']}';
+                                            var Images =
+                                                "${Api().baseImgURL + datablogs[index]['Images']}";
+
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => BlogDisc(
+                                                  DescriptionAr: DescriptionAr,
+                                                  DescriptionEn: DescriptionEn,
+                                                  Images: Images,
+                                                  TitleEn: TitleEn,
+                                                  TitleAr: TitleAr,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          color: Colors.black,
+                                          elevation: 2,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              side: BorderSide(
+                                                  color: Colors.black)),
+                                        )
+                                      ],
                                     )),
-                        ],
-                      )),
-                ),
-        )));
+                              ],
+                            ),
+                            height: 190,
+                          ),
+                        );
+                      },
+                    )
+                  : Container(
+                      height: double.infinity,
+                      child: ModalProgressHUD(
+                          color: Colors.white12,
+                          inAsyncCall: loading,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                  child: loading
+                                      ? Center(
+                                          child: Text(
+                                              '${AppController.strings.pleaseWait}'))
+                                      : Center(
+                                          child: Text(
+                                            '${AppController.strings.NoServices}',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.black87),
+                                          ),
+                                        )),
+                            ],
+                          )),
+                    ),
+            )));
   }
 }
 //Directionality(

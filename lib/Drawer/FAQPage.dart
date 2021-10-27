@@ -24,6 +24,7 @@ class _FAQPageState extends State<FAQPage> {
       FAQ;
     });
   }
+
   bool loading = true;
 
   var languageState;
@@ -38,12 +39,14 @@ class _FAQPageState extends State<FAQPage> {
     }
     print(languageState);
   }
+
   @override
   void initState() {
     super.initState();
     getaboutvision();
     langState();
   }
+
   final List<GlobalKey<ExpansionTileCardState>> cardKeyList = [];
 
   @override
@@ -61,73 +64,77 @@ class _FAQPageState extends State<FAQPage> {
                 //     gradient: AppConstants().mainColors()),
                 ),
           ),
-          body:
-          FAQ!=null?  ListView.builder(
-            padding:EdgeInsets.only(bottom: 50),
-            itemCount: FAQ.length,
-            itemBuilder: (context, index) {
-              cardKeyList.add(GlobalKey(debugLabel: "index :$index"));
+          body: FAQ != null
+              ? ListView.builder(
+                  padding: EdgeInsets.only(bottom: 50),
+                  itemCount: FAQ.length,
+                  itemBuilder: (context, index) {
+                    cardKeyList.add(GlobalKey(debugLabel: "index :$index"));
 
-              return   Container(child:
-
-              ExpansionTileCard(
-              baseColor:Color(0xFF04b2d9) ,
-                key: cardKeyList[index],
-                onExpansionChanged: (value) {
-                  if (value) {
-                    Future.delayed(const Duration(milliseconds: 500), () {
-                      for (var i = 0; i < cardKeyList.length; i++) {
-                        if (index != i) {
-                          cardKeyList[i].currentState?.collapse();
-                        }
-                      }
-                    });
-                  }
-                },
-                title: Text(
-                  languageState == 'Ar'
-                      ? '${FAQ[index]['TitleAr']} '
-                      : '${FAQ[index]['TitleEn']} ',
-                  style: TextStyle(fontSize: 20,),
-
+                    return Container(
+                      child: ExpansionTileCard(
+                        baseColor: Color(0xFF04b2d9),
+                        key: cardKeyList[index],
+                        onExpansionChanged: (value) {
+                          if (value) {
+                            Future.delayed(const Duration(milliseconds: 500),
+                                () {
+                              for (var i = 0; i < cardKeyList.length; i++) {
+                                if (index != i) {
+                                  cardKeyList[i].currentState?.collapse();
+                                }
+                              }
+                            });
+                          }
+                        },
+                        title: Text(
+                          languageState == 'Ar'
+                              ? '${FAQ[index]['TitleAr']} '
+                              : '${FAQ[index]['TitleEn']} ',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                        ),
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              languageState == 'Ar'
+                                  ? '${FAQ[index]['DescriptionAr']} '
+                                  : '${FAQ[index]['DescriptionEn']} ',
+                            ),
+                          ),
+                        ],
+                      ),
+                      width: 150,
+                    );
+                  },
+                )
+              : Container(
+                  height: double.infinity,
+                  child: ModalProgressHUD(
+                      color: Colors.white12,
+                      inAsyncCall: loading,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              child: loading
+                                  ? Center(
+                                      child: Text(
+                                          '${AppController.strings.pleaseWait}'))
+                                  : Center(
+                                      child: Text(
+                                        '${AppController.strings.NoServices}',
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.black87),
+                                      ),
+                                    )),
+                        ],
+                      )),
                 ),
-                children: [
-                  Padding(
-                    padding: EdgeInsets.all(10),
-                    child:  Text(
-                      languageState == 'Ar'
-                          ? '${FAQ[index]['DescriptionAr']} '
-                          : '${FAQ[index]['DescriptionEn']} ',
-
-                    ),
-                  ),
-                ],
-              ),width: 150,);
-            },)
-        : Container(
-      height: double.infinity,
-      child: ModalProgressHUD(
-          color: Colors.white12,
-          inAsyncCall: loading,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                  child: loading
-                      ? Center(
-                      child: Text(
-                          '${AppController.strings.PleaseWait}'))
-                      : Center(
-                    child: Text(
-                      '${AppController.strings.NoServices}',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black87),
-                    ),
-                  )),
-            ],
-          )),
-    ),));
+        ));
   }
 }
