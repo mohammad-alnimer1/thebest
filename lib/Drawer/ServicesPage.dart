@@ -17,7 +17,6 @@ class ServicesPage extends StatefulWidget {
 }
 
 class _ServicesPageState extends State<ServicesPage> {
-
   var mainCat;
   List data;
 
@@ -52,13 +51,14 @@ class _ServicesPageState extends State<ServicesPage> {
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     languageState = preferences.getString("lng");
-    if(languageState=='Ar'){
+    if (languageState == 'Ar') {
       AppController.strings = ArabicString();
-    }else if(languageState=='En') {
+    } else if (languageState == 'En') {
       AppController.strings = EnglishString();
     }
     print(languageState);
   }
+
   @override
   void initState() {
     super.initState();
@@ -108,8 +108,8 @@ class _ServicesPageState extends State<ServicesPage> {
                                 MaterialPageRoute(
                                   builder: (context) => SubCategory(
                                     id: id,
-                                    name:name ,
-                                    nameEN:nameEN ,
+                                    name: name,
+                                    nameEN: nameEN,
                                   ),
                                 ),
                               );
@@ -128,60 +128,71 @@ class _ServicesPageState extends State<ServicesPage> {
                                   ),
                                 ),
                                 Expanded(
-                                  flex: 2,
+                                    flex: 2,
                                     child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    languageState != 'Ar'
-                                        ? Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              data[index]['TitleEn'],
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          )
-                                        : Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: Text(
-                                              data[index]['TitleAr'],
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        languageState != 'Ar'
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                child: Text(
+                                                  data[index]['TitleEn'],
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              )
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsets.all(5.0),
+                                                child: Text(
+                                                  data[index]['TitleAr'],
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ),
+                                        RaisedButton(
+                                          child: Text(
+                                            '${AppController.strings.viewServices}',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.white),
                                           ),
-                                    RaisedButton(
-                                      child: Text(
-                                        '${AppController.strings.viewServices}',
-                                        style: TextStyle(
-                                            fontSize: 18, color: Colors.white),
-                                      ),
-                                      onPressed: () {
-                                        var name = mainCat[index]['TitleAr'];
-                                        var nameEN = mainCat[index]['TitleEn'];
-                                        int id = data[index]['PagesID'];;
-                                        print('id id id id id ${id}');
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => SubCategory(
-                                              name:name,
-                                              nameEN:nameEN ,
-                                              id: id,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      color: Colors.black,
-                                      elevation: 2,
-                                      shape: RoundedRectangleBorder(
-                                       borderRadius: BorderRadius.circular(10.0),
-                                       side: BorderSide(color: Colors.black)),
-                                    )
-                                  ],
-                                )),
+                                          onPressed: () {
+                                            var name =
+                                                mainCat[index]['TitleAr'];
+                                            var nameEN =
+                                                mainCat[index]['TitleEn'];
+                                            int id = data[index]['PagesID'];
+                                            ;
+                                            print('id id id id id ${id}');
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SubCategory(
+                                                  name: name,
+                                                  nameEN: nameEN,
+                                                  id: id,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          color: Colors.black,
+                                          elevation: 2,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              side: BorderSide(
+                                                  color: Colors.black)),
+                                        )
+                                      ],
+                                    )),
                               ],
                             ),
                           ),
@@ -203,7 +214,7 @@ class _ServicesPageState extends State<ServicesPage> {
                               child: loading
                                   ? Center(
                                       child: Text(
-                                          '${AppController.strings.PleaseWait}'))
+                                          '${AppController.strings.pleaseWait}'))
                                   : Center(
                                       child: Text(
                                         '${AppController.strings.NoServices}',

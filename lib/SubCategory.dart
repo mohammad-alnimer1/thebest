@@ -30,7 +30,7 @@ class _SubCategoryState extends State<SubCategory> {
   Future<dynamic> getSubCat(int id) async {
     try {
       NetworkHelper networkHelper =
-      NetworkHelper('${Api().baseURL}serviceslist/en?id=${id = widget.id}');
+          NetworkHelper('${Api().baseURL}serviceslist/en?id=${id = widget.id}');
       SubCat = await networkHelper.getdata();
       setState(() {
         print('hi hi hi hih ih hi hi id ${id}');
@@ -44,7 +44,6 @@ class _SubCategoryState extends State<SubCategory> {
     }
   }
 
-
   var languageState;
   void langState() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
@@ -57,19 +56,20 @@ class _SubCategoryState extends State<SubCategory> {
     }
     print(languageState);
   }
+
   @override
   void initState() {
     super.initState();
-  setState(() {
-    widget.name;
-    widget.nameEN;
+    setState(() {
+      widget.name;
+      widget.nameEN;
 
-    print('widget.name');
-    // print('widget.name${widget.nameEN}');
-    // print('widget.name${widget.name}');
-    getSubCat(widget.id);
-    langState();
-  });
+      print('widget.name');
+      // print('widget.name${widget.nameEN}');
+      // print('widget.name${widget.name}');
+      getSubCat(widget.id);
+      langState();
+    });
   }
 
   @override
@@ -83,8 +83,9 @@ class _SubCategoryState extends State<SubCategory> {
             elevation: 0,
             toolbarHeight: 70,
             centerTitle: true,
-            title:languageState == 'Ar'? Text('${widget.name}')
-                :Text('${widget.nameEN}') ,
+            title: languageState == 'Ar'
+                ? Text('${widget.name}')
+                : Text('${widget.nameEN}'),
           ),
           body: data != null && data.isNotEmpty
               ? ListView.builder(
@@ -102,30 +103,35 @@ class _SubCategoryState extends State<SubCategory> {
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
-
                             children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height*0.5,
-                              child:   Image.network(
-                              '${Api().baseImgURL + data[index]['Images']}',
-                                fit: BoxFit.fill,
-                            ),),
-                               Padding(
-                                 padding: EdgeInsets.all(10),
-                                 child:Center(child: Text(
-                                   languageState != 'Ar'
-                                       ?'${data[index]['TitleEn']}':'${data[index]['TitleAr']}',
-                                 ),)
-                               ),
-
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.5,
+                                child: Image.network(
+                                  '${Api().baseImgURL + data[index]['Images']}',
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
                               Padding(
-                                      padding: EdgeInsets.all(10),
-                                      child: Text(languageState != 'Ar' ? "${data[index]['DescriptionEn']}":"${data[index]['DescriptionAr']}",
-                                        textAlign: languageState == "Ar"
-                                          ? TextAlign.right
-                                          : TextAlign.left,),
+                                  padding: EdgeInsets.all(10),
+                                  child: Center(
+                                    child: Text(
+                                      languageState != 'Ar'
+                                          ? '${data[index]['TitleEn']}'
+                                          : '${data[index]['TitleAr']}',
                                     ),
-
+                                  )),
+                              Padding(
+                                padding: EdgeInsets.all(10),
+                                child: Text(
+                                  languageState != 'Ar'
+                                      ? "${data[index]['DescriptionEn']}"
+                                      : "${data[index]['DescriptionAr']}",
+                                  textAlign: languageState == "Ar"
+                                      ? TextAlign.right
+                                      : TextAlign.left,
+                                ),
+                              ),
                               Container(
                                 height: 50,
                                 color: Colors.grey.shade200,
@@ -139,7 +145,9 @@ class _SubCategoryState extends State<SubCategory> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => DetailsPage(id: id,)),
+                                              builder: (context) => DetailsPage(
+                                                    id: id,
+                                                  )),
                                         );
                                       },
                                       child: Container(
@@ -174,7 +182,7 @@ class _SubCategoryState extends State<SubCategory> {
                             child: loading
                                 ? Center(
                                     child: Text(
-                                        '${AppController.strings.PleaseWait}'))
+                                        '${AppController.strings.pleaseWait}'))
                                 : Center(
                                     child: Text(
                                       '${AppController.strings.NoServices}',

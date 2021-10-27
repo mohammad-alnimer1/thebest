@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -12,8 +11,6 @@ class AboutVision extends StatefulWidget {
 }
 
 class _AboutVisionState extends State<AboutVision> {
-
-
   var DescriptionAr;
   var DescriptionEn;
   var TitleAr;
@@ -22,7 +19,8 @@ class _AboutVisionState extends State<AboutVision> {
   var aboutvision;
   List data;
   Future<dynamic> getaboutvision() async {
-    NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}aboutvision/en');
+    NetworkHelper networkHelper =
+        NetworkHelper('${Api().baseURL}aboutvision/en');
     aboutvision = await networkHelper.getdata();
     setState(() {
       print(aboutvision);
@@ -36,64 +34,72 @@ class _AboutVisionState extends State<AboutVision> {
     getaboutvision();
   }
 
-  bool loading=true;
-
+  bool loading = true;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body:
-    data!=null?  ListView.builder(
-         itemCount: data.length,
-         itemBuilder:(context, index) {
-         return Container(
-           padding: EdgeInsets.only(bottom: 30,right: 20,left: 20,top: 30),
-           height: 500,
-           child: Column(
-           mainAxisAlignment: MainAxisAlignment.spaceAround,
-           children: [
-             Expanded(
-               child: CircleAvatar(
-                 backgroundColor: Colors.white,
-                 radius: 180,
-                 backgroundImage: NetworkImage('${Api().baseImgURL+aboutvision[index]['Images']}'),
-             ),),
-             Padding(
-               padding: const EdgeInsets.all(5.0),
-               child: Text(
-                 '${data[index]['TitleEn']}',
-                 style: TextStyle(
-                     fontSize: 17, fontWeight: FontWeight.bold),
-               ),
-             ),
-             Expanded(child: Text('${data[index]['DescriptionEn']}')),
-           Divider(thickness: 3,color: Colors.blue,)
-           ],
-         ),);
-       },):
-      Container(height: double.infinity,child:  ModalProgressHUD(
-          color: Colors.white12,
-          inAsyncCall: loading,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                  child: loading
-                      ? Center(
-                      child: Text(
-                          '${AppController.strings.PleaseWait}'))
-                      : Center(
-                    child: Text(
-                      '${AppController.strings.NoServices}',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black87),
-                    ),
+    return Scaffold(
+      body: data != null
+          ? ListView.builder(
+              itemCount: data.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  padding:
+                      EdgeInsets.only(bottom: 30, right: 20, left: 20, top: 30),
+                  height: 500,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          radius: 180,
+                          backgroundImage: NetworkImage(
+                              '${Api().baseImgURL + aboutvision[index]['Images']}'),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          '${data[index]['TitleEn']}',
+                          style: TextStyle(
+                              fontSize: 17, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(child: Text('${data[index]['DescriptionEn']}')),
+                      Divider(
+                        thickness: 3,
+                        color: Colors.blue,
+                      )
+                    ],
+                  ),
+                );
+              },
+            )
+          : Container(
+              height: double.infinity,
+              child: ModalProgressHUD(
+                  color: Colors.white12,
+                  inAsyncCall: loading,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          child: loading
+                              ? Center(
+                                  child: Text(
+                                      '${AppController.strings.pleaseWait}'))
+                              : Center(
+                                  child: Text(
+                                    '${AppController.strings.NoServices}',
+                                    style: TextStyle(
+                                        fontSize: 18, color: Colors.black87),
+                                  ),
+                                )),
+                    ],
                   )),
-            ],
-          )),),
-
-
-      );
+            ),
+    );
   }
 }

@@ -105,6 +105,7 @@ class _HomepageState extends State<Homepage> {
       print(e);
     }
   }
+
   var faq;
   Future<dynamic> getFAQ() async {
     try {
@@ -112,7 +113,7 @@ class _HomepageState extends State<Homepage> {
           NetworkHelper('${Api().baseURL}gethomefaqs/en');
       faq = await networkHelper.getdata();
       setState(() {
-       ListFAQ=  faq;
+        ListFAQ = faq;
       });
     } catch (e) {
       print(e);
@@ -136,7 +137,8 @@ class _HomepageState extends State<Homepage> {
 
   Future<dynamic> getMainCAt() async {
     try {
-      NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}servicescategory/en');
+      NetworkHelper networkHelper =
+          NetworkHelper('${Api().baseURL}servicescategory/en');
       mainCat = await networkHelper.getdata();
       setState(() {
         print(mainCat.runtimeType);
@@ -157,16 +159,15 @@ class _HomepageState extends State<Homepage> {
       imgdata = slidImg;
     });
   }
+
   Future<dynamic> getslidOffers() async {
     NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}getoffer/en');
     slidOffers = await networkHelper.getdata();
     setState(() {
-     imgslideoffer= slidOffers;
+      imgslideoffer = slidOffers;
       print('ListslidOffers ****************** ${slidOffers}');
     });
   }
-
-
 
   var facebookurl;
   Future<dynamic> getFacebook() async {
@@ -236,9 +237,9 @@ class _HomepageState extends State<Homepage> {
       getwelcomebannar();
       getslidOffers();
       getFAQ();
-
     });
   }
+
   final List<GlobalKey<ExpansionTileCardState>> cardKeyList = [];
 
   @override
@@ -297,28 +298,33 @@ class _HomepageState extends State<Homepage> {
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white,
                             ),
-                            child: welcomebannar!=null?Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  languageState == 'Ar'
-                                      ? '${welcomebannar['TitleAr']} '
-                                      : '${welcomebannar['TitleEn']} ',
-                                  style: TextStyle(
-                                      fontSize: 22,
-                                      fontStyle: FontStyle.italic),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(bottom: 16),
-                                  child: Container(
-                                    child: Image.network(
-                                        '${Api().baseImgURL + welcomebannar['Images']}'),
-                                    height: 50,
-                                    width: 50,
-                                  ),
-                                ),
-                              ],
-                            ):Container(child:  CircularProgressIndicator(),))),
+                            child: welcomebannar != null
+                                ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        languageState == 'Ar'
+                                            ? '${welcomebannar['TitleAr']} '
+                                            : '${welcomebannar['TitleEn']} ',
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            fontStyle: FontStyle.italic),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(bottom: 16),
+                                        child: Container(
+                                          child: Image.network(
+                                              '${Api().baseImgURL + welcomebannar['Images']}'),
+                                          height: 50,
+                                          width: 50,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : Container(
+                                    child: CircularProgressIndicator(),
+                                  ))),
                     GridView.builder(
                       shrinkWrap: true,
                       primary: false,
@@ -356,7 +362,8 @@ class _HomepageState extends State<Homepage> {
                                     backgroundColor: Colors.white,
                                     radius: 180,
                                     backgroundImage: NetworkImage(
-                                        Api().baseImgURL + mainCat[index]['Images']),
+                                        Api().baseImgURL +
+                                            mainCat[index]['Images']),
                                   ),
                                 ),
                                 Expanded(
@@ -421,107 +428,123 @@ class _HomepageState extends State<Homepage> {
                         );
                       },
                     ),
-
-
-              Container(
-              color: Color(0xd2fefefb),
-              child:   Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(padding: EdgeInsets.only(bottom: 20,top: 20),
-                  child: Text(
-                    '${AppController.strings.FAQ}',
-                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                  ),),
-              ],
-            ),),
-
-
-
-                    cardKeyList!=null? Container(margin: EdgeInsets.only(top: 20,bottom: 20),child:  ListView.builder(
-                   physics: NeverScrollableScrollPhysics(),
-                   padding:EdgeInsets.only(bottom: 50),
-                   shrinkWrap: true,
-                   itemCount: faq.length,
-                   itemBuilder: (context, index) {
-                     cardKeyList.add(GlobalKey(debugLabel: "index :$index"));
-
-                     return   Container(
-                       margin: EdgeInsets.all(10),
-                       child: ExpansionTileCard(
-                       key: cardKeyList[index],
-                       onExpansionChanged: (value) {
-                         if (value) {
-                           Future.delayed(const Duration(milliseconds: 500), () {
-                             for (var i = 0; i < cardKeyList.length; i++) {
-                               if (index != i) {
-                                 cardKeyList[i].currentState?.collapse();
-                               }
-                             }
-                           });
-                         }
-                       },
-                       title: Text(
-                         languageState == 'Ar'
-                             ? '${ListFAQ[index]['TitleAr']} '
-                             : '${ListFAQ[index]['TitleEn']} ',
-
-                       ),
-                       children: [
-                         Padding(
-                           padding: EdgeInsets.all(10),
-                           child:  Text(
-                             languageState == 'Ar'
-                                 ? '${ListFAQ[index]['DescriptionAr']} '
-                                 : '${ListFAQ[index]['DescriptionEn']} ',
-
-                           ),
-                         ),
-                       ],
-                     ),width: 150,);
-                   },),):Container(),
-
                     Container(
                       color: Color(0xd2fefefb),
-                      child:   Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(bottom: 20,top: 20),
-                            child: Text('${AppController.strings.offers}',
-                              style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
-                            ),),
+                            padding: EdgeInsets.only(bottom: 20, top: 20),
+                            child: Text(
+                              '${AppController.strings.FAQ}',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ],
-                      ),),
+                      ),
+                    ),
+                    cardKeyList != null
+                        ? Container(
+                            margin: EdgeInsets.only(top: 20, bottom: 20),
+                            child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.only(bottom: 50),
+                              shrinkWrap: true,
+                              itemCount: faq.length,
+                              itemBuilder: (context, index) {
+                                cardKeyList.add(
+                                    GlobalKey(debugLabel: "index :$index"));
 
-                    Container(child:
-    imgslideoffer!=null? Carousel(
-                      animationDuration: Duration(seconds: 1),
-                      pageController: PageController(),
-                      boxFit: BoxFit.cover,
-                      animationCurve: Curves.fastOutSlowIn,
-                      dotSize: 10.0,
-                      autoplay: true,
-                      dotIncreasedColor: Color(0xFF04b2d9),
-                      dotBgColor: Colors.transparent,
-                      dotPosition: DotPosition.bottomCenter,
-                      dotVerticalPadding: 10.0,
-                      showIndicator: true,
-                      indicatorBgPadding: 7.0,
-                      autoplayDuration: Duration(seconds: 3),
-                      borderRadius: true,
-                      noRadiusForIndicator: true,
-                      images: [
-                        for (var i = 0; i < imgslideoffer.length; i++)
-                          NetworkImage('${Api().baseImgURL + imgslideoffer[i]['Images']}'),
-                        // NetworkImage('${Api().baseImgURL + imgdata[1]['Images']}'),
-                        // NetworkImage('${Api().baseImgURL + imgdata[2]['Images']}'),
-                      ],
-                    ):Container(),
-
+                                return Container(
+                                  margin: EdgeInsets.all(10),
+                                  child: ExpansionTileCard(
+                                    key: cardKeyList[index],
+                                    onExpansionChanged: (value) {
+                                      if (value) {
+                                        Future.delayed(
+                                            const Duration(milliseconds: 500),
+                                            () {
+                                          for (var i = 0;
+                                              i < cardKeyList.length;
+                                              i++) {
+                                            if (index != i) {
+                                              cardKeyList[i]
+                                                  .currentState
+                                                  ?.collapse();
+                                            }
+                                          }
+                                        });
+                                      }
+                                    },
+                                    title: Text(
+                                      languageState == 'Ar'
+                                          ? '${ListFAQ[index]['TitleAr']} '
+                                          : '${ListFAQ[index]['TitleEn']} ',
+                                    ),
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.all(10),
+                                        child: Text(
+                                          languageState == 'Ar'
+                                              ? '${ListFAQ[index]['DescriptionAr']} '
+                                              : '${ListFAQ[index]['DescriptionEn']} ',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  width: 150,
+                                );
+                              },
+                            ),
+                          )
+                        : Container(),
+                    Container(
+                      color: Color(0xd2fefefb),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 20, top: 20),
+                            child: Text(
+                              '${AppController.strings.offers}',
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      child: imgslideoffer != null
+                          ? Carousel(
+                              animationDuration: Duration(seconds: 1),
+                              pageController: PageController(),
+                              boxFit: BoxFit.cover,
+                              animationCurve: Curves.fastOutSlowIn,
+                              dotSize: 10.0,
+                              autoplay: true,
+                              dotIncreasedColor: Color(0xFF04b2d9),
+                              dotBgColor: Colors.transparent,
+                              dotPosition: DotPosition.bottomCenter,
+                              dotVerticalPadding: 10.0,
+                              showIndicator: true,
+                              indicatorBgPadding: 7.0,
+                              autoplayDuration: Duration(seconds: 3),
+                              borderRadius: true,
+                              noRadiusForIndicator: true,
+                              images: [
+                                for (var i = 0; i < imgslideoffer.length; i++)
+                                  NetworkImage(
+                                      '${Api().baseImgURL + imgslideoffer[i]['Images']}'),
+                                // NetworkImage('${Api().baseImgURL + imgdata[1]['Images']}'),
+                                // NetworkImage('${Api().baseImgURL + imgdata[2]['Images']}'),
+                              ],
+                            )
+                          : Container(),
                       height: 250,
-                      margin: EdgeInsets.only(bottom: 50,top: 50),),
-
+                      margin: EdgeInsets.only(bottom: 50, top: 50),
+                    ),
                   ],
                 )
               : Container(
@@ -537,7 +560,7 @@ class _HomepageState extends State<Homepage> {
                               child: loading
                                   ? Center(
                                       child: Text(
-                                          '${AppController.strings.PleaseWait}'))
+                                          '${AppController.strings.pleaseWait}'))
                                   : Center(
                                       child: Text(
                                         '${AppController.strings.NoServices}',

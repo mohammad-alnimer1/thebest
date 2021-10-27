@@ -80,10 +80,12 @@ class _DetailsPageState extends State<DetailsPage> {
       print(e);
     }
   }
+
   var thankpage;
   Future<dynamic> getthankpage() async {
     try {
-      NetworkHelper networkHelper = NetworkHelper('${Api().baseURL}thankpage/en');
+      NetworkHelper networkHelper =
+          NetworkHelper('${Api().baseURL}thankpage/en');
       thankpage = await networkHelper.getdata();
 
       setState(() {
@@ -91,7 +93,6 @@ class _DetailsPageState extends State<DetailsPage> {
         loading1 = false;
         return thankpage;
       });
-
     } catch (e) {
       print(e);
     }
@@ -135,24 +136,24 @@ class _DetailsPageState extends State<DetailsPage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     String name = prefs.getString("Name");
     String email = prefs.getString("Email");
-    var url = 'http://mohamadfaqeh-001-site37.itempurl.com/api/mobile/insertadvuser';
-      var dataToSend = {
-        "Phone": "000000000",
-        "Title": name.toString(),
-        "Email": email.toString()
-      };
-      print('))))))))))))))))');
-      https.Response response = await https.post(url, body: dataToSend);
-      if (response.statusCode == 200) {
-        String data = response.body;
-        print('hi hi hi hi hi hi  data ${data}');
-        setState(() {
-          if (mounted) jsonEncode(data);
-        });
-      } else {
-        print(response.statusCode);
-      }
-    
+    var url =
+        'http://mohamadfaqeh-001-site37.itempurl.com/api/mobile/insertadvuser';
+    var dataToSend = {
+      "Phone": "000000000",
+      "Title": name.toString(),
+      "Email": email.toString()
+    };
+    print('))))))))))))))))');
+    https.Response response = await https.post(url, body: dataToSend);
+    if (response.statusCode == 200) {
+      String data = response.body;
+      print('hi hi hi hi hi hi  data ${data}');
+      setState(() {
+        if (mounted) jsonEncode(data);
+      });
+    } else {
+      print(response.statusCode);
+    }
   }
 
   String validdata(String val) {
@@ -200,17 +201,14 @@ class _DetailsPageState extends State<DetailsPage> {
   //         sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size);
   //   }
 
-
   _onShareWithEmptyOrigin(BuildContext context) async {
-    if(Platform.isAndroid){
-      await Share.share("https://play.google.com/store/apps/details?id=servesApp.thebest");
-
-    }else{
+    if (Platform.isAndroid) {
+      await Share.share(
+          "https://play.google.com/store/apps/details?id=servesApp.thebest");
+    } else {
       await Share.share("https://apps.apple.com/us/app/the-best/id1573635575");
-
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -223,70 +221,73 @@ class _DetailsPageState extends State<DetailsPage> {
             centerTitle: true,
           ),
           backgroundColor: Color(0xFF04b2d9),
-          body: servicesDetails != null && servicesDetails.isNotEmpty ?
-          ListView.builder(
-            itemCount: 1,
-            itemBuilder: (context, index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
-                    ),
-                    margin: EdgeInsets.all(20),
-                    child: Column(
+          body: servicesDetails != null && servicesDetails.isNotEmpty
+              ? ListView.builder(
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    return Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                languageState != 'Ar'
-                                    ? Text(
-                                    '${servicesDetails['TitleEn']}',
-                                    style: TextStyle(fontSize: 22))
-                                    : Text(
-                                    '${servicesDetails['TitleAr']}',
-                                    style: TextStyle(fontSize: 22)),
-                              ],
-                            )),
-                        Padding(
-                          padding:
-                          const EdgeInsets.only(right: 10, left: 10),
-                          child: Divider(
-                            thickness: 1,
-                            color: Colors.black45,
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
                           ),
-                        ),
-                        Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Colors.white,
-                            ),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: Container(
-                                    height: MediaQuery.of(context).size.height * 0.5,
-                                    child: Image.network(
-                                      '${Api().baseImgURL + servicesDetails['Images']}',
-                                      fit: BoxFit.fill,
-                                    )))),
-                        Container(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              languageState != 'Ar' ?
-                              "${servicesDetails['DescriptionEn']}"
-                                  : "${servicesDetails['DescriptionAr']}",
-                              style: TextStyle(fontSize: 18),
-                              textAlign: languageState == "Ar"
-                                  ? TextAlign.right
-                                  : TextAlign.left,
-                            )),
+                          margin: EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      languageState != 'Ar'
+                                          ? Text(
+                                              '${servicesDetails['TitleEn']}',
+                                              style: TextStyle(fontSize: 22))
+                                          : Text(
+                                              '${servicesDetails['TitleAr']}',
+                                              style: TextStyle(fontSize: 22)),
+                                    ],
+                                  )),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 10, left: 10),
+                                child: Divider(
+                                  thickness: 1,
+                                  color: Colors.black45,
+                                ),
+                              ),
+                              Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(50),
+                                    color: Colors.white,
+                                  ),
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Container(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.5,
+                                          child: Image.network(
+                                            '${Api().baseImgURL + servicesDetails['Images']}',
+                                            fit: BoxFit.fill,
+                                          )))),
+                              Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    languageState != 'Ar'
+                                        ? "${servicesDetails['DescriptionEn']}"
+                                        : "${servicesDetails['DescriptionAr']}",
+                                    style: TextStyle(fontSize: 18),
+                                    textAlign: languageState == "Ar"
+                                        ? TextAlign.right
+                                        : TextAlign.left,
+                                  )),
                               // Container(
                               //   padding: EdgeInsets.all(16),
                               //   child: Row(
@@ -306,46 +307,46 @@ class _DetailsPageState extends State<DetailsPage> {
                               //     ],
                               //   ),
                               // )
-                        userIsLoggedIn == null || userIsLoggedIn == false ?
-                        Container():ElevatedButton(
-                          onPressed: (){
-                            setState(() {
-                              sendrequest().then((value) =>
-                                  Alert(
-
-                                    context: context,
-                                    type: AlertType.success,
-                                    title: "${AppController.strings.Submittedsuccessfully}",
-                                    desc: "${AppController.strings.assoon}",
-                                    buttons: [
-                                      DialogButton(
-                                        child: Text(
-                                          "${AppController.strings.ok}",
-                                          style: TextStyle(color: Colors.white, fontSize: 20),
-                                        ),
-                                        onPressed: () => Navigator.pop(context),
-                                        width: 120,
-                                      )
-                                    ],
-
-                                    style: AlertStyle(titleStyle: TextStyle(fontSize: 18),
-                                    isCloseButton: false,
-
-                                      animationDuration: Duration(milliseconds: 400),
-
-                                    )
-
-                                  ).show()
-                              );
-                            });
-                        },
-                          child: languageState != 'Ar'
-                              ? Text(
-                              'Request the service now',
-                              style: TextStyle(fontSize: 22))
-                              : Text(
-                              'أطلب الخدمة الان',
-                              style: TextStyle(fontSize: 22)),),
+                              userIsLoggedIn == null || userIsLoggedIn == false
+                                  ? Container()
+                                  : ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          sendrequest().then((value) => Alert(
+                                              context: context,
+                                              type: AlertType.success,
+                                              title:
+                                                  "${AppController.strings.Submittedsuccessfully}",
+                                              desc:
+                                                  "${AppController.strings.assoon}",
+                                              buttons: [
+                                                DialogButton(
+                                                  child: Text(
+                                                    "${AppController.strings.ok}",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 20),
+                                                  ),
+                                                  onPressed: () =>
+                                                      Navigator.pop(context),
+                                                  width: 120,
+                                                )
+                                              ],
+                                              style: AlertStyle(
+                                                titleStyle:
+                                                    TextStyle(fontSize: 18),
+                                                isCloseButton: false,
+                                                animationDuration:
+                                                    Duration(milliseconds: 400),
+                                              )).show());
+                                        });
+                                      },
+                                      child: languageState != 'Ar'
+                                          ? Text('Request the service now',
+                                              style: TextStyle(fontSize: 22))
+                                          : Text('أطلب الخدمة الان',
+                                              style: TextStyle(fontSize: 22)),
+                                    ),
                             ],
                           ),
                         ),
@@ -477,7 +478,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                                     child: loading1
                                                         ? Center(
                                                             child: Text(
-                                                                '${AppController.strings.PleaseWait}'))
+                                                                '${AppController.strings.pleaseWait}'))
                                                         : Center(
                                                             child: Text(
                                                               '${AppController.strings.NoComment}',
@@ -503,186 +504,203 @@ class _DetailsPageState extends State<DetailsPage> {
                                 alignment: Alignment.topCenter,
                                 child: Form(
                                   key: commentKey,
-                                  child: userIsLoggedIn == null ||
-                                          userIsLoggedIn == false
-                                      ? Padding(
-                                          padding: EdgeInsets.all(10),
-                                          child: Container(
-                                            color: Colors.black12,
-                                            child: TextButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    bool loginback = true;
+                                  child:
+                                      userIsLoggedIn == null ||
+                                              userIsLoggedIn == false
+                                          ? Padding(
+                                              padding: EdgeInsets.all(10),
+                                              child: Container(
+                                                color: Colors.black12,
+                                                child: TextButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        bool loginback = true;
 
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            LogInPage(
-                                                          loginback: loginback,
-                                                        ),
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                            builder:
+                                                                (context) =>
+                                                                    LogInPage(
+                                                              loginback:
+                                                                  loginback,
+                                                            ),
+                                                          ),
+                                                        );
+                                                      });
+                                                    },
+                                                    child: Text(
+                                                      '${AppController.strings.LoginCommented}',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: TextStyle(
+                                                        color: Colors.black87,
+                                                        fontSize: 18,
                                                       ),
-                                                    );
-                                                  });
-                                                },
-                                                child: Text(
-                                                  '${AppController.strings.LoginCommented}',
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    color: Colors.black87,
-                                                    fontSize: 18,
-                                                  ),
-                                                )),
-                                          ),
-                                        )
-                                      : Container(
-                                          padding: EdgeInsets.all(16),
-                                          child: ExpansionTileCard(
-                                            title: Text(
-                                                '${AppController.strings.LeaveComment}'),
-                                            children: [
-                                              // Padding(
-                                              //   padding: EdgeInsets.all(10),
-                                              //   child: TextFormField(
-                                              //       controller: nameController,
-                                              //       textAlign: TextAlign.center,
-                                              //       validator: validdata,
-                                              //       decoration:
-                                              //           KDecoration.copyWith(
-                                              //         labelText:
-                                              //             '${AppController.strings.EnteryourName}',
-                                              //       )),
-                                              // ),
-                                              // Padding(
-                                              //   padding: EdgeInsets.all(10),
-                                              //   child: TextFormField(
-                                              //       controller: emailController,
-                                              //       textAlign: TextAlign.center,
-                                              //       keyboardType:
-                                              //           TextInputType.emailAddress,
-                                              //       validator: validdata,
-                                              //       decoration: KDecoration.copyWith(
-                                              //           labelText:
-                                              //               '${AppController.strings.EnteryourEmail}')),
-                                              // ),
-                                              Padding(
-                                                padding: EdgeInsets.all(10),
-                                                child: TextFormField(
-                                                    controller:
-                                                        CommentController,
-                                                    maxLines: 5,
-                                                    textAlign: TextAlign.center,
-                                                    keyboardType: TextInputType
-                                                        .emailAddress,
-                                                    validator: validdata,
-                                                    decoration:
-                                                        KDecoration.copyWith(
-                                                            labelText:
-                                                                '${AppController.strings.writComment}')),
+                                                    )),
                                               ),
-                                              MaterialButton(
-                                                  onPressed: () {
-                                                    setState(() {
-                                                      if (commentKey
-                                                          .currentState
-                                                          .validate()) {
-                                                        if (userIsLoggedIn ==
-                                                                null ||
-                                                            userIsLoggedIn ==
-                                                                false) {
-                                                          _showMaterialDialog(
-                                                              textcontent:
-                                                                  '${AppController.strings.LoginCommented}',
-                                                              textTitle:
-                                                                  '${AppController.strings.noteLogin}',
-                                                              function: [
-                                                                FlatButton(
-                                                                  child: Text(
-                                                                      '${AppController.strings.login}'),
-                                                                  onPressed:
-                                                                      () {
-                                                                    bool loginback = true;
-                                                                    Navigator.push(context, MaterialPageRoute(
-                                                                        builder: (context) => LogInPage(
-                                                                          loginback: loginback,
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  },
-                                                                )
-                                                              ]);
-                                                        } else {
-                                                          senddata();
-                                                          //Navigator.push(context, MaterialPageRoute(builder: (BuildContextcontext) => super.widget));
-                                                          getthankpage().then((value) => showDialog(
-                                                              context: context,
-                                                              builder: (_) => new AlertDialog(
-                                                                  title:    Container(child: Icon(FontAwesomeIcons.solidCheckCircle,size: 50,color: Colors.greenAccent,),),
+                                            )
+                                          : Container(
+                                              padding: EdgeInsets.all(16),
+                                              child: ExpansionTileCard(
+                                                title: Text(
+                                                    '${AppController.strings.LeaveComment}'),
+                                                children: [
+                                                  // Padding(
+                                                  //   padding: EdgeInsets.all(10),
+                                                  //   child: TextFormField(
+                                                  //       controller: nameController,
+                                                  //       textAlign: TextAlign.center,
+                                                  //       validator: validdata,
+                                                  //       decoration:
+                                                  //           KDecoration.copyWith(
+                                                  //         labelText:
+                                                  //             '${AppController.strings.EnteryourName}',
+                                                  //       )),
+                                                  // ),
+                                                  // Padding(
+                                                  //   padding: EdgeInsets.all(10),
+                                                  //   child: TextFormField(
+                                                  //       controller: emailController,
+                                                  //       textAlign: TextAlign.center,
+                                                  //       keyboardType:
+                                                  //           TextInputType.emailAddress,
+                                                  //       validator: validdata,
+                                                  //       decoration: KDecoration.copyWith(
+                                                  //           labelText:
+                                                  //               '${AppController.strings.EnteryourEmail}')),
+                                                  // ),
+                                                  Padding(
+                                                    padding: EdgeInsets.all(10),
+                                                    child: TextFormField(
+                                                        controller:
+                                                            CommentController,
+                                                        maxLines: 5,
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        keyboardType:
+                                                            TextInputType
+                                                                .emailAddress,
+                                                        validator: validdata,
+                                                        decoration: KDecoration
+                                                            .copyWith(
+                                                                labelText:
+                                                                    '${AppController.strings.writComment}')),
+                                                  ),
+                                                  MaterialButton(
+                                                      onPressed: () {
+                                                        setState(() {
+                                                          if (commentKey
+                                                              .currentState
+                                                              .validate()) {
+                                                            if (userIsLoggedIn ==
+                                                                    null ||
+                                                                userIsLoggedIn ==
+                                                                    false) {
+                                                              _showMaterialDialog(
+                                                                  textcontent:
+                                                                      '${AppController.strings.LoginCommented}',
+                                                                  textTitle:
+                                                                      '${AppController.strings.noteLogin}',
+                                                                  function: [
+                                                                    FlatButton(
+                                                                      child: Text(
+                                                                          '${AppController.strings.login}'),
+                                                                      onPressed:
+                                                                          () {
+                                                                        bool
+                                                                            loginback =
+                                                                            true;
+                                                                        Navigator
+                                                                            .push(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                LogInPage(
+                                                                              loginback: loginback,
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                    )
+                                                                  ]);
+                                                            } else {
+                                                              senddata();
+                                                              //Navigator.push(context, MaterialPageRoute(builder: (BuildContextcontext) => super.widget));
+                                                              getthankpage().then((value) =>
+                                                                  showDialog(
+                                                                      context:
+                                                                          context,
+                                                                      builder: (_) => new AlertDialog(
+                                                                          title: Container(
+                                                                            child:
+                                                                                Icon(
+                                                                              FontAwesomeIcons.solidCheckCircle,
+                                                                              size: 50,
+                                                                              color: Colors.greenAccent,
+                                                                            ),
+                                                                          ),
+                                                                          content: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.center, children: [
+                                                                            Center(
+                                                                              child: languageState != 'Ar'
+                                                                                  ? Text(
+                                                                                      '${thankpage['TitleEn']}',
+                                                                                      style: TextStyle(fontSize: 22),
+                                                                                      textAlign: TextAlign.center,
+                                                                                    )
+                                                                                  : Text(
+                                                                                      '${thankpage['TitleAr']}',
+                                                                                      style: TextStyle(fontSize: 22),
+                                                                                      textAlign: TextAlign.center,
+                                                                                    ),
+                                                                            ),
 
-                                                                  content: Column(
-                                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                                      children: [
-
-
-                                                                        Center(child:  languageState != 'Ar'
-                                                                            ? Text(
-                                                                            '${thankpage['TitleEn']}',
-                                                                            style: TextStyle(fontSize: 22),
-                                                                        textAlign: TextAlign.center,
-                                                                        )
-                                                                            : Text(
-                                                                            '${thankpage['TitleAr']}',
-                                                                            style: TextStyle(fontSize: 22),
-                                                                          textAlign: TextAlign.center,
-
-                                                                        ),),
-
-
-                                                                        new Center(child:  languageState != 'Ar'
-                                                                            ? Text(
-                                                                            '${thankpage['DescriptionEn']}',
-                                                                            style: TextStyle(fontSize: 19),
-                                                                          textAlign: TextAlign.center,
-
-                                                                        )
-                                                                            : Text(
-                                                                            '${thankpage['DescriptionAr']}',
-                                                                            style: TextStyle(fontSize: 19),
-                                                                          textAlign: TextAlign.center,
-
-                                                                        ),),
-                                                                        ElevatedButton(
-                                                                          child: Text('${AppController.strings.ok}'),
-                                                                          onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContextcontext) => super.widget)), // passing true
-                                                                        ),
-                                                                        SizedBox(height: 40,),
-                                                                        GestureDetector(
-                                                                          child: Text('${AppController.strings.share}'),
-                                                                          onTap: () {
-                                                                            _onShareWithEmptyOrigin(context);
-                                                                          },
-                                                                         ), // passing true
-
-                                                                      ]
-                                                                  ))));
-                                                          nameController.clear();
-                                                          emailController.clear();
-                                                          CommentController.clear();
-
-                                                        }
-                                                      }
-                                                    });
-                                                  },
-                                                  color: Color(0xFF04b2d9),
-                                                  child: Text(
-                                                    '${AppController.strings.send}',
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 20),
-                                                  ))
-                                            ],
-                                          )),
+                                                                            new Center(
+                                                                              child: languageState != 'Ar'
+                                                                                  ? Text(
+                                                                                      '${thankpage['DescriptionEn']}',
+                                                                                      style: TextStyle(fontSize: 19),
+                                                                                      textAlign: TextAlign.center,
+                                                                                    )
+                                                                                  : Text(
+                                                                                      '${thankpage['DescriptionAr']}',
+                                                                                      style: TextStyle(fontSize: 19),
+                                                                                      textAlign: TextAlign.center,
+                                                                                    ),
+                                                                            ),
+                                                                            ElevatedButton(
+                                                                              child: Text('${AppController.strings.ok}'),
+                                                                              onPressed: () => Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContextcontext) => super.widget)), // passing true
+                                                                            ),
+                                                                            SizedBox(
+                                                                              height: 40,
+                                                                            ),
+                                                                            GestureDetector(
+                                                                              child: Text('${AppController.strings.share}'),
+                                                                              onTap: () {
+                                                                                _onShareWithEmptyOrigin(context);
+                                                                              },
+                                                                            ), // passing true
+                                                                          ]))));
+                                                              nameController
+                                                                  .clear();
+                                                              emailController
+                                                                  .clear();
+                                                              CommentController
+                                                                  .clear();
+                                                            }
+                                                          }
+                                                        });
+                                                      },
+                                                      color: Color(0xFF04b2d9),
+                                                      child: Text(
+                                                        '${AppController.strings.send}',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 20),
+                                                      ))
+                                                ],
+                                              )),
                                 ),
                               )
                             ],
@@ -705,7 +723,7 @@ class _DetailsPageState extends State<DetailsPage> {
                               child: loading
                                   ? Center(
                                       child: Text(
-                                          '${AppController.strings.PleaseWait}'))
+                                          '${AppController.strings.pleaseWait}'))
                                   : Center(
                                       child: Text(
                                         '${AppController.strings.NoServices}',
@@ -721,26 +739,29 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   _showMaterialDialog(
-      {BuildContext context ,String textTitle, String textcontent, List<Widget> function}) {
+      {BuildContext context,
+      String textTitle,
+      String textcontent,
+      List<Widget> function}) {
     showDialog(
         context: context,
         builder: (_) => new AlertDialog(
-            title: Center(child: new Text(textTitle)),
-            content: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-              Container(child: Icon(FontAwesomeIcons.checkCircle),),
-
-              new Text(
-                textcontent,
-                textAlign: TextAlign.center,
+              title: Center(child: new Text(textTitle)),
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    child: Icon(FontAwesomeIcons.checkCircle),
+                  ),
+                  new Text(
+                    textcontent,
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-
-            ],),
-            actions: function,
-
-        ));
+              actions: function,
+            ));
   }
 }
 //
